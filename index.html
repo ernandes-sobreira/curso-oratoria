@@ -1,1 +1,138 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Meu Curso (Aluno) — Oratória & Storytelling</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">🎤</div>
+      <div>
+        <div class="title">Meu Curso — Oratória & Storytelling (20h)</div>
+        <div class="subtitle">Você é o aluno. O app é seu treinador. Eu te avalio aqui.</div>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button id="btnExport" class="btn ghost">Exportar</button>
+      <button id="btnImport" class="btn ghost">Importar</button>
+      <button id="btnReset" class="btn danger ghost">Reset</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <div class="card">
+        <div class="card-title">Progresso</div>
+        <div class="progress-wrap">
+          <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+          <div class="progress-meta">
+            <span id="progressText">0%</span>
+            <span id="hoursText">0/20h</span>
+          </div>
+        </div>
+        <div class="pill-row">
+          <span class="pill" id="pillDone">0 concluídas</span>
+          <span class="pill" id="pillTotal">0 aulas</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Aula de hoje</div>
+        <div id="todayBox" class="today-box"></div>
+        <div class="row">
+          <button id="btnStartToday" class="btn">Começar aula</button>
+          <button id="btnPickAnother" class="btn ghost">Trocar</button>
+        </div>
+        <div class="small muted">
+          Dica: 45–50 min por aula. Faça 1 entrega por dia.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Aulas</div>
+        <div id="lessonList" class="module-list"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Personalizar</div>
+        <p class="muted">Edite o curso (temas, público, aulas, links). Salva só no seu navegador.</p>
+        <button id="btnEditCourse" class="btn">Editar curso</button>
+      </div>
+    </aside>
+
+    <section class="content">
+      <div class="card hero">
+        <div class="hero-title" id="curTitle">Selecione uma aula</div>
+        <div class="hero-sub" id="curMeta">—</div>
+        <div class="hero-desc" id="curDesc">A aula tem passos guiados, entrega e autoavaliação.</div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="card-title">Passo a passo (45–50 min)</div>
+          <div id="stepList" class="task-list"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Entregas (obrigatório)</div>
+          <div id="deliverableList" class="deliverable-list"></div>
+          <div class="row">
+            <input id="deliverableLink" class="input" placeholder="Cole link/descrição da entrega (ex.: vídeo no drive, ou 'gravei no celular')" />
+            <button id="btnSaveDelivery" class="btn">Salvar entrega</button>
+          </div>
+          <div id="deliverySaved" class="small muted"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Autoavaliação (0–10)</div>
+          <div id="rubric" class="rubric"></div>
+          <div class="row">
+            <button id="btnSaveRubric" class="btn">Salvar autoavaliação</button>
+            <span id="rubricSaved" class="small muted"></span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Notas e feedback</div>
+          <textarea id="notes" class="notes" placeholder="O que melhorou? O que travou? Que frase ficou forte? Que parte ficou confusa?"></textarea>
+          <div class="row">
+            <button id="btnSaveNotes" class="btn">Salvar notas</button>
+            <span id="notesSaved" class="small muted"></span>
+          </div>
+          <div class="muted small">
+            Quando quiser, cole aqui no chat sua entrega/roteiro e eu te devolvo a correção com rubrica.
+          </div>
+        </div>
+      </div>
+
+      <dialog id="importDlg" class="dlg">
+        <form method="dialog" class="dlg-body">
+          <h3>Importar</h3>
+          <textarea id="importText" class="notes" placeholder='{"version":1,...}'></textarea>
+          <div class="dlg-actions">
+            <button class="btn ghost">Cancelar</button>
+            <button id="btnDoImport" class="btn">Importar</button>
+          </div>
+        </form>
+      </dialog>
+
+      <dialog id="editDlg" class="dlg">
+        <form method="dialog" class="dlg-body">
+          <h3>Editar curso (JSON)</h3>
+          <textarea id="courseEditor" class="notes"></textarea>
+          <div class="dlg-actions">
+            <button class="btn ghost">Cancelar</button>
+            <button id="btnSaveCourse" class="btn">Salvar</button>
+          </div>
+        </form>
+      </dialog>
+    </section>
+  </main>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
 
