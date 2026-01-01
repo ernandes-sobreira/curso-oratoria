@@ -39,32 +39,75 @@
     },
 
     {
-      "id": "L2",
-      "title": "Aula 2 — Abertura: como começar a falar sem enrolar",
-      "minutes": 60,
-      "outcome": "Criar 3 aberturas (acadêmico/gestor/extensão) e escolher a melhor.",
-      "study": [
-        "Abertura serve pra: (1) atenção, (2) promessa de valor, (3) mapa do caminho.",
-        "Erro comum acadêmico: contexto longo. Abertura boa é curta e assertiva.",
-        "No teu perfil: gestor quer risco/ação; aluno quer clareza; público geral quer sentido."
-      ],
-      "resources": [
-        { "type": "video", "label": "Julian Treasure — How to speak so that people want to listen (YouTube)", "url": "https://www.youtube.com/watch?v=eIho2S0ZahI", "note": "Voz e hábitos." },
-        { "type": "site", "label": "TED — Página do talk do Chris Anderson", "url": "https://www.ted.com/talks/chris_anderson_ted_s_secret_to_great_public_speaking", "note": "Rever pontos-chave." }
-      ],
-      "templates": [
-        { "name": "Abertura acadêmica (mapa)", "text": "Hoje eu vou responder: [pergunta]. Em 3 passos: (1) __, (2) __, (3) __. No final: [limitação] + [próximo passo]." },
-        { "name": "Abertura gestor (risco→ação)", "text": "A decisão aqui é: [ação]. Se não, o risco é: [risco]. Em 5 min: evidência → impacto → ação em 90 dias." },
-        { "name": "Abertura extensão (cena)", "text": "Deixa eu te contar uma cena real: [cena]. Ela mostra por que [tema] importa. No final: 1 ação simples." }
-      ],
-      "tasks": [
-        "Escreva 3 aberturas (25–35s cada).",
-        "Leia em voz alta e corte 20% do texto.",
-        "Escolha 1 abertura e refine."
-      ],
-      "deliverables": ["3 aberturas + 1 escolhida refinada."],
-      "minToComplete": { "resourcesWatched": 1 }
+  "id": "L2",
+  "title": "Aula 2 — Como começar a falar (aberturas que funcionam)",
+  "minutes": 60,
+  "outcome": "Você cria 3 aberturas (acadêmico / gestor / extensão) e escolhe a melhor.",
+  "study": [
+    "Abertura tem 3 funções: (1) ganhar atenção, (2) prometer valor, (3) dar direção (mapa). Se faltar UMA delas, a fala começa fraca.",
+    "Regra de ouro (professor universitário): comece pelo que o público ganha AGORA. Contexto longo é inimigo da atenção.",
+    "Abertura para gestores/policy: decida a ‘pergunta de decisão’. O público precisa entender qual decisão está na mesa antes dos dados.",
+    "Abertura para extensão: uma cena real (curta) + por que isso importa para a vida concreta. Depois você ‘ancora’ com 1 dado.",
+    "Meta de tempo: 25–35 segundos. Mais que isso vira introdução cansativa."
+  ],
+  "resources": [
+    {
+      "type": "video",
+      "label": "Julian Treasure — How to speak so that people want to listen (YouTube)",
+      "url": "https://www.youtube.com/watch?v=eIho2S0ZahI",
+      "note": "Voz/prática (base universal)."
     },
+    {
+      "type": "site",
+      "label": "TED (texto) — Chris Anderson (página do talk)",
+      "url": "https://www.ted.com/talks/chris_anderson_ted_s_secret_to_great_public_speaking",
+      "note": "Leia e anote as ideias-chave."
+    },
+    {
+      "type": "talk",
+      "label": "Sônia Bridi — Como eu testemunhei a mudança climática (TEDxYouth, PT)",
+      "url": "https://www.ted.com/talks/sonia_bridi_como_eu_testemunhei_a_mudanca_climatica",
+      "note": "Exemplo forte de abertura com autoridade + narrativa."
+    },
+    {
+      "type": "talk",
+      "label": "Matthew Shirts — Como falar de mudanças climáticas em festas (TED, PT)",
+      "url": "https://www.ted.com/talks/matthew_shirts_como_falar_de_mudancas_climaticas_em_festas",
+      "note": "Excelente para tom humano e acessível."
+    },
+    {
+      "type": "talk",
+      "label": "Luis Felipe Adaime — Mudanças climáticas: como posso me envolver hoje? (TEDxUNISO, PT)",
+      "url": "https://www.ted.com/talks/luis_felipe_adaime_mudancas_climaticas_como_posso_me_envolver_hoje",
+      "note": "Abertura + convite de ação."
+    }
+  ],
+  "templates": [
+    {
+      "name": "Abertura Acadêmica (mapa)",
+      "text": "Hoje eu vou responder: [pergunta].\nEm 3 passos: (1) __, (2) __, (3) __.\nNo final, eu deixo [limitação] + [próximo passo].\n(Tempo: 25–35s)"
+    },
+    {
+      "name": "Abertura Gestor (risco→ação)",
+      "text": "A decisão aqui é: [ação].\nSe não, o risco é: [risco].\nEm 5 min: (1) evidência, (2) impacto, (3) ação em 90 dias.\n(Tempo: 25–35s)"
+    },
+    {
+      "name": "Abertura Extensão (cena real)",
+      "text": "Deixa eu te contar uma cena rápida: [cena real].\nEla mostra por que [tema] importa.\nNo final, eu te dou 1 ação simples.\n(Tempo: 25–35s)"
+    }
+  ],
+  "tasks": [
+    "Escreva 3 aberturas (acadêmico/gestor/extensão).",
+    "Leia em voz alta e corte 20% (sem perder sentido).",
+    "Escolha a melhor e refine para 25–35 segundos.",
+    "Bônus (opcional): grave 1 áudio/vídeo de 35s e cole o link na Entrega."
+  ],
+  "deliverables": [
+    "3 aberturas completas.",
+    "1 abertura final (25–35s) pronta para uso."
+  ],
+  "minToComplete": { "resourcesWatched": 2 }
+}
 
     {
       "id": "L3",
