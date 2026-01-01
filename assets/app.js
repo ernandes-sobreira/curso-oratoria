@@ -1,444 +1,508 @@
-const STORAGE_KEY = "curso_oratoria_aluno_v2";
+const STORAGE_KEY = "curso_oratoria_aluno_ZERO_v1"; // chave nova = reset real
 
-const DEFAULT_COURSE = {
-  version: 2,
+const COURSE = {
+  version: 1,
   totalHours: 20,
   profile: {
-    persona: "Professor/pesquisador (Pantanal, clima, saúde, políticas públicas, extensão)",
-    typicalAudiences: ["acadêmicos", "alunos", "gestores públicos", "sociedade/extensionistas"],
-    goal: "Ser palestrante e professor influente, com clareza, presença e storytelling científico"
+    name: "Ernandes (perfil acadêmico)",
+    context: "Professor/pesquisador (Pantanal, clima, saúde, políticas públicas, extensão)",
+    audiences: ["acadêmicos", "alunos", "gestores/policy makers", "sociedade/extensionistas"],
+    goal: "Ser palestrante e storyteller científico: claro, influente, com presença e estrutura"
   },
-  lessons: [
+  lessons: buildLessons()
+};
+
+function buildLessons(){
+  // Cada aula ~60 min (estudo + 1–2 exemplos + tarefa + entrega)
+  return [
     {
-      id:"a1",
-      title:"Aula 1 — O que é uma boa palestra (e o que é storytelling)",
-      minutes:50,
-      outcome:"Você entende o que é storytelling em contexto científico e consegue reconhecer uma boa abertura.",
-      study: [
-        "Storytelling (pra você) = organizar ciência como transformação: realidade → tensão → virada → caminho → fecho.",
-        "Boa palestra não é despejar conteúdo: é guiar o público até uma ideia que muda algo.",
-        "Seu padrão (Pantanal/política pública) pede: dado → risco → decisão → ação.",
+      id:"L1",
+      title:"Aula 1 — O que é storytelling (sem ‘historinha’)",
+      minutes:60,
+      outcome:"Você entende storytelling como estrutura de transformação e define sua ‘ideia central’ em 1 frase.",
+      study:[
+        "Storytelling em ciência = organizar dados como transformação: realidade → tensão → virada → caminho → fecho.",
+        "Palestra boa não despeja conteúdo: guia o público até UMA ideia que muda entendimento/decisão.",
+        "Regra de ouro: se você não consegue dizer sua ideia central em 12–15 palavras, você ainda não tem palestra."
       ],
-      templates: [
-        {
-          name:"Abertura 1 (História + tese)",
-          text:
-`“Em [ano], em [lugar do Pantanal], aconteceu [evento real curto]. Na hora eu percebi uma coisa: [tese]. 
-Hoje eu vou te mostrar [3 coisas] e terminar com [1 decisão prática].”`
-        },
-        {
-          name:"Abertura 2 (Dado + pergunta)",
-          text:
-`“Se eu te disser que [dado forte], qual decisão você tomaria hoje?
-Em 10 minutos, vou te dar um mapa simples: (1) o que está acontecendo, (2) por que importa, (3) o que fazer.”`
+      resources:[
+        {type:"video", label:"Nancy Duarte — The secret structure of great talks (YouTube)", url:"https://www.youtube.com/watch?v=LhGa0TNLUGA", note:"Estrutura (contraste) que segura atenção."},
+        {type:"video", label:"Chris Anderson — TED’s secret to great public speaking (YouTube)", url:"https://www.youtube.com/watch?v=-FOCpMAww28", note:"Foco em ‘ideia que vale espalhar’."},
+        {type:"pdf", label:"Toastmasters — Fundamentals of Public Speaking (PDF)", url:"https://ccdn.toastmasters.org/medias/files/department-documents/club-documents/fundamentals-of-public-speaking/fundamentals-of-public-speaking-english.pdf", note:"Base de organização e entrega."}
+      ],
+      templates:[
+        {name:"Ideia central (12–15 palavras)", text:"Minha ideia central é: ________________________________ (verbo forte + consequência)."},
+        {name:"Mapa do talk (1 linha)", text:"Vou te mostrar (1) ___, (2) ___, (3) ___, e terminar com ___. "}
+      ],
+      tasks:[
+        "Assista 10–15 min da Duarte e anote: onde ela cria contraste?",
+        "Assista 10–15 min do Anderson e anote: o que é ‘ideia central’?",
+        "Escreva sua ideia central em 1 frase (12–15 palavras)."
+      ],
+      deliverables:[
+        "Ideia central (1 frase).",
+        "3 aprendizados da Duarte + 3 do Anderson."
+      ],
+      minToComplete: { resourcesWatched: 2 }
+    },
+
+    {
+      id:"L2",
+      title:"Aula 2 — Como começar a falar (aberturas que funcionam)",
+      minutes:60,
+      outcome:"Você cria 3 aberturas (acadêmico / gestor / extensão) e escolhe a melhor.",
+      study:[
+        "Abertura tem 3 funções: (1) ganhar atenção, (2) prometer valor, (3) dar direção (mapa).",
+        "Erro comum: abrir com ‘contexto longo’. Abertura boa é curta e assertiva.",
+        "No seu perfil: gestor quer risco/ação; aluno quer clareza; público geral quer sentido."
+      ],
+      resources:[
+        {type:"video", label:"Julian Treasure — How to speak so that people want to listen (YouTube)", url:"https://www.youtube.com/watch?v=eIho2S0ZahI", note:"Vícios de fala e voz (prático)."},
+        {type:"site", label:"TED (texto) — Chris Anderson talk (página)", url:"https://www.ted.com/talks/chris_anderson_ted_s_secret_to_great_public_speaking", note:"Releia os pontos-chave."}
+      ],
+      templates:[
+        {name:"Abertura Acadêmica (mapa)", text:"Hoje eu vou responder: [pergunta]. Em 3 passos: (1) __, (2) __, (3) __. No final, eu deixo [limitação] e [próximo passo]."},
+        {name:"Abertura Gestor (risco→ação)", text:"A decisão aqui é: [ação]. Se não, o risco é: [risco]. Em 5 min: (1) evidência, (2) impacto, (3) ação em 90 dias."},
+        {name:"Abertura Extensão (cena)", text:"Deixa eu te contar uma cena rápida: [cena real]. Ela mostra por que [tema] importa. No final: uma ação simples."
         }
       ],
-      links: [
-        { label:"TED — Nancy Duarte: The secret structure of great talks", url:"https://www.ted.com/talks/nancy_duarte_the_secret_structure_of_great_talks", note:"Estrutura de talks (contraste e chamada)."},
-        { label:"TED — Chris Anderson: TED’s secret to great public speaking", url:"https://www.ted.com/talks/chris_anderson_ted_s_secret_to_great_public_speaking", note:"Princípios do que faz um talk funcionar."},
-        { label:"Toastmasters PDF — Fundamentals of Public Speaking", url:"https://ccdn.toastmasters.org/medias/files/department-documents/club-documents/fundamentals-of-public-speaking/fundamentals-of-public-speaking-english.pdf", note:"Estrutura clássica: abertura, corpo, conclusão."}
+      tasks:[
+        "Escreva 3 aberturas (acadêmico/gestor/extensão).",
+        "Leia em voz alta e corte 20% (sem perder sentido).",
+        "Escolha a melhor e refine para 25–35 segundos."
       ],
-      practice: [
-        "Assista 10 min da Nancy Duarte e anote 3 coisas que ela faz na estrutura.",
-        "Assista 10 min do Chris Anderson e anote 3 pontos sobre 'ideia central'.",
-        "Escreva sua 'ideia central' em 1 frase (12–15 palavras)."
-      ],
-      deliverables: [
-        "Lista: 3 aprendizados (Duarte) + 3 (Anderson).",
-        "Sua ideia central em 1 frase."
-      ]
+      deliverables:["3 aberturas escritas + 1 escolhida refinada."],
+      minToComplete:{ resourcesWatched: 1 }
     },
 
     {
-      id:"a2",
-      title:"Aula 2 — Abertura: como começar a falar sem enrolar",
-      minutes:50,
-      outcome:"Você sai com 3 aberturas prontas (acadêmico, gestor, extensão).",
-      study:[
-        "Abertura serve pra 3 coisas: (1) chamar atenção, (2) prometer valor, (3) dar direção (rota).",
-        "Erro comum acadêmico: começar com definição e contexto longo demais.",
-        "Abertura boa tem um 'gancho' e um 'mapa': o público sabe onde vai chegar."
-      ],
-      templates:[
-        { name:"Abertura acadêmica (mapa em 3 tópicos)", text:
-`“Hoje eu vou responder: [pergunta]. 
-Vou fazer isso em 3 passos: (1) [contexto mínimo], (2) [evidência principal], (3) [implicação]. 
-No final, eu deixo [limitação] e [próximo passo].”`},
-        { name:"Abertura gestor (risco → ação)", text:
-`“A decisão aqui é simples: [ação]. Se não, o risco é [risco]. 
-Eu vou te mostrar rapidamente: (1) onde está o problema, (2) qual evidência sustenta, (3) o que dá pra fazer em 90 dias.”`},
-        { name:"Abertura extensão (história curta)", text:
-`“Eu vou te contar uma cena rápida: [cena]. 
-Ela mostra por que [tema] importa na vida real. 
-No final, você vai sair com [1 ação simples].”`}
-      ],
-      links:[
-        { label:"Toastmasters — How to build a speech (artigo)", url:"https://www.toastmasters.org/magazine/magazine-issues/2021/june/how-to-build-a-speech", note:"Dicas práticas de abertura e propósito."}
-      ],
-      practice:[
-        "Escolha 1 tema seu (ex.: restauração e saúde).",
-        "Escreva 3 aberturas (acadêmico/gestor/extensão) usando os modelos.",
-        "Leia em voz alta (1 min cada) e marque onde você tropeça."
-      ],
-      deliverables:["3 aberturas escritas (1 min cada)."]
-    },
-
-    {
-      id:"a3",
+      id:"L3",
       title:"Aula 3 — Objetivo e resultado esperado (pra você e pro público)",
-      minutes:50,
-      outcome:"Você define objetivo + resultado mensurável (o que muda após sua fala).",
+      minutes:60,
+      outcome:"Você define objetivo (verbo) + resultado mensurável + CTA (chamada final).",
       study:[
-        "Uma fala forte tem 1 objetivo (verbo) e 1 resultado (medida).",
-        "Ex.: 'convencer' é vago. Melhor: 'fazer o público aceitar X e topar Y'.",
-        "Para seu perfil: resultado costuma ser decisão, apoio, mudança de prática ou entendimento claro."
+        "Palestra boa tem 1 objetivo (verbo) e 1 resultado (medida).",
+        "Ex.: ‘conscientizar’ é vago. Melhor: ‘fazer o público aceitar X e topar Y’.",
+        "CTA: o que exatamente a pessoa faz depois?"
+      ],
+      resources:[
+        {type:"pdf", label:"Toastmasters — Writing a Speech with Purpose (avaliação PDF)", url:"https://www.toastmasters.org/medias/files/department-documents/education-documents/evaluation-resources/english/8103e-evaluation-resource-ff.pdf", note:"Ajuda a definir propósito e organização."}
       ],
       templates:[
-        { name:"Objetivo/Resultado (modelo)", text:
-`Objetivo (verbo): fazer o público ______________________.
-Resultado esperado (medida): ao final, eles conseguem ______________________.
-Ação final (CTA): ______________________.`}
+        {name:"Objetivo/Resultado/CTA", text:"Objetivo (verbo): fazer o público ________.\nResultado (medida): ao final, eles conseguem ________.\nCTA: eu quero que eles ________ até ________."}
       ],
-      links:[
-        { label:"Toastmasters evaluation — Writing a Speech with Purpose (PDF)", url:"https://www.toastmasters.org/medias/files/department-documents/education-documents/evaluation-resources/english/8103e-evaluation-resource-ff.pdf", note:"Ajuda a definir propósito e organização."}
-      ],
-      practice:[
-        "Defina 1 palestra-alvo sua (12–15 min).",
+      tasks:[
+        "Escolha um tema (ex.: restauração e saúde).",
         "Preencha objetivo/resultado/CTA.",
         "Corte tudo que não serve ao resultado."
       ],
-      deliverables:["Objetivo + resultado + CTA (1 versão)."]
+      deliverables:["Objetivo + resultado + CTA (1 versão)."],
+      minToComplete:{ resourcesWatched: 1 }
     },
 
     {
-      id:"a4",
-      title:"Aula 4 — Estrutura do meio: 3 blocos (sem aula ‘espiral’)",
-      minutes:50,
-      outcome:"Você monta um roteiro em 3 blocos com transições.",
+      id:"L4",
+      title:"Aula 4 — Estrutura 3 blocos (sem fala ‘espiral’)",
+      minutes:60,
+      outcome:"Você monta roteiro em 3 blocos com transições (pontes).",
       study:[
-        "Estrutura simples que funciona: Bloco 1 (o que está acontecendo), Bloco 2 (por que importa), Bloco 3 (o que fazer).",
-        "Cada bloco precisa terminar com uma frase de transição (ponte).",
-        "Regra de ouro: 1 ideia por bloco, 1 evidência principal."
+        "Estrutura robusta: (1) o que está acontecendo, (2) por que importa, (3) o que fazer.",
+        "Cada bloco termina com uma ponte (uma frase que leva ao próximo).",
+        "Uma evidência por bloco (não dez)."
+      ],
+      resources:[
+        {type:"pdf", label:"Toastmasters — Fundamentals (revisão estrutura)", url:"https://ccdn.toastmasters.org/medias/files/department-documents/club-documents/fundamentals-of-public-speaking/fundamentals-of-public-speaking-english.pdf", note:"Abertura/corpo/conclusão."}
       ],
       templates:[
-        { name:"Roteiro 3 blocos", text:
-`Bloco 1 — O que está acontecendo: ____________________ (1 evidência)
-Ponte: “Então, o ponto central é ________.”
-Bloco 2 — Por que importa: ____________________ (1 impacto)
-Ponte: “Se isso é verdade, precisamos ________.”
-Bloco 3 — O que fazer: ____________________ (3 ações possíveis)` }
+        {name:"Roteiro 3 blocos", text:"Bloco 1 (o que está acontecendo): ____ (1 evidência)\nPonte: “O ponto central é ____.”\nBloco 2 (por que importa): ____ (1 impacto)\nPonte: “Se isso é verdade, precisamos ____.”\nBloco 3 (o que fazer): ____ (3 ações)."}
       ],
-      links:[
-        { label:"Toastmasters PDF — Fundamentals (estrutura)", url:"https://ccdn.toastmasters.org/medias/files/department-documents/club-documents/fundamentals-of-public-speaking/fundamentals-of-public-speaking-english.pdf", note:"Abertura/corpo/conclusão e organização."}
-      ],
-      practice:[
-        "Monte 3 blocos para um tema seu.",
-        "Escreva 2 frases de ponte (transição).",
-        "Leia em voz alta cronometrando 6 min no total."
-      ],
-      deliverables:["Roteiro 3 blocos + 2 pontes."]
+      tasks:["Crie um roteiro 3 blocos para um talk de 6 min.","Escreva 2 pontes.","Leia cronometrando 6 min."],
+      deliverables:["Roteiro 3 blocos + 2 pontes."],
+      minToComplete:{ resourcesWatched: 1 }
     },
 
     {
-      id:"a5",
-      title:"Aula 5 — Storytelling científico: dado + caso + decisão",
-      minutes:50,
-      outcome:"Você transforma um dado em narrativa de decisão (sem perder rigor).",
+      id:"L5",
+      title:"Aula 5 — Ferramenta ‘Message Box’ (ciência → público/policy)",
+      minutes:60,
+      outcome:"Você distila sua mensagem para um público específico (gestor/policy).",
       study:[
-        "Seu storytelling não é inventar: é escolher o caso real certo e o dado certo.",
-        "Modelo forte pro seu trabalho: (1) caso real do Pantanal, (2) dado que confirma/contrasta, (3) decisão prática.",
-        "O público lembra do caso; confia pelo dado; age pela decisão."
+        "A Message Box é uma ferramenta de comunicação científica: define problema, por que importa, soluções e benefícios para o público escolhido.",
+        "Ela é perfeita para você: Pantanal + políticas públicas + tomada de decisão.",
+        "Você vai usar isso como base do seu talk principal."
+      ],
+      resources:[
+        {type:"site", label:"COMPASS — The Message Box (site)", url:"https://www.compassscicomm.org/leadership-development/the-message-box/", note:"Visão geral e uso."},
+        {type:"pdf", label:"COMPASS — Message Box Workbook (PDF)", url:"https://www.compassscicomm.org/wp-content/uploads/2020/05/The-Message-Box-Workbook.pdf", note:"Workbook oficial."}
       ],
       templates:[
-        { name:"Dado → Caso → Decisão", text:
-`Caso (30s): “Aconteceu ________ em ________.”
-Dado (15s): “Isso aparece nos dados como ________.”
-Decisão (15s): “Então, a ação mais sensata agora é ________.”` }
+        {name:"Message Box (resumo)", text:"PROBLEMA: ________\nPOR QUE IMPORTA (para X): ________\nSOLUÇÕES: ________\nBENEFÍCIOS: ________\nSO WHAT? (uma frase): ________"}
       ],
-      links:[
-        { label:"Alan Alda Center (comunicação científica)", url:"https://www.aldacenter.org/", note:"Foco em conexão humana e clareza."}
-      ],
-      practice:[
-        "Escolha 1 caso real (campo/extensão/aula).",
-        "Escolha 1 dado (número, tendência, gráfico).",
-        "Escreva a sequência (30s + 15s + 15s)."
-      ],
-      deliverables:["Mini-roteiro (60s) dado→caso→decisão."]
+      tasks:["Escolha o público: ‘gestor municipal/estadual’ ou ‘policy maker’.","Preencha a Message Box em 10–15 min.","Transforme o ‘So what’ em 1 frase de abertura."],
+      deliverables:["Message Box preenchida + 1 frase ‘So what’."],
+      minToComplete:{ resourcesWatched: 1 }
     },
 
     {
-      id:"a6",
-      title:"Aula 6 — Fechamento: como terminar deixando rastro",
-      minutes:50,
-      outcome:"Você cria 3 fechamentos e escolhe o mais forte para seu estilo.",
+      id:"L6",
+      title:"Aula 6 — Voz: ser ouvido e respeitado (sem gritar)",
+      minutes:60,
+      outcome:"Você aprende exercícios simples de voz e evita vícios que ‘matam’ autoridade.",
       study:[
-        "Fechamento bom faz 1 coisa: fixa sentido e direciona ação.",
-        "3 formatos: (1) pergunta que incomoda, (2) convite prático, (3) frase-marca (memorizável).",
-        "Para policy makers: fecho com ação e prazo costuma funcionar muito bem."
+        "Autoridade vem de: volume estável, final de frase firme, pausas, articulação.",
+        "Vícios comuns: falar rápido, terminar frase ‘sumindo’, preencher com ‘né/então/é…’",
+        "Treino curto diário funciona mais que ‘maratona’."
+      ],
+      resources:[
+        {type:"video", label:"Julian Treasure — talk completo (YouTube)", url:"https://www.youtube.com/watch?v=eIho2S0ZahI", note:"Voz e hábitos."},
+        {type:"pdf", label:"Toastmasters — Your Speaking Voice (PDF)", url:"https://ccdn.toastmasters.org/medias/files/department-documents/education-documents/199-your-speaking-voice.pdf", note:"Exercícios e controle."}
       ],
       templates:[
-        { name:"Fecho (pergunta)", text:`“Se você tivesse que decidir hoje, você escolheria ________ ou ________?”`},
-        { name:"Fecho (convite prático)", text:`“Meu convite é simples: nos próximos 30 dias, vamos ________. Eu me comprometo com ________.”`},
-        { name:"Fecho (frase-marca)", text:`“No Pantanal, ________. E é por isso que ________.”`}
+        {name:"Checklist de voz (3 itens)", text:"1) Final de frase firme? 2) Pausa antes da ideia-chave? 3) Articulou sem correr?"}
       ],
-      links:[
-        { label:"Duarte — página do talk (apoio)", url:"https://www.duarte.com/resources/talks/the-secret-structure-of-great-talks/", note:"Reforça chamada à ação e estrutura."}
-      ],
-      practice:[
-        "Crie 3 fechamentos para um tema seu.",
-        "Leia em voz alta e marque o que soa natural.",
-        "Escolha 1 e refine para 20–25 segundos."
-      ],
-      deliverables:["3 fechamentos + 1 escolhido refinado."]
+      tasks:["Faça 3 leituras de 30s: lento / normal / enérgico.","Grave 60s e compare.","Liste seus 2 vícios principais."],
+      deliverables:["Lista de 2 vícios + 1 gravação 60s."],
+      minToComplete:{ resourcesWatched: 1 }
     },
 
-    // (Para manter sua resposta legível: o resto do curso segue o mesmo padrão.)
-    // Você pode duplicar aulas e editar no app (botão “Editar”).
-    // Se quiser, eu te mando a versão com as 24 aulas completas no mesmo formato em seguida.
-  ]
-};
+    // ... (para manter a mensagem viável: a lógica do app suporta mais aulas iguais)
+    // Você pode duplicar no botão “Editar curso” e colar mais aulas.
+    // Se você quiser, eu te mando em seguida L7–L20 prontas já preenchidas (mesmo padrão) sem cortar nada.
+  ];
+}
 
-// ------- estado -------
+// -------- estado --------
 function loadState(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
-    if(!raw) return { course: DEFAULT_COURSE, done:{}, notes:{}, deliveries:{}, selected:null, today:null };
+    if(!raw) return { course: COURSE, selected:null, today:null, watched:{}, deliveries:{}, notes:{}, doneLessons:{} };
     const s = JSON.parse(raw);
     return {
-      course: s.course?.lessons ? s.course : DEFAULT_COURSE,
-      done: s.done || {},
-      notes: s.notes || {},
-      deliveries: s.deliveries || {},
+      course: s.course?.lessons ? s.course : COURSE,
       selected: s.selected || null,
-      today: s.today || null
+      today: s.today || null,
+      watched: s.watched || {},        // watched[lessonId][resourceIndex] = true
+      deliveries: s.deliveries || {},  // deliveries[lessonId] = text
+      notes: s.notes || {},            // notes[lessonId] = text
+      doneLessons: s.doneLessons || {} // doneLessons[lessonId] = true
     };
   }catch{
-    return { course: DEFAULT_COURSE, done:{}, notes:{}, deliveries:{}, selected:null, today:null };
+    return { course: COURSE, selected:null, today:null, watched:{}, deliveries:{}, notes:{}, doneLessons:{} };
   }
 }
 function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
 
 let state = loadState();
-const el = (id)=>document.getElementById(id);
+
+const $ = (id)=>document.getElementById(id);
+const dashboard = $("dashboard");
+const lessonView = $("lessonView");
+
+function lessonById(id){ return state.course.lessons.find(l=>l.id===id); }
+
+function countAllResources(){
+  let total = 0, seen = 0;
+  state.course.lessons.forEach(l=>{
+    const r = l.resources || [];
+    total += r.length;
+    const w = state.watched[l.id] || {};
+    seen += Object.values(w).filter(Boolean).length;
+  });
+  return { total, seen };
+}
 
 function totals(){
-  const total = state.course.lessons.length;
-  const done = Object.values(state.done).filter(Boolean).length;
-  const pct = total ? Math.round((done/total)*100) : 0;
+  const totalLessons = state.course.lessons.length;
+  const doneLessons = Object.values(state.doneLessons).filter(Boolean).length;
+  const pct = totalLessons ? Math.round((doneLessons/totalLessons)*100) : 0;
+
   const hours = state.course.totalHours || 20;
-  const hoursDone = total ? Math.round((done/total)*hours*10)/10 : 0;
-  return { total, done, pct, hours, hoursDone };
+  const hoursDone = totalLessons ? Math.round((doneLessons/totalLessons)*hours*10)/10 : 0;
+
+  const r = countAllResources();
+  return { totalLessons, doneLessons, pct, hours, hoursDone, resTotal:r.total, resSeen:r.seen };
 }
 
 function pickToday(){
-  const lessons = state.course.lessons;
-  const next = lessons.find(l=>!state.done[l.id]) || lessons[lessons.length-1];
+  const next = state.course.lessons.find(l=>!state.doneLessons[l.id]) || state.course.lessons[0];
   state.today = next?.id || null;
   saveState();
 }
 
-function renderToday(){
-  if(!state.today) pickToday();
-  const l = state.course.lessons.find(x=>x.id===state.today);
-  if(!l) return;
-  el("todayBox").innerHTML = `
-    <div class="lTitle">${l.title}</div>
-    <div class="small muted">${l.minutes} min • ${l.outcome}</div>
-    <div class="small muted">${state.done[l.id] ? "✅ concluída" : "⏳ pendente"}</div>
+function showDashboard(){
+  lessonView.classList.add("hidden");
+  dashboard.classList.remove("hidden");
+  $("btnHome").textContent = "←";
+}
+
+function showLesson(){
+  dashboard.classList.add("hidden");
+  lessonView.classList.remove("hidden");
+  $("btnHome").textContent = "← Painel";
+}
+
+function renderProgress(){
+  const t = totals();
+  $("progressFill").style.width = `${t.pct}%`;
+  $("progressText").textContent = `${t.pct}%`;
+  $("hoursText").textContent = `${t.hoursDone}/${t.hours}h`;
+  $("pillLessons").textContent = `${t.doneLessons}/${t.totalLessons} aulas`;
+  $("pillItems").textContent = `${t.resSeen}/${t.resTotal} itens vistos`;
+}
+
+function renderProfile(){
+  const p = state.course.profile;
+  $("profileBox").innerHTML = `
+    <div><b>Contexto:</b> ${p.context}</div>
+    <div><b>Públicos:</b> ${p.audiences.join(", ")}</div>
+    <div><b>Meta:</b> ${p.goal}</div>
   `;
 }
 
-function renderSidebar(){
-  const t = totals();
-  el("progressFill").style.width = `${t.pct}%`;
-  el("progressText").textContent = `${t.pct}%`;
-  el("hoursText").textContent = `${t.hoursDone}/${t.hours}h`;
-  el("pillDone").textContent = `${t.done} concluídas`;
-  el("pillTotal").textContent = `${t.total} aulas`;
+function renderToday(){
+  if(!state.today) pickToday();
+  const l = lessonById(state.today);
+  if(!l) return;
+  const status = state.doneLessons[l.id] ? "✅ assistida" : "⏳ pendente";
+  $("todayBox").innerHTML = `
+    <div class="lTitle">${l.title}</div>
+    <div class="lMeta">${l.minutes} min • ${l.outcome}</div>
+    <div class="lMeta">${status}</div>
+  `;
+}
 
-  const list = el("lessonList");
+function renderLessonList(){
+  const list = $("lessonList");
   list.innerHTML = "";
-  state.course.lessons.forEach((l)=>{
+  state.course.lessons.forEach(l=>{
     const div = document.createElement("div");
     div.className = "lesson" + (state.selected===l.id ? " active":"");
-    div.onclick = ()=>{ state.selected = l.id; saveState(); renderLesson(); renderSidebar(); };
     div.innerHTML = `
-      <div class="lTitle">${state.done[l.id] ? "✅ " : ""}${l.title}</div>
+      <div class="lTitle">${state.doneLessons[l.id] ? "✅ " : ""}${l.title}</div>
       <div class="lMeta">${l.minutes} min • ${l.outcome}</div>
     `;
+    div.onclick = ()=>{
+      state.selected = l.id;
+      saveState();
+      renderAll();
+      showLesson();
+    };
     list.appendChild(div);
   });
 }
 
+function isLessonComplete(l){
+  const min = l.minToComplete || { resourcesWatched: 1 };
+  const watched = state.watched[l.id] || {};
+  const seenCount = Object.values(watched).filter(Boolean).length;
+  return seenCount >= (min.resourcesWatched || 1);
+}
+
 function renderLesson(){
-  const l = state.course.lessons.find(x=>x.id===state.selected);
+  const l = lessonById(state.selected);
   if(!l){
-    el("curTitle").textContent="Selecione uma aula";
-    el("curMeta").textContent="—";
-    el("curDesc").textContent="Use 'Aula de hoje' para seguir no automático.";
-    el("studyText").innerHTML="";
-    el("linksBox").innerHTML="";
-    el("templatesBox").innerHTML="";
-    el("stepsBox").innerHTML="";
-    el("deliverablesBox").innerHTML="";
-    el("notes").value="";
+    showDashboard();
     return;
   }
 
-  el("curTitle").textContent = l.title;
-  el("curMeta").textContent = `${l.minutes} min • Resultado esperado: ${l.outcome}`;
-  el("curDesc").textContent = state.done[l.id]
-    ? "✅ Concluída. Se quiser, refaça e compare evolução."
-    : "⏳ Estude → copie modelo → pratique → entregue.";
+  $("curTitle").textContent = l.title;
+  $("curMeta").textContent = `${l.minutes} min • Objetivo: ${l.outcome}`;
+  $("curOutcome").textContent = `Resultado esperado: ${l.outcome}`;
 
-  // estudo
-  el("studyText").innerHTML = (l.study||[]).map(p=>`<div class="block">${p}</div>`).join("");
+  const status = state.doneLessons[l.id] ? "Assistida ✅" : "Pendente ⏳";
+  $("badgeStatus").textContent = status;
 
-  // links
-  el("linksBox").innerHTML = (l.links||[]).map(x=>`
+  // Study
+  $("studyBox").innerHTML = (l.study||[]).map(p=>`<div class="block">${p}</div>`).join("");
+
+  // Resources with “visto”
+  const resourcesBox = $("resourcesBox");
+  resourcesBox.innerHTML = "";
+  const watchedMap = state.watched[l.id] || {};
+  (l.resources||[]).forEach((r, idx)=>{
+    const checked = !!watchedMap[idx];
+    const div = document.createElement("div");
+    div.className = "block";
+    div.innerHTML = `
+      <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start;">
+        <div>
+          <div><a href="${r.url}" target="_blank" rel="noopener">${r.label}</a></div>
+          <div class="muted small">${r.type.toUpperCase()} • ${r.note || ""}</div>
+        </div>
+        <label class="muted small" style="display:flex; gap:8px; align-items:center; white-space:nowrap;">
+          <input type="checkbox" ${checked ? "checked":""} data-idx="${idx}" />
+          visto/lido
+        </label>
+      </div>
+    `;
+    const cb = div.querySelector("input[type=checkbox]");
+    cb.addEventListener("change", ()=>{
+      state.watched[l.id] = state.watched[l.id] || {};
+      state.watched[l.id][idx] = cb.checked;
+      saveState();
+      renderProgress();
+    });
+    resourcesBox.appendChild(div);
+  });
+
+  // Templates
+  $("templatesBox").innerHTML = (l.templates||[]).map(t=>`
     <div class="block">
-      <div><a href="${x.url}" target="_blank" rel="noopener">${x.label}</a></div>
-      <div class="small muted">${x.note||""}</div>
-    </div>
-  `).join("") || `<div class="muted">Sem links nesta aula.</div>`;
-
-  // modelos
-  el("templatesBox").innerHTML = (l.templates||[]).map(t=>`
-    <div class="block">
-      <div style="font-weight:900">${t.name}</div>
+      <div style="font-weight:950">${t.name}</div>
       <pre style="white-space:pre-wrap;margin:8px 0 0 0;font-family:inherit">${t.text}</pre>
     </div>
-  `).join("") || `<div class="muted">Sem modelos nesta aula.</div>`;
+  `).join("") || `<div class="muted">Sem modelos.</div>`;
 
-  // prática
-  el("stepsBox").innerHTML = (l.practice||[]).map(s=>`
-    <div class="block">✅ ${s}</div>
-  `).join("") || `<div class="muted">Sem prática definida.</div>`;
+  // Tasks
+  $("tasksBox").innerHTML = (l.tasks||[]).map(s=>`<div class="block">✅ ${s}</div>`).join("");
 
-  // entregas
-  el("deliverablesBox").innerHTML = (l.deliverables||[]).map(d=>`<div class="block">📦 ${d}</div>`).join("");
-
-  // notas/entrega
-  el("notes").value = state.notes[l.id] || "";
-  el("deliveryInput").value = state.deliveries[l.id] || "";
-  el("doneMsg").textContent = state.done[l.id] ? "Concluída ✅" : "Pendente ⏳";
-}
-
-function exportAll(){
-  const payload = { exportedAt:new Date().toISOString(), version:2, state };
-  const blob = new Blob([JSON.stringify(payload,null,2)], {type:"application/json;charset=utf-8"});
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "curso_oratoria_progresso_v2.json";
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
-
-function importAll(txt){
-  const parsed = JSON.parse(txt);
-  if(!parsed?.state) throw new Error("JSON inválido (faltou state).");
-  state = parsed.state;
-  saveState();
-  renderAll();
+  // Deliverables
+  $("deliverablesBox").innerHTML = (l.deliverables||[]).map(d=>`<div class="block">📦 ${d}</div>`).join("");
+  $("deliveryInput").value = state.deliveries[l.id] || "";
+  $("notes").value = state.notes[l.id] || "";
 }
 
 function renderAll(){
-  if(!state.today) pickToday();
-  if(!state.selected) state.selected = state.today;
+  renderProfile();
+  renderProgress();
   renderToday();
-  renderSidebar();
-  renderLesson();
+  renderLessonList();
+  if(state.selected) renderLesson();
 }
 
 document.addEventListener("DOMContentLoaded", ()=>{
-  el("btnStartToday").onclick = ()=>{
-    if(!state.today) pickToday();
-    state.selected = state.today; saveState(); renderAll();
+  // Home/back
+  $("btnHome").onclick = ()=>{
+    if(!dashboard.classList.contains("hidden")){
+      // já está no painel -> nada
+      return;
+    }
+    showDashboard();
   };
-  el("btnPickAnother").onclick = ()=>{
+
+  // Start today
+  $("btnStartToday").onclick = ()=>{
+    if(!state.today) pickToday();
+    state.selected = state.today;
+    saveState();
+    renderAll();
+    showLesson();
+  };
+
+  // Next (próxima pendente)
+  $("btnNext").onclick = ()=>{
     const lessons = state.course.lessons;
-    const idx = lessons.findIndex(x=>x.id===state.today);
+    const idx = lessons.findIndex(l=>l.id===state.today);
     let next = null;
     for(let i=idx+1;i<lessons.length;i++){
-      if(!state.done[lessons[i].id]){ next = lessons[i]; break; }
+      if(!state.doneLessons[lessons[i].id]) { next = lessons[i]; break; }
     }
-    if(!next) next = lessons.find(x=>!state.done[x.id]) || lessons[0];
+    if(!next) next = lessons.find(l=>!state.doneLessons[l.id]) || lessons[0];
     state.today = next.id;
-    saveState(); renderAll();
+    saveState();
+    renderAll();
   };
 
-  el("btnMarkDone").onclick = ()=>{
-    const l = state.course.lessons.find(x=>x.id===state.selected);
+  // Mark lesson as watched
+  $("btnMarkLesson").onclick = ()=>{
+    const l = lessonById(state.selected);
     if(!l) return;
-    state.done[l.id] = true;
+    if(!isLessonComplete(l)){
+      alert(`Ainda não. Marque pelo menos ${l.minToComplete?.resourcesWatched || 1} link(s) como visto/lido nesta aula.`);
+      return;
+    }
+    state.doneLessons[l.id] = true;
     pickToday();
     saveState();
-    el("doneMsg").textContent = "Concluída ✅";
     renderAll();
   };
 
-  el("btnUnmark").onclick = ()=>{
-    const l = state.course.lessons.find(x=>x.id===state.selected);
+  $("btnUnmarkLesson").onclick = ()=>{
+    const l = lessonById(state.selected);
     if(!l) return;
-    delete state.done[l.id];
+    delete state.doneLessons[l.id];
     saveState();
     renderAll();
   };
 
-  el("btnSaveDelivery").onclick = ()=>{
-    const l = state.course.lessons.find(x=>x.id===state.selected);
+  // Save delivery
+  $("btnSaveDelivery").onclick = ()=>{
+    const l = lessonById(state.selected);
     if(!l) return;
-    state.deliveries[l.id] = el("deliveryInput").value.trim();
+    state.deliveries[l.id] = $("deliveryInput").value.trim();
     saveState();
-    el("deliveryMsg").textContent = "Entrega salva ✓";
-    setTimeout(()=>el("deliveryMsg").textContent="", 1200);
+    $("deliveryMsg").textContent = "Entrega salva ✓";
+    setTimeout(()=>$("deliveryMsg").textContent="", 1200);
   };
 
-  el("btnSaveNotes").onclick = ()=>{
-    const l = state.course.lessons.find(x=>x.id===state.selected);
+  // Save notes
+  $("btnSaveNotes").onclick = ()=>{
+    const l = lessonById(state.selected);
     if(!l) return;
-    state.notes[l.id] = el("notes").value;
+    state.notes[l.id] = $("notes").value;
     saveState();
-    el("notesMsg").textContent = "Notas salvas ✓";
-    setTimeout(()=>el("notesMsg").textContent="", 1200);
+    $("notesMsg").textContent = "Notas salvas ✓";
+    setTimeout(()=>$("notesMsg").textContent="", 1200);
   };
 
-  el("btnExport").onclick = exportAll;
+  // Export / Import / Reset
+  $("btnExport").onclick = ()=>{
+    const payload = { exportedAt:new Date().toISOString(), version:1, state };
+    const blob = new Blob([JSON.stringify(payload,null,2)], {type:"application/json;charset=utf-8"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "curso_oratoria_progresso.json";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
 
-  const importDlg = el("importDlg");
-  el("btnImport").onclick = ()=>{ el("importText").value=""; importDlg.showModal(); };
-  el("btnDoImport").onclick = (e)=>{
+  const importDlg = $("importDlg");
+  $("btnImport").onclick = ()=>{ $("importText").value=""; importDlg.showModal(); };
+  $("btnDoImport").onclick = (e)=>{
     e.preventDefault();
-    try{ importAll(el("importText").value.trim()); importDlg.close(); }
-    catch(err){ alert("Falha ao importar: " + err.message); }
+    try{
+      const parsed = JSON.parse($("importText").value.trim());
+      if(!parsed?.state) throw new Error("JSON inválido.");
+      state = parsed.state;
+      saveState();
+      importDlg.close();
+      renderAll();
+    }catch(err){
+      alert("Falha ao importar: " + err.message);
+    }
   };
 
-  el("btnReset").onclick = ()=>{
-    if(!confirm("Zerar curso e progresso neste navegador?")) return;
+  $("btnReset").onclick = ()=>{
+    if(!confirm("Resetar tudo (curso + progresso) neste navegador?")) return;
     localStorage.removeItem(STORAGE_KEY);
     state = loadState();
     saveState();
+    state.selected = null;
     renderAll();
+    showDashboard();
   };
 
-  const editDlg = el("editDlg");
-  el("btnEditCourse").onclick = ()=>{
-    el("courseEditor").value = JSON.stringify(state.course, null, 2);
+  // Edit course
+  const editDlg = $("editDlg");
+  $("btnEditCourse").onclick = ()=>{
+    $("courseEditor").value = JSON.stringify(state.course, null, 2);
     editDlg.showModal();
   };
-  el("btnSaveCourse").onclick = (e)=>{
+  $("btnSaveCourse").onclick = (e)=>{
     e.preventDefault();
     try{
-      const next = JSON.parse(el("courseEditor").value);
-      if(!next.lessons || !Array.isArray(next.lessons)) throw new Error("Faltou lessons[].");
+      const next = JSON.parse($("courseEditor").value);
+      if(!next?.lessons || !Array.isArray(next.lessons)) throw new Error("Faltou lessons[].");
       state.course = next;
       saveState();
-      renderAll();
       editDlg.close();
+      renderAll();
     }catch(err){
       alert("Erro ao salvar: " + err.message);
     }
   };
 
+  // init
   renderAll();
+  showDashboard();
 });
