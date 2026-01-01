@@ -1,71 +1,176 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <title>Curso — Oratória & Storytelling</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Meu Curso — Oratória & Storytelling (20h)</title>
+  <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">🎙️</div>
+      <div>
+        <div class="title">Meu Curso — Oratória & Storytelling <span class="chip">20h</span></div>
+        <div class="subtitle">Curso personalizado. Você é o aluno. Progresso salvo no navegador (com export/import).</div>
+      </div>
+    </div>
 
-<header>
-  <h1>🎙️ Meu Curso — Oratória & Storytelling</h1>
-  <p>Curso personalizado. Você é o aluno.</p>
-</header>
+    <div class="actions">
+      <button class="btn ghost" id="btnExport">Exportar</button>
+      <button class="btn ghost" id="btnImportOpen">Importar</button>
+      <button class="btn ghost danger" id="btnReset">Reset</button>
+    </div>
+  </header>
 
-<main class="container">
+  <div id="errorBar" class="error hidden"></div>
 
-  <!-- PERFIL -->
-  <section class="card">
-    <h2>👤 Meu perfil</h2>
-    <label>Nome</label>
-    <input id="nameInput" placeholder="Seu nome">
+  <main class="layout">
+    <!-- Sidebar -->
+    <aside class="side">
+      <section class="card">
+        <div class="cardTitle">👤 Seu perfil</div>
 
-    <label>Objetivo com o curso</label>
-    <textarea id="goalInput" placeholder="Ex: Ser um palestrante claro e influente em clima e extensão"></textarea>
+        <div class="row2">
+          <div>
+            <label class="label">Nome</label>
+            <input id="inpName" class="input" placeholder="Ernandes (ou como quiser)" />
+          </div>
+          <div>
+            <label class="label">Foto (arquivo)</label>
+            <input id="inpPhoto" class="input" type="file" accept="image/*" />
+          </div>
+        </div>
 
-    <label>Foto (URL ou deixe vazio)</label>
-    <input id="photoInput" placeholder="https://...">
+        <label class="label">Seu objetivo com o curso</label>
+        <textarea id="inpGoal" class="textarea" placeholder="Ex: ser palestrante influente em clima/saúde/extensionismo, com clareza e presença."></textarea>
 
-    <button onclick="saveProfile()">Salvar perfil</button>
+        <div class="row">
+          <button class="btn" id="btnSaveProfile">Salvar perfil</button>
+          <button class="btn ghost" id="btnClearPhoto">Remover foto</button>
+        </div>
 
-    <div id="profileView"></div>
-  </section>
+        <div id="profilePreview" class="profilePreview"></div>
+      </section>
 
-  <!-- TIMER -->
-  <section class="card">
-    <h2>⏱️ Tempo de estudo</h2>
-    <div class="timer" id="timer">00:00:00</div>
-    <button onclick="startTimer()">Iniciar</button>
-    <button onclick="stopTimer()">Parar</button>
-  </section>
+      <section class="card">
+        <div class="cardTitle">⏱️ Tempo conectado (estudo)</div>
+        <div class="timerRow">
+          <div class="timer" id="timerText">00:00:00</div>
+          <div class="timerBtns">
+            <button class="btn" id="btnTimerStart">Iniciar</button>
+            <button class="btn ghost" id="btnTimerStop">Parar</button>
+          </div>
+        </div>
+        <div class="muted small">Dica: isso mede seu tempo real usando o app (não o tempo do vídeo).</div>
+      </section>
 
-  <!-- PROGRESSO -->
-  <section class="card">
-    <h2>📊 Progresso</h2>
-    <progress id="progressBar" value="0" max="5"></progress>
-    <p id="progressText">0 de 5 aulas concluídas</p>
-  </section>
+      <section class="card">
+        <div class="cardTitle">📈 Progresso</div>
+        <div class="progressBar"><div id="progFill" class="progressFill"></div></div>
+        <div class="progressMeta">
+          <span id="progText">0%</span>
+          <span id="progCount">0/20 aulas</span>
+        </div>
+        <div class="pills">
+          <span class="pill" id="pillSeen">0 itens vistos</span>
+          <span class="pill" id="pillTime">0h estudadas</span>
+        </div>
+      </section>
 
-  <!-- AULAS -->
-  <section class="card">
-    <h2>📚 Aulas</h2>
-    <div id="lessons"></div>
-  </section>
+      <section class="card">
+        <div class="cardTitle">📚 Aulas</div>
+        <div id="lessonList" class="lessonList"></div>
+      </section>
+    </aside>
 
-  <!-- EXPORT -->
-  <section class="card">
-    <h2>💾 Backup</h2>
-    <button onclick="exportData()">Exportar progresso</button>
-    <input type="file" onchange="importData(event)">
-  </section>
+    <!-- Content -->
+    <section class="main">
+      <section class="card hero">
+        <div class="heroTop">
+          <div>
+            <div class="heroTitle" id="lessonTitle">Selecione uma aula</div>
+            <div class="heroSub" id="lessonMeta">Você vai ver leitura, links (PT/EN), exemplos, templates editáveis e tarefas.</div>
+          </div>
 
-</main>
+          <div class="heroBtns">
+            <button class="btn ghost" id="btnPrev">← Anterior</button>
+            <button class="btn ghost" id="btnNext">Próxima →</button>
+          </div>
+        </div>
 
-<footer>
-  <p>Plataforma criada por mim com apoio do ChatGPT • 2026</p>
-</footer>
+        <div class="row" id="lessonControls">
+          <span class="badge" id="badgeStatus">—</span>
+          <button class="btn" id="btnDone">Marcar como concluída</button>
+          <button class="btn ghost" id="btnUndone">Desmarcar</button>
 
-<script src="app.js"></script>
+          <div class="spacer"></div>
+
+          <span class="muted small">Você gostou desta aula?</span>
+          <button class="btn ghost mini" id="btnLike">👍</button>
+          <button class="btn ghost mini" id="btnDislike">👎</button>
+        </div>
+      </section>
+
+      <div class="grid">
+        <section class="card">
+          <div class="cardTitle">📖 Leitura na plataforma (direto ao ponto)</div>
+          <div id="studyBox" class="studyBox"></div>
+        </section>
+
+        <section class="card">
+          <div class="cardTitle">🎬 Links (PT/EN) + marcar como visto</div>
+          <div id="linksBox"></div>
+        </section>
+
+        <section class="card">
+          <div class="cardTitle">✅ O que fazer / ❌ O que NÃO fazer</div>
+          <div id="doDontBox"></div>
+        </section>
+
+        <section class="card">
+          <div class="cardTitle">🧩 Templates editáveis (escreva aqui)</div>
+          <div id="tplBox"></div>
+        </section>
+
+        <section class="card">
+          <div class="cardTitle">🧪 Tarefas práticas</div>
+          <div id="tasksBox"></div>
+        </section>
+
+        <section class="card">
+          <div class="cardTitle">📦 Sua entrega + notas</div>
+
+          <label class="label">Entrega (cole link do vídeo, texto, roteiro, slides…)</label>
+          <input id="inpDelivery" class="input" placeholder="Cole aqui…" />
+          <div class="row">
+            <button class="btn" id="btnSaveDelivery">Salvar entrega</button>
+            <span class="muted small" id="msgDelivery"></span>
+          </div>
+
+          <label class="label">Notas</label>
+          <textarea id="inpNotes" class="textarea" placeholder="O que aprendi? Onde travei? Qual frase ficou forte?"></textarea>
+          <div class="row">
+            <button class="btn" id="btnSaveNotes">Salvar notas</button>
+            <span class="muted small" id="msgNotes"></span>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="dlgImport" class="dlg">
+    <form method="dialog" class="dlgBody">
+      <h3>Importar progresso</h3>
+      <p class="muted">Cole o JSON exportado aqui.</p>
+      <textarea id="importText" class="textarea" style="min-height:220px" placeholder='{ "version": 1, ... }'></textarea>
+      <div class="row right">
+        <button class="btn ghost">Cancelar</button>
+        <button class="btn" id="btnDoImport">Importar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="./app.js"></script>
 </body>
 </html>
