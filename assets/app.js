@@ -23,6 +23,9 @@ function defaultState(course){
     deliveries: {},    // deliveries[lessonId] = text
     notes: {},         // notes[lessonId] = text
     doneLessons: {}    // doneLessons[lessonId] = true
+    templateEdits: {},     // templateEdits[lessonId][templateIndex] = text
+    lessonFeedback: {},    // lessonFeedback[lessonId] = 1 (gostei) | -1 (não gostei) | 0/undefined
+    resourceFeedback: {}   // resourceFeedback[lessonId][resourceIndex] = 1 | -1
   };
 }
 
@@ -125,10 +128,27 @@ function renderLessonList(){
   state.course.lessons.forEach(l=>{
     const div = document.createElement("div");
     div.className = "lesson" + (state.selected===l.id ? " active":"");
+        const rfb = (state.resourceFeedback[l.id]||{})[idx] || 0;
     div.innerHTML = `
-      <div class="lTitle">${state.doneLessons[l.id] ? "✅ " : ""}${l.title}</div>
-      <div class="lMeta">${l.minutes} min • ${l.outcome}</div>
+      <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start;">
+        <div>
+          <div><a href="${r.url}" target="_blank" rel="noopener">${r.label}</a></div>
+          <div class="muted small">${(r.type||"link").toUpperCase()} • ${r.note||""}</div>
+
+          <div class="row" style="margin-top:6px">
+            <span class="muted small">Esse link ajudou?</span>
+            <button class="btn ghost miniBtn ${rfb===1?"isOn":""}" data-like="${idx}">👍</button>
+            <button class="btn ghost miniBtn ${rfb===-1?"isOn":""}" data-dislike="${idx}">👎</button>
+          </div>
+        </div>
+
+        <label class="muted small" style="display:flex; gap:8px; align-items:center; white-space:nowrap;">
+          <input type="checkbox" ${checked?"checked":""} />
+          visto/lido
+        </label>
+      </div>
     `;
+
     div.onclick = ()=>{
       state.selected = l.id;
       saveState();
@@ -157,6 +177,31 @@ function renderLesson(){
   $("badgeStatus").textContent = state.doneLessons[l.id] ? "Assistida ✅" : "Pendente ⏳";
 
   $("studyBox").innerHTML = (l.study||[]).map(p=>`<div class="block">${p}</div>`).join("");
+
+    // Feedback da aula
+  const fb = state.lessonFeedback[l.id] || 0;
+  const fbHtml = `
+    <div class="row" style="margin-top:8px">
+      <span class="muted small">Você gostou desta aula?</span>
+      <button id="btnLike" class="btn ghost ${fb===1?"isOn":""}">👍 Gostei</button>
+      <button id="btnDislike" class="btn ghost ${fb===-1?"isOn":""}">👎 Não gostei</button>
+    </div>
+  `;
+  $("curOutcome").insertAdjacentHTML("afterend", fbHtml);
+
+  setTimeout(()=>{
+    const like = $("btnLike");
+    const dislike = $("btnDislike");
+    if(like) like.onclick = ()=>{
+      state.lessonFeedback[l.id] = (state.lessonFeedback[l.id]===1)?0:1;
+      saveState(); renderAll();
+    };
+    if(dislike) dislike.onclick = ()=>{
+      state.lessonFeedback[l.id] = (state.lessonFeedback[l.id]===-1)?0:-1;
+      saveState(); renderAll();
+    };
+  },0);
+
 
   // resources
   const box = $("resourcesBox");
@@ -187,13 +232,48 @@ function renderLesson(){
     box.appendChild(div);
   });
 
-  // templates
-  $("templatesBox").innerHTML = (l.templates||[]).map(t=>`
-    <div class="block">
-      <div style="font-weight:980">${t.name}</div>
-      <pre style="white-space:pre-wrap;margin:8px 0 0 0;font-family:inherit">${t.text}</pre>
-    </div>
-  `).join("");
+    // templates EDITÁVEIS
+  state.templateEdits[l.id] = state.templateEdits[l.id] || {};
+  $("templatesBox").innerHTML = (l.templates||[]).map((t, idx)=>{
+    const saved = state.templateEdits[l.id][idx] ?? t.text;
+    return `
+      <div class="block">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+          <div style="font-weight:980">${t.name}</div>
+          <button class="btn ghost" data-save-tpl="${idx}">Salvar</button>
+        </div>
+        <textarea class="tplArea" data-tpl="${idx}" placeholder="Escreva aqui...">${saved}</textarea>
+        <div class="muted small">Dica: você pode colar seu texto, roteiro, abertura e ir refinando ao longo das aulas.</div>
+      </div>
+    `;
+  }).join("");
+
+  // handlers salvar template
+  setTimeout(()=>{
+    document.querySelectorAll("[data-save-tpl]").forEach(btn=>{
+      btn.onclick = ()=>{
+        const idx = btn.getAttribute("data-save-tpl");
+        const ta = document.querySelector(`textarea[data-tpl="${idx}"]`);
+        state.templateEdits[l.id][idx] = ta.value;
+        saveState();
+        btn.textContent = "Salvo ✓";
+        setTimeout(()=>btn.textContent="Salvar", 900);
+      };
+    });
+  },0);
+
+      div.querySelector(`[data-like="${idx}"]`).onclick = ()=>{
+      state.resourceFeedback[l.id] = state.resourceFeedback[l.id] || {};
+      state.resourceFeedback[l.id][idx] = (state.resourceFeedback[l.id][idx]===1)?0:1;
+      saveState(); renderLesson();
+    };
+    div.querySelector(`[data-dislike="${idx}"]`).onclick = ()=>{
+      state.resourceFeedback[l.id] = state.resourceFeedback[l.id] || {};
+      state.resourceFeedback[l.id][idx] = (state.resourceFeedback[l.id][idx]===-1)?0:-1;
+      saveState(); renderLesson();
+    };
+
+
 
   // tasks
   $("tasksBox").innerHTML = (l.tasks||[]).map(s=>`<div class="block">✅ ${s}</div>`).join("");
