@@ -1,0 +1,442 @@
+{
+  "version": 1,
+  "totalHours": 20,
+  "profile": {
+    "context": "Professor/pesquisador (Pantanal, clima, saúde, políticas públicas, extensão)",
+    "audiences": ["acadêmicos", "alunos", "gestores/policy makers", "sociedade/extensionistas"],
+    "goal": "Ser palestrante e storyteller científico: claro, influente, com presença e estrutura"
+  },
+  "lessons": [
+    {
+      "id": "L1",
+      "title": "Aula 1 — O que é storytelling (sem historinha)",
+      "minutes": 60,
+      "outcome": "Entender storytelling como estrutura de transformação e escrever sua ideia central em 1 frase.",
+      "study": [
+        "Storytelling em ciência = organizar dados como transformação: realidade → tensão → virada → caminho → fecho.",
+        "Boa palestra não despeja conteúdo: guia o público até UMA ideia que muda entendimento/decisão.",
+        "Regra: se você não consegue dizer sua ideia central em 12–15 palavras, a palestra ainda está confusa."
+      ],
+      "resources": [
+        { "type": "video", "label": "Nancy Duarte — The secret structure of great talks (YouTube)", "url": "https://www.youtube.com/watch?v=LhGa0TNLUGA", "note": "Estrutura que segura atenção." },
+        { "type": "video", "label": "Chris Anderson — TED’s secret to great public speaking (YouTube)", "url": "https://www.youtube.com/watch?v=-FOCpMAww28", "note": "Ideia central e clareza." },
+        { "type": "pdf", "label": "Toastmasters — Fundamentals of Public Speaking (PDF)", "url": "https://ccdn.toastmasters.org/medias/files/department-documents/club-documents/fundamentals-of-public-speaking/fundamentals-of-public-speaking-english.pdf", "note": "Base de organização." }
+      ],
+      "templates": [
+        { "name": "Ideia central (12–15 palavras)", "text": "Minha ideia central é: ________________________________ (verbo forte + consequência)." },
+        { "name": "Mapa do talk (1 linha)", "text": "Vou te mostrar (1) ___, (2) ___, (3) ___, e terminar com ___." }
+      ],
+      "tasks": [
+        "Assista 10–15 min de Duarte e anote 3 elementos de estrutura.",
+        "Assista 10–15 min de Anderson e anote como ele define ‘ideia’.",
+        "Escreva sua ideia central em 1 frase (12–15 palavras)."
+      ],
+      "deliverables": [
+        "Ideia central (1 frase).",
+        "3 aprendizados Duarte + 3 Anderson."
+      ],
+      "minToComplete": { "resourcesWatched": 2 }
+    },
+
+    {
+      "id": "L2",
+      "title": "Aula 2 — Abertura: como começar a falar sem enrolar",
+      "minutes": 60,
+      "outcome": "Criar 3 aberturas (acadêmico/gestor/extensão) e escolher a melhor.",
+      "study": [
+        "Abertura serve pra: (1) atenção, (2) promessa de valor, (3) mapa do caminho.",
+        "Erro comum acadêmico: contexto longo. Abertura boa é curta e assertiva.",
+        "No teu perfil: gestor quer risco/ação; aluno quer clareza; público geral quer sentido."
+      ],
+      "resources": [
+        { "type": "video", "label": "Julian Treasure — How to speak so that people want to listen (YouTube)", "url": "https://www.youtube.com/watch?v=eIho2S0ZahI", "note": "Voz e hábitos." },
+        { "type": "site", "label": "TED — Página do talk do Chris Anderson", "url": "https://www.ted.com/talks/chris_anderson_ted_s_secret_to_great_public_speaking", "note": "Rever pontos-chave." }
+      ],
+      "templates": [
+        { "name": "Abertura acadêmica (mapa)", "text": "Hoje eu vou responder: [pergunta]. Em 3 passos: (1) __, (2) __, (3) __. No final: [limitação] + [próximo passo]." },
+        { "name": "Abertura gestor (risco→ação)", "text": "A decisão aqui é: [ação]. Se não, o risco é: [risco]. Em 5 min: evidência → impacto → ação em 90 dias." },
+        { "name": "Abertura extensão (cena)", "text": "Deixa eu te contar uma cena real: [cena]. Ela mostra por que [tema] importa. No final: 1 ação simples." }
+      ],
+      "tasks": [
+        "Escreva 3 aberturas (25–35s cada).",
+        "Leia em voz alta e corte 20% do texto.",
+        "Escolha 1 abertura e refine."
+      ],
+      "deliverables": ["3 aberturas + 1 escolhida refinada."],
+      "minToComplete": { "resourcesWatched": 1 }
+    },
+
+    {
+      "id": "L3",
+      "title": "Aula 3 — Objetivo, resultado esperado e CTA",
+      "minutes": 60,
+      "outcome": "Definir objetivo (verbo), resultado mensurável e chamada final (CTA).",
+      "study": [
+        "Palestra forte tem 1 objetivo (verbo) e 1 resultado (medida).",
+        "Ex.: ‘conscientizar’ é vago. Melhor: ‘fazer o público aceitar X e topar Y’.",
+        "CTA = o que a pessoa faz depois (com prazo)."
+      ],
+      "resources": [
+        { "type": "pdf", "label": "Toastmasters — Writing a Speech with Purpose (PDF)", "url": "https://www.toastmasters.org/medias/files/department-documents/education-documents/evaluation-resources/english/8103e-evaluation-resource-ff.pdf", "note": "Propósito e organização." }
+      ],
+      "templates": [
+        { "name": "Objetivo/Resultado/CTA", "text": "Objetivo: fazer o público ________.\nResultado: ao final, eles conseguem ________.\nCTA: eu quero que eles ________ até ________." }
+      ],
+      "tasks": [
+        "Escolha 1 tema (ex.: restauração e saúde).",
+        "Preencha objetivo/resultado/CTA.",
+        "Corte o que não serve ao resultado."
+      ],
+      "deliverables": ["Objetivo + resultado + CTA."],
+      "minToComplete": { "resourcesWatched": 1 }
+    },
+
+    {
+      "id": "L4",
+      "title": "Aula 4 — Estrutura 3 blocos (sem fala em espiral)",
+      "minutes": 60,
+      "outcome": "Montar roteiro de 6–8 min em 3 blocos + 2 transições.",
+      "study": [
+        "Estrutura robusta: (1) o que está acontecendo, (2) por que importa, (3) o que fazer.",
+        "Cada bloco termina com uma ponte (uma frase que leva ao próximo).",
+        "Uma evidência por bloco (não dez)."
+      ],
+      "resources": [
+        { "type": "pdf", "label": "Toastmasters — Fundamentals (revisão)", "url": "https://ccdn.toastmasters.org/medias/files/department-documents/club-documents/fundamentals-of-public-speaking/fundamentals-of-public-speaking-english.pdf", "note": "Abertura/corpo/conclusão." }
+      ],
+      "templates": [
+        { "name": "Roteiro 3 blocos", "text": "Bloco 1: ____ (1 evidência)\nPonte: “O ponto é ____.”\nBloco 2: ____ (1 impacto)\nPonte: “Então precisamos ____.”\nBloco 3: ____ (3 ações)." }
+      ],
+      "tasks": ["Crie um roteiro 3 blocos.", "Escreva 2 pontes.", "Leia cronometrando 6–8 min."],
+      "deliverables": ["Roteiro + 2 pontes."],
+      "minToComplete": { "resourcesWatched": 1 }
+    },
+
+    {
+      "id": "L5",
+      "title": "Aula 5 — Message Box (ciência → policy)",
+      "minutes": 60,
+      "outcome": "Destilar sua mensagem para gestor/policy usando Message Box.",
+      "study": [
+        "Message Box define: problema, por que importa (para o público), soluções e benefícios.",
+        "Perfeito para Pantanal + políticas públicas: clareza sem perder rigor.",
+        "Isso vira seu talk principal."
+      ],
+      "resources": [
+        { "type": "site", "label": "COMPASS — Message Box (site)", "url": "https://www.compassscicomm.org/leadership-development/the-message-box/", "note": "Visão geral." },
+        { "type": "pdf", "label": "COMPASS — Message Box Workbook (PDF)", "url": "https://www.compassscicomm.org/wp-content/uploads/2020/05/The-Message-Box-Workbook.pdf", "note": "Workbook oficial." }
+      ],
+      "templates": [
+        { "name": "Message Box", "text": "PROBLEMA: ____\nPOR QUE IMPORTA (para X): ____\nSOLUÇÕES: ____\nBENEFÍCIOS: ____\nSO WHAT (1 frase): ____" }
+      ],
+      "tasks": ["Escolha um público (gestor municipal/estadual).", "Preencha a Message Box.", "Transforme o ‘So what’ em abertura."],
+      "deliverables": ["Message Box preenchida + abertura (1 frase)."],
+      "minToComplete": { "resourcesWatched": 1 }
+    },
+
+    {
+      "id": "L6",
+      "title": "Aula 6 — Voz e presença (sem gritar)",
+      "minutes": 60,
+      "outcome": "Identificar 2 vícios de fala e criar 1 rotina curta de voz.",
+      "study": [
+        "Autoridade vem de: final de frase firme, pausas, articulação, ritmo.",
+        "Vícios: correr, ‘sumir’ no fim da frase, muletas (‘né’, ‘então’).",
+        "Treino diário curto > maratona."
+      ],
+      "resources": [
+        { "type": "video", "label": "Julian Treasure — Talk (YouTube)", "url": "https://www.youtube.com/watch?v=eIho2S0ZahI", "note": "Voz e hábitos." },
+        { "type": "pdf", "label": "Toastmasters — Your Speaking Voice (PDF)", "url": "https://ccdn.toastmasters.org/medias/files/department-documents/education-documents/199-your-speaking-voice.pdf", "note": "Exercícios práticos." }
+      ],
+      "templates": [
+        { "name": "Checklist de voz", "text": "1) Final firme? 2) Pausa antes da ideia-chave? 3) Articulação sem correr?" }
+      ],
+      "tasks": ["Faça 3 leituras de 30s: lento/normal/enérgico.", "Grave 60s.", "Liste seus 2 vícios."],
+      "deliverables": ["2 vícios + 1 gravação 60s."],
+      "minToComplete": { "resourcesWatched": 1 }
+    },
+
+    {
+      "id": "L7",
+      "title": "Aula 7 — Storytelling científico: dado + caso + decisão",
+      "minutes": 60,
+      "outcome": "Transformar um dado em narrativa de decisão.",
+      "study": [
+        "Storytelling científico não inventa: escolhe o caso real certo + o dado certo.",
+        "O público lembra do caso; confia pelo dado; age pela decisão."
+      ],
+      "resources": [
+        { "type": "site", "label": "Alan Alda Center (site)", "url": "https://www.aldacenter.org/", "note": "Conexão humana e clareza." }
+      ],
+      "templates": [
+        { "name": "Dado→Caso→Decisão (60s)", "text": "Caso (30s): ____\nDado (15s): ____\nDecisão (15s): ____" }
+      ],
+      "tasks": ["Escolha 1 caso real do Pantanal.", "Escolha 1 dado que sustente.", "Escreva a sequência 60s."],
+      "deliverables": ["Mini-roteiro 60s."],
+      "minToComplete": { "resourcesWatched": 1 }
+    },
+
+    {
+      "id": "L8",
+      "title": "Aula 8 — Fechamento que deixa rastro",
+      "minutes": 60,
+      "outcome": "Criar 3 fechamentos e escolher 1 forte.",
+      "study": [
+        "Fecho fixa sentido e direciona ação.",
+        "Formatos: pergunta forte, convite prático, frase-marca."
+      ],
+      "resources": [
+        { "type": "site", "label": "Duarte — estrutura de talks (site)", "url": "https://www.duarte.com/resources/talks/the-secret-structure-of-great-talks/", "note": "Refina contraste e chamada." }
+      ],
+      "templates": [
+        { "name": "Fecho pergunta", "text": "“Se você tivesse que decidir hoje, escolheria ____ ou ____?”" },
+        { "name": "Fecho convite", "text": "“Nos próximos 30 dias, vamos ____. Eu me comprometo com ____.”" },
+        { "name": "Fecho frase-marca", "text": "“No Pantanal, ____. E é por isso que ____.”" }
+      ],
+      "tasks": ["Escreva 3 fechamentos.", "Leia em voz alta.", "Escolha 1 e refine (20–25s)."],
+      "deliverables": ["3 fechamentos + 1 final."],
+      "minToComplete": { "resourcesWatched": 1 }
+    },
+
+    {
+      "id": "L9",
+      "title": "Aula 9 — Slides: menos texto, mais mensagem",
+      "minutes": 60,
+      "outcome": "Criar um esqueleto de 8–10 slides sem poluição.",
+      "study": [
+        "Slide não é roteiro: é apoio visual.",
+        "1 ideia por slide. Título = frase (não tema)."
+      ],
+      "resources": [
+        { "type": "video", "label": "Nancy Duarte — talk (YouTube)", "url": "https://www.youtube.com/watch?v=LhGa0TNLUGA", "note": "Veja como ela usa visual/estrutura." }
+      ],
+      "templates": [
+        { "name": "Roteiro de slides (10)", "text": "1 Gancho | 2 Problema | 3 Evidência | 4 Caso | 5 Virada | 6 Caminho | 7 Ação 1 | 8 Ação 2 | 9 Ação 3 | 10 Fecho" }
+      ],
+      "tasks": ["Esboce títulos-frase de 10 slides.", "Retire palavras extras.", "Defina 1 gráfico essencial."],
+      "deliverables": ["Lista de 10 títulos-frase."],
+      "minToComplete": { "resourcesWatched": 1 }
+    },
+
+    {
+      "id": "L10",
+      "title": "Aula 10 — Falar para policy maker: clareza e decisão",
+      "minutes": 60,
+      "outcome": "Montar talk de 5 min focado em decisão.",
+      "study": [
+        "Policy maker quer: risco, custo de não agir, alternativa viável, prazo.",
+        "Você precisa traduzir sem infantilizar."
+      ],
+      "resources": [
+        { "type": "pdf", "label": "COMPASS — Message Box Workbook (PDF)", "url": "https://www.compassscicomm.org/wp-content/uploads/2020/05/The-Message-Box-Workbook.pdf", "note": "Use de novo." }
+      ],
+      "templates": [
+        { "name": "Talk 5 min (policy)", "text": "1) Decisão (10s)\n2) Evidência (40s)\n3) Impacto (40s)\n4) Opções (2 min)\n5) Recomendação + prazo (50s)\n6) Fecho (20s)" }
+      ],
+      "tasks": ["Escreva o talk 5 min.", "Leia cronometrando.", "Corte até caber."],
+      "deliverables": ["Roteiro 5 min policy."],
+      "minToComplete": { "resourcesWatched": 1 }
+    },
+
+    {
+      "id": "L11",
+      "title": "Aula 11 — Aula universitária mais clara (estrutura docente)",
+      "minutes": 60,
+      "outcome": "Planejar uma aula com início-meio-fim e checkpoints.",
+      "study": [
+        "Aula boa tem objetivos explícitos, exemplos, prática e fechamento.",
+        "Checkpoints evitam dispersão e aumentam retenção."
+      ],
+      "resources": [
+        { "type": "site", "label": "Toastmasters (site principal)", "url": "https://www.toastmasters.org/", "note": "Comunicação estruturada." }
+      ],
+      "templates": [
+        { "name": "Plano de aula (50 min)", "text": "0–5 gancho + objetivos | 5–15 conceito | 15–25 exemplo | 25–35 prática | 35–45 discussão | 45–50 síntese + tarefa" }
+      ],
+      "tasks": ["Escolha uma disciplina sua.", "Monte o plano 50 min.", "Escreva 3 checkpoints."],
+      "deliverables": ["Plano 50 min + 3 checkpoints."],
+      "minToComplete": { "resourcesWatched": 1 }
+    },
+
+    {
+      "id": "L12",
+      "title": "Aula 12 — Improviso controlado (responder perguntas)",
+      "minutes": 60,
+      "outcome": "Responder perguntas sem se perder (estrutura curta).",
+      "study": [
+        "Resposta boa: (1) frase direta, (2) evidência curta, (3) implicação, (4) próximo passo.",
+        "Se não souber: diga limite + como descobrir."
+      ],
+      "resources": [
+        { "type": "site", "label": "Alan Alda Center (site)", "url": "https://www.aldacenter.org/", "note": "Clareza e conexão." }
+      ],
+      "templates": [
+        { "name": "Resposta 20–30s", "text": "Resposta direta: ____.\nEvidência: ____.\nEntão: ____.\nPróximo passo: ____." }
+      ],
+      "tasks": ["Liste 5 perguntas difíceis do teu tema.", "Escreva 5 respostas 30s.", "Treine em voz alta."],
+      "deliverables": ["5 respostas 30s."],
+      "minToComplete": { "resourcesWatched": 1 }
+    },
+
+    {
+      "id": "L13",
+      "title": "Aula 13 — Ritmo e pausas (autoridade)",
+      "minutes": 60,
+      "outcome": "Aplicar pausas antes de ideias-chave e reduzir muletas.",
+      "study": [
+        "Pausa = poder. Especialmente antes do dado principal.",
+        "Muletas são sinal de ansiedade (treinável)."
+      ],
+      "resources": [
+        { "type": "video", "label": "Julian Treasure (YouTube)", "url": "https://www.youtube.com/watch?v=eIho2S0ZahI", "note": "Voz, ritmo, hábitos." }
+      ],
+      "templates": [
+        { "name": "Regra das pausas", "text": "Pausa de 1s antes de: (a) dado forte, (b) frase-marca, (c) CTA." }
+      ],
+      "tasks": ["Leia um trecho e coloque 6 pausas.", "Grave 60s.", "Conte muletas e reduza 30%."],
+      "deliverables": ["Áudio/vídeo 60s com pausas."],
+      "minToComplete": { "resourcesWatched": 1 }
+    },
+
+    {
+      "id": "L14",
+      "title": "Aula 14 — Histórias curtas (micro-história de campo)",
+      "minutes": 60,
+      "outcome": "Criar 3 micro-histórias (30–45s) do teu trabalho real.",
+      "study": [
+        "Micro-história = cenário + ação + detalhe + significado.",
+        "Detalhe concreto vence abstração."
+      ],
+      "resources": [
+        { "type": "video", "label": "TED — Duarte (YouTube)", "url": "https://www.youtube.com/watch?v=LhGa0TNLUGA", "note": "Contraste e estrutura." }
+      ],
+      "templates": [
+        { "name": "Micro-história (45s)", "text": "Cenário: ____ | Ação: ____ | Detalhe: ____ | Significado: ____" }
+      ],
+      "tasks": ["Escreva 3 micro-histórias do Pantanal/extensão.", "Leia em voz alta.", "Escolha 1 para usar na Aula 20."],
+      "deliverables": ["3 micro-histórias."],
+      "minToComplete": { "resourcesWatched": 1 }
+    },
+
+    {
+      "id": "L15",
+      "title": "Aula 15 — Storyboard do talk (espinha dorsal)",
+      "minutes": 60,
+      "outcome": "Montar storyboard 6–8 min com começo/meio/fim.",
+      "study": [
+        "Storyboard é sequência de cenas/ideias, não texto.",
+        "Ele evita ‘dar aula’ e te mantém no fio narrativo."
+      ],
+      "resources": [
+        { "type": "site", "label": "TED — Anderson (site)", "url": "https://www.ted.com/talks/chris_anderson_ted_s_secret_to_great_public_speaking", "note": "Revisão de princípios." }
+      ],
+      "templates": [
+        { "name": "Storyboard (8 quadros)", "text": "1 Gancho | 2 Problema | 3 Evidência | 4 Caso | 5 Virada | 6 Caminho | 7 Ação | 8 Fecho" }
+      ],
+      "tasks": ["Monte 8 quadros.", "Escreva 1 frase por quadro.", "Cronometre 6–8 min."],
+      "deliverables": ["Storyboard 8 quadros."],
+      "minToComplete": { "resourcesWatched": 1 }
+    },
+
+    {
+      "id": "L16",
+      "title": "Aula 16 — Q&A e perguntas hostis (sem perder elegância)",
+      "minutes": 60,
+      "outcome": "Ter 5 respostas prontas para críticas típicas.",
+      "study": [
+        "Pergunta hostil: responda ao conteúdo, não ao tom.",
+        "Estrutura: reconhecer + responder + ponte de volta ao objetivo."
+      ],
+      "resources": [
+        { "type": "pdf", "label": "Toastmasters — Fundamentals (PDF)", "url": "https://ccdn.toastmasters.org/medias/files/department-documents/club-documents/fundamentals-of-public-speaking/fundamentals-of-public-speaking-english.pdf", "note": "Organização e controle." }
+      ],
+      "templates": [
+        { "name": "Resposta hostil (20s)", "text": "Entendo a preocupação. O ponto é ____. A evidência é ____. O que proponho é ____." }
+      ],
+      "tasks": ["Liste 5 críticas comuns.", "Escreva 5 respostas 20–30s.", "Treine em voz alta."],
+      "deliverables": ["5 respostas 20–30s."],
+      "minToComplete": { "resourcesWatched": 1 }
+    },
+
+    {
+      "id": "L17",
+      "title": "Aula 17 — Linguagem simples sem perder rigor",
+      "minutes": 60,
+      "outcome": "Reescrever um parágrafo científico para público geral e para gestor.",
+      "study": [
+        "Rigor não é vocabulário difícil. Rigor é precisão.",
+        "Faça 2 versões: público geral (sentido) e gestor (decisão)."
+      ],
+      "resources": [
+        { "type": "site", "label": "COMPASS — Message Box (site)", "url": "https://www.compassscicomm.org/leadership-development/the-message-box/", "note": "Tradução para público." }
+      ],
+      "templates": [
+        { "name": "Tradução em 2 versões", "text": "Versão geral (2 frases): ____\nVersão gestor (2 frases + ação): ____" }
+      ],
+      "tasks": ["Pegue 1 parágrafo de um artigo seu.", "Traduza para geral.", "Traduza para gestor."],
+      "deliverables": ["2 versões do mesmo parágrafo."],
+      "minToComplete": { "resourcesWatched": 1 }
+    },
+
+    {
+      "id": "L18",
+      "title": "Aula 18 — Carisma acadêmico (presença sem performance)",
+      "minutes": 60,
+      "outcome": "Definir teu estilo: firme, humano, objetivo.",
+      "study": [
+        "Carisma não é teatro: é clareza + intenção + conexão.",
+        "Seu estilo natural pode ser ‘calmo e preciso’, e isso é forte."
+      ],
+      "resources": [
+        { "type": "site", "label": "Alan Alda Center (site)", "url": "https://www.aldacenter.org/", "note": "Humanidade na ciência." }
+      ],
+      "templates": [
+        { "name": "Frase de identidade", "text": "Meu estilo de fala é: ____ (3 palavras). Ex.: calmo, direto, confiável." }
+      ],
+      "tasks": ["Escolha 3 palavras do teu estilo.", "Escreva 1 abertura com esse tom.", "Leia em voz alta."],
+      "deliverables": ["3 palavras + 1 abertura no teu tom."],
+      "minToComplete": { "resourcesWatched": 1 }
+    },
+
+    {
+      "id": "L19",
+      "title": "Aula 19 — Ensaio inteligente (sem decorar)",
+      "minutes": 60,
+      "outcome": "Ensaiar por marcos (checkpoints) e reduzir ansiedade.",
+      "study": [
+        "Não decore texto. Decore marcos: gancho, virada, 3 ações, fecho.",
+        "Ensaiar = testar tempo, transição e clareza."
+      ],
+      "resources": [
+        { "type": "video", "label": "Chris Anderson (YouTube)", "url": "https://www.youtube.com/watch?v=-FOCpMAww28", "note": "Clareza e foco." }
+      ],
+      "templates": [
+        { "name": "Marcos do ensaio", "text": "Gancho | Problema | Evidência | Virada | 3 ações | Fecho" }
+      ],
+      "tasks": ["Ensaie 3x: 1) lento, 2) normal, 3) com pausas.", "Cronometre.", "Ajuste transições."],
+      "deliverables": ["Checklist preenchido + tempo final."],
+      "minToComplete": { "resourcesWatched": 1 }
+    },
+
+    {
+      "id": "L20",
+      "title": "Aula 20 — Talk final (12–15 min) + versão 5 min policy",
+      "minutes": 60,
+      "outcome": "Ter um talk pronto e reaproveitável, com duas versões.",
+      "study": [
+        "Versão 12–15 min: história + dados + caminho + fecho.",
+        "Versão 5 min policy: decisão + evidência + impacto + recomendação.",
+        "O objetivo é repetibilidade (você não começa do zero nunca mais)."
+      ],
+      "resources": [
+        { "type": "site", "label": "COMPASS — Workbook (PDF)", "url": "https://www.compassscicomm.org/wp-content/uploads/2020/05/The-Message-Box-Workbook.pdf", "note": "Sua base final." }
+      ],
+      "templates": [
+        { "name": "Checklist do talk final", "text": "Ideia central ok? | Abertura forte? | 3 blocos claros? | 1 caso real? | 1 gráfico essencial? | CTA com prazo? | Fecho memorável?" }
+      ],
+      "tasks": ["Junte tudo: storyboard + abertura + dados + fecho.", "Monte duas versões (12–15 / 5 min).", "Grave um ensaio."],
+      "deliverables": ["Roteiro 12–15 min + roteiro 5 min + gravação."],
+      "minToComplete": { "resourcesWatched": 1 }
+    }
+  ]
+}
