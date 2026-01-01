@@ -1,421 +1,147 @@
-const STORAGE_KEY = "curso_oratoria_aluno_coursejson_v1";
+let data = JSON.parse(localStorage.getItem("cursoData")) || {
+  profile: {},
+  time: 0,
+  running: false,
+  lessonsDone: {}
+};
 
-const $ = (id)=>document.getElementById(id);
-
-function showError(msg){
-  const bar = $("errorBar");
-  bar.textContent = "ERRO: " + msg;
-  bar.classList.remove("hidden");
-}
-
-function hideError(){
-  $("errorBar").classList.add("hidden");
-}
-
-let state = null;
-
-function defaultState(course){
-  return {
-    course,
-    selected: null,
-    today: null,
-    watched: {},       // watched[lessonId][resourceIndex] = true
-    deliveries: {},    // deliveries[lessonId] = text
-    notes: {},         // notes[lessonId] = text
-    doneLessons: {}    // doneLessons[lessonId] = true
-    templateEdits: {},     // templateEdits[lessonId][templateIndex] = text
-    lessonFeedback: {},    // lessonFeedback[lessonId] = 1 (gostei) | -1 (não gostei) | 0/undefined
-    resourceFeedback: {}   // resourceFeedback[lessonId][resourceIndex] = 1 | -1
-  };
-}
-
-function loadState(course){
-  try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(!raw) return defaultState(course);
-    const s = JSON.parse(raw);
-    if(!s?.course?.lessons?.length) return defaultState(course);
-    // sempre substitui o course pelo do JSON atual (para atualizar aulas sem perder progresso)
-    s.course = course;
-    return s;
-  }catch{
-    return defaultState(course);
+const lessons = [
+  {
+    id: 1,
+    title: "O que é storytelling (sem historinha)",
+    text: `
+Storytelling é organizar ideias como transformação.
+Não é contar história bonita — é guiar o público de um estado inicial
+para um novo entendimento ou decisão.
+`,
+    video: "https://www.youtube.com/watch?v=-FOCpMAww28"
+  },
+  {
+    id: 2,
+    title: "Como começar a falar (aberturas)",
+    text: `
+Toda boa abertura faz 3 coisas:
+1. Chama atenção
+2. Promete valor
+3. Mostra o caminho
+`,
+    video: "https://www.youtube.com/watch?v=eIho2S0ZahI"
+  },
+  {
+    id: 3,
+    title: "Objetivo e resultado esperado",
+    text: "Você fala para quê? Se não sabe, o público também não.",
+    video: "https://www.youtube.com/watch?v=LhGa0TNLUGA"
+  },
+  {
+    id: 4,
+    title: "Estrutura em 3 blocos",
+    text: "Problema → Por que importa → O que fazer",
+    video: "https://www.youtube.com/watch?v=8S0FDjFBj8o"
+  },
+  {
+    id: 5,
+    title: "Fechamento forte",
+    text: "O fechamento decide se você será lembrado.",
+    video: "https://www.ted.com/talks/sonia_bridi_como_eu_testemunhei_a_mudanca_climatica"
   }
+];
+
+function save() {
+  localStorage.setItem("cursoData", JSON.stringify(data));
 }
 
-function saveState(){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-}
-
-function lessonById(id){
-  return state.course.lessons.find(l=>l.id===id);
-}
-
-function countAllResources(){
-  let total = 0, seen = 0;
-  state.course.lessons.forEach(l=>{
-    const r = l.resources || [];
-    total += r.length;
-    const w = state.watched[l.id] || {};
-    seen += Object.values(w).filter(Boolean).length;
-  });
-  return { total, seen };
-}
-
-function totals(){
-  const totalLessons = state.course.lessons.length;
-  const doneLessons = Object.values(state.doneLessons).filter(Boolean).length;
-  const pct = totalLessons ? Math.round((doneLessons/totalLessons)*100) : 0;
-
-  const hours = state.course.totalHours || 20;
-  const hoursDone = totalLessons ? Math.round((doneLessons/totalLessons)*hours*10)/10 : 0;
-
-  const r = countAllResources();
-  return { totalLessons, doneLessons, pct, hours, hoursDone, resTotal:r.total, resSeen:r.seen };
-}
-
-function pickToday(){
-  const next = state.course.lessons.find(l=>!state.doneLessons[l.id]) || state.course.lessons[0];
-  state.today = next?.id || null;
-  saveState();
-}
-
-function showDashboard(){
-  $("lessonView").classList.add("hidden");
-  $("dashboard").classList.remove("hidden");
-  $("btnHome").textContent = "←";
-}
-
-function showLesson(){
-  $("dashboard").classList.add("hidden");
-  $("lessonView").classList.remove("hidden");
-  $("btnHome").textContent = "← Painel";
-}
-
-function renderProfile(){
-  const p = state.course.profile;
-  $("profileBox").innerHTML = `
-    <div><b>Contexto:</b> ${p.context}</div>
-    <div><b>Públicos:</b> ${p.audiences.join(", ")}</div>
-    <div><b>Meta:</b> ${p.goal}</div>
-  `;
-}
-
-function renderProgress(){
-  const t = totals();
-  $("progressFill").style.width = `${t.pct}%`;
-  $("progressText").textContent = `${t.pct}%`;
-  $("hoursText").textContent = `${t.hoursDone}/${t.hours}h`;
-  $("pillLessons").textContent = `${t.doneLessons}/${t.totalLessons} aulas`;
-  $("pillItems").textContent = `${t.resSeen}/${t.resTotal} itens vistos`;
-}
-
-function renderToday(){
-  if(!state.today) pickToday();
-  const l = lessonById(state.today);
-  if(!l) return;
-  const status = state.doneLessons[l.id] ? "✅ assistida" : "⏳ pendente";
-  $("todayBox").innerHTML = `
-    <div class="lTitle">${l.title}</div>
-    <div class="lMeta">${l.minutes} min • ${l.outcome}</div>
-    <div class="lMeta">${status}</div>
-  `;
-}
-
-function renderLessonList(){
-  const list = $("lessonList");
-  list.innerHTML = "";
-  state.course.lessons.forEach(l=>{
-    const div = document.createElement("div");
-    div.className = "lesson" + (state.selected===l.id ? " active":"");
-        const rfb = (state.resourceFeedback[l.id]||{})[idx] || 0;
-    div.innerHTML = `
-      <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start;">
-        <div>
-          <div><a href="${r.url}" target="_blank" rel="noopener">${r.label}</a></div>
-          <div class="muted small">${(r.type||"link").toUpperCase()} • ${r.note||""}</div>
-
-          <div class="row" style="margin-top:6px">
-            <span class="muted small">Esse link ajudou?</span>
-            <button class="btn ghost miniBtn ${rfb===1?"isOn":""}" data-like="${idx}">👍</button>
-            <button class="btn ghost miniBtn ${rfb===-1?"isOn":""}" data-dislike="${idx}">👎</button>
-          </div>
-        </div>
-
-        <label class="muted small" style="display:flex; gap:8px; align-items:center; white-space:nowrap;">
-          <input type="checkbox" ${checked?"checked":""} />
-          visto/lido
-        </label>
-      </div>
-    `;
-
-    div.onclick = ()=>{
-      state.selected = l.id;
-      saveState();
-      renderAll();
-      showLesson();
-    };
-    list.appendChild(div);
-  });
-}
-
-function minWatchedOK(l){
-  const min = l.minToComplete?.resourcesWatched ?? 1;
-  const w = state.watched[l.id] || {};
-  const seen = Object.values(w).filter(Boolean).length;
-  return seen >= min;
-}
-
-function renderLesson(){
-  const l = lessonById(state.selected);
-  if(!l){ showDashboard(); return; }
-
-  $("curTitle").textContent = l.title;
-  $("curMeta").textContent = `${l.minutes} min • Objetivo: ${l.outcome}`;
-  $("curOutcome").textContent = `Resultado esperado: ${l.outcome}`;
-
-  $("badgeStatus").textContent = state.doneLessons[l.id] ? "Assistida ✅" : "Pendente ⏳";
-
-  $("studyBox").innerHTML = (l.study||[]).map(p=>`<div class="block">${p}</div>`).join("");
-
-    // Feedback da aula
-  const fb = state.lessonFeedback[l.id] || 0;
-  const fbHtml = `
-    <div class="row" style="margin-top:8px">
-      <span class="muted small">Você gostou desta aula?</span>
-      <button id="btnLike" class="btn ghost ${fb===1?"isOn":""}">👍 Gostei</button>
-      <button id="btnDislike" class="btn ghost ${fb===-1?"isOn":""}">👎 Não gostei</button>
-    </div>
-  `;
-  $("curOutcome").insertAdjacentHTML("afterend", fbHtml);
-
-  setTimeout(()=>{
-    const like = $("btnLike");
-    const dislike = $("btnDislike");
-    if(like) like.onclick = ()=>{
-      state.lessonFeedback[l.id] = (state.lessonFeedback[l.id]===1)?0:1;
-      saveState(); renderAll();
-    };
-    if(dislike) dislike.onclick = ()=>{
-      state.lessonFeedback[l.id] = (state.lessonFeedback[l.id]===-1)?0:-1;
-      saveState(); renderAll();
-    };
-  },0);
-
-
-  // resources
-  const box = $("resourcesBox");
-  box.innerHTML = "";
-  const watchedMap = state.watched[l.id] || {};
-  (l.resources||[]).forEach((r, idx)=>{
-    const checked = !!watchedMap[idx];
-    const div = document.createElement("div");
-    div.className = "block";
-    div.innerHTML = `
-      <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start;">
-        <div>
-          <div><a href="${r.url}" target="_blank" rel="noopener">${r.label}</a></div>
-          <div class="muted small">${(r.type||"link").toUpperCase()} • ${r.note||""}</div>
-        </div>
-        <label class="muted small" style="display:flex; gap:8px; align-items:center; white-space:nowrap;">
-          <input type="checkbox" ${checked?"checked":""} />
-          visto/lido
-        </label>
-      </div>
-    `;
-    div.querySelector("input").addEventListener("change", (e)=>{
-      state.watched[l.id] = state.watched[l.id] || {};
-      state.watched[l.id][idx] = e.target.checked;
-      saveState();
-      renderProgress();
-    });
-    box.appendChild(div);
-  });
-
-    // templates EDITÁVEIS
-  state.templateEdits[l.id] = state.templateEdits[l.id] || {};
-  $("templatesBox").innerHTML = (l.templates||[]).map((t, idx)=>{
-    const saved = state.templateEdits[l.id][idx] ?? t.text;
-    return `
-      <div class="block">
-        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
-          <div style="font-weight:980">${t.name}</div>
-          <button class="btn ghost" data-save-tpl="${idx}">Salvar</button>
-        </div>
-        <textarea class="tplArea" data-tpl="${idx}" placeholder="Escreva aqui...">${saved}</textarea>
-        <div class="muted small">Dica: você pode colar seu texto, roteiro, abertura e ir refinando ao longo das aulas.</div>
-      </div>
-    `;
-  }).join("");
-
-  // handlers salvar template
-  setTimeout(()=>{
-    document.querySelectorAll("[data-save-tpl]").forEach(btn=>{
-      btn.onclick = ()=>{
-        const idx = btn.getAttribute("data-save-tpl");
-        const ta = document.querySelector(`textarea[data-tpl="${idx}"]`);
-        state.templateEdits[l.id][idx] = ta.value;
-        saveState();
-        btn.textContent = "Salvo ✓";
-        setTimeout(()=>btn.textContent="Salvar", 900);
-      };
-    });
-  },0);
-
-      div.querySelector(`[data-like="${idx}"]`).onclick = ()=>{
-      state.resourceFeedback[l.id] = state.resourceFeedback[l.id] || {};
-      state.resourceFeedback[l.id][idx] = (state.resourceFeedback[l.id][idx]===1)?0:1;
-      saveState(); renderLesson();
-    };
-    div.querySelector(`[data-dislike="${idx}"]`).onclick = ()=>{
-      state.resourceFeedback[l.id] = state.resourceFeedback[l.id] || {};
-      state.resourceFeedback[l.id][idx] = (state.resourceFeedback[l.id][idx]===-1)?0:-1;
-      saveState(); renderLesson();
-    };
-
-
-
-  // tasks
-  $("tasksBox").innerHTML = (l.tasks||[]).map(s=>`<div class="block">✅ ${s}</div>`).join("");
-
-  // deliverables
-  $("deliverablesBox").innerHTML = (l.deliverables||[]).map(d=>`<div class="block">📦 ${d}</div>`).join("");
-  $("deliveryInput").value = state.deliveries[l.id] || "";
-  $("notes").value = state.notes[l.id] || "";
-}
-
-function renderAll(){
+function saveProfile() {
+  data.profile = {
+    name: nameInput.value,
+    goal: goalInput.value,
+    photo: photoInput.value
+  };
+  save();
   renderProfile();
-  renderProgress();
-  renderToday();
-  renderLessonList();
-  if(state.selected) renderLesson();
 }
 
-async function loadCourseJSON(){
-  // caminho relativo funciona em GitHub Pages
-  const res = await fetch("assets/course.json", { cache: "no-store" });
-  if(!res.ok) throw new Error(`Não consegui carregar assets/course.json (HTTP ${res.status}).`);
-  const course = await res.json();
-  if(!course?.lessons?.length) throw new Error("course.json sem lessons[] (vazio).");
-  return course;
+function renderProfile() {
+  if (!data.profile.name) return;
+  profileView.innerHTML = `
+    <p><b>${data.profile.name}</b></p>
+    <p>${data.profile.goal}</p>
+    ${data.profile.photo ? `<img src="${data.profile.photo}" width="120">` : ""}
+  `;
 }
 
-document.addEventListener("DOMContentLoaded", async ()=>{
-  try{
-    hideError();
-    const course = await loadCourseJSON();
-    state = loadState(course);
-    if(!state.today) pickToday();
-    renderAll();
-    showDashboard();
-  }catch(err){
-    showError(err.message + " — confira se existe o arquivo assets/course.json e se está na pasta certa.");
-    // cria estado mínimo pra UI não morrer
-    state = defaultState({
-      version: 1,
-      totalHours: 20,
-      profile: { context:"—", audiences:["—"], goal:"—" },
-      lessons:[]
-    });
-    renderAll();
-    showDashboard();
-  }
+function renderLessons() {
+  lessonsDiv.innerHTML = "";
+  lessons.forEach(l => {
+    const div = document.createElement("div");
+    div.className = "lesson" + (data.lessonsDone[l.id] ? " done" : "");
+    div.innerHTML = `
+      <h3>${l.title}</h3>
+      <p>${l.text}</p>
+      <a href="${l.video}" target="_blank">▶ assistir</a><br><br>
+      <button onclick="completeLesson(${l.id})">Marcar como concluída</button>
+    `;
+    lessonsDiv.appendChild(div);
+  });
+}
 
-  $("btnHome").onclick = ()=> showDashboard();
+function completeLesson(id) {
+  data.lessonsDone[id] = true;
+  save();
+  updateProgress();
+  renderLessons();
+}
 
-  $("btnStartToday").onclick = ()=>{
-    if(!state.today) pickToday();
-    state.selected = state.today;
-    saveState();
-    renderAll();
-    showLesson();
-  };
+function updateProgress() {
+  const done = Object.keys(data.lessonsDone).length;
+  progressBar.value = done;
+  progressText.innerText = `${done} de ${lessons.length} aulas concluídas`;
+}
 
-  $("btnNext").onclick = ()=>{
-    const lessons = state.course.lessons;
-    if(!lessons.length) return;
-    const idx = lessons.findIndex(l=>l.id===state.today);
-    let next = null;
-    for(let i=idx+1;i<lessons.length;i++){
-      if(!state.doneLessons[lessons[i].id]) { next = lessons[i]; break; }
-    }
-    if(!next) next = lessons.find(l=>!state.doneLessons[l.id]) || lessons[0];
-    state.today = next.id;
-    saveState();
-    renderAll();
-  };
+let interval;
+function startTimer() {
+  if (data.running) return;
+  data.running = true;
+  interval = setInterval(() => {
+    data.time++;
+    updateTimer();
+    save();
+  }, 1000);
+}
 
-  $("btnMarkLesson").onclick = ()=>{
-    const l = lessonById(state.selected);
-    if(!l) return;
-    const min = l.minToComplete?.resourcesWatched ?? 1;
-    if(!minWatchedOK(l)){
-      alert(`Ainda não. Marque pelo menos ${min} link(s) como visto/lido.`);
-      return;
-    }
-    state.doneLessons[l.id] = true;
-    pickToday();
-    saveState();
-    renderAll();
-  };
+function stopTimer() {
+  data.running = false;
+  clearInterval(interval);
+}
 
-  $("btnUnmarkLesson").onclick = ()=>{
-    const l = lessonById(state.selected);
-    if(!l) return;
-    delete state.doneLessons[l.id];
-    saveState();
-    renderAll();
-  };
+function updateTimer() {
+  const h = String(Math.floor(data.time / 3600)).padStart(2,"0");
+  const m = String(Math.floor(data.time % 3600 / 60)).padStart(2,"0");
+  const s = String(data.time % 60).padStart(2,"0");
+  timer.innerText = `${h}:${m}:${s}`;
+}
 
-  $("btnSaveDelivery").onclick = ()=>{
-    const l = lessonById(state.selected);
-    if(!l) return;
-    state.deliveries[l.id] = $("deliveryInput").value.trim();
-    saveState();
-    $("deliveryMsg").textContent = "Entrega salva ✓";
-    setTimeout(()=>$("deliveryMsg").textContent="", 1200);
-  };
+function exportData() {
+  const blob = new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "meu_curso_oratoria.json";
+  a.click();
+}
 
-  $("btnSaveNotes").onclick = ()=>{
-    const l = lessonById(state.selected);
-    if(!l) return;
-    state.notes[l.id] = $("notes").value;
-    saveState();
-    $("notesMsg").textContent = "Notas salvas ✓";
-    setTimeout(()=>$("notesMsg").textContent="", 1200);
-  };
-
-  $("btnExport").onclick = ()=>{
-    const payload = { exportedAt:new Date().toISOString(), version:1, state };
-    const blob = new Blob([JSON.stringify(payload,null,2)], {type:"application/json;charset=utf-8"});
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "curso_oratoria_progresso.json";
-    a.click();
-    URL.revokeObjectURL(a.href);
-  };
-
-  const importDlg = $("importDlg");
-  $("btnImport").onclick = ()=>{ $("importText").value=""; importDlg.showModal(); };
-  $("btnDoImport").onclick = (e)=>{
-    e.preventDefault();
-    try{
-      const parsed = JSON.parse($("importText").value.trim());
-      if(!parsed?.state) throw new Error("JSON inválido.");
-      state = parsed.state;
-      saveState();
-      importDlg.close();
-      renderAll();
-    }catch(err){
-      alert("Falha ao importar: " + err.message);
-    }
-  };
-
-  $("btnReset").onclick = ()=>{
-    if(!confirm("Resetar progresso neste navegador?")) return;
-    localStorage.removeItem(STORAGE_KEY);
-    // recarrega a página (mais seguro)
+function importData(e) {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+  reader.onload = () => {
+    data = JSON.parse(reader.result);
+    save();
     location.reload();
   };
-});
+  reader.readAsText(file);
+}
+
+const lessonsDiv = document.getElementById("lessons");
+renderProfile();
+renderLessons();
+updateProgress();
+updateTimer();
