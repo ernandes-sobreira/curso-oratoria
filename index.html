@@ -9,16 +9,16 @@
 <body>
   <header class="topbar">
     <div class="brand">
-      <div class="logo">🎤</div>
+      <div class="logo">🎙️</div>
       <div>
         <div class="title">Meu Curso — Oratória & Storytelling (20h)</div>
-        <div class="subtitle">Você é o aluno. O app é seu treinador. Eu te avalio aqui.</div>
+        <div class="subtitle">Estudo guiado + prática. Personalizável. Progresso salvo no navegador.</div>
       </div>
     </div>
     <div class="top-actions">
       <button id="btnExport" class="btn ghost">Exportar</button>
       <button id="btnImport" class="btn ghost">Importar</button>
-      <button id="btnReset" class="btn danger ghost">Reset</button>
+      <button id="btnReset" class="btn ghost danger">Reset</button>
     </div>
   </header>
 
@@ -26,14 +26,12 @@
     <aside class="sidebar">
       <div class="card">
         <div class="card-title">Progresso</div>
-        <div class="progress-wrap">
-          <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
-          <div class="progress-meta">
-            <span id="progressText">0%</span>
-            <span id="hoursText">0/20h</span>
-          </div>
+        <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+        <div class="progress-meta">
+          <span id="progressText">0%</span>
+          <span id="hoursText">0/20h</span>
         </div>
-        <div class="pill-row">
+        <div class="pills">
           <span class="pill" id="pillDone">0 concluídas</span>
           <span class="pill" id="pillTotal">0 aulas</span>
         </div>
@@ -41,78 +39,84 @@
 
       <div class="card">
         <div class="card-title">Aula de hoje</div>
-        <div id="todayBox" class="today-box"></div>
+        <div id="todayBox" class="todayBox"></div>
         <div class="row">
-          <button id="btnStartToday" class="btn">Começar aula</button>
+          <button id="btnStartToday" class="btn">Começar</button>
           <button id="btnPickAnother" class="btn ghost">Trocar</button>
-        </div>
-        <div class="small muted">
-          Dica: 45–50 min por aula. Faça 1 entrega por dia.
         </div>
       </div>
 
       <div class="card">
         <div class="card-title">Aulas</div>
-        <div id="lessonList" class="module-list"></div>
+        <div id="lessonList" class="lessonList"></div>
       </div>
 
       <div class="card">
-        <div class="card-title">Personalizar</div>
-        <p class="muted">Edite o curso (temas, público, aulas, links). Salva só no seu navegador.</p>
-        <button id="btnEditCourse" class="btn">Editar curso</button>
+        <div class="card-title">Personalizar curso</div>
+        <p class="muted">Edite temas, públicos, aulas e links no JSON.</p>
+        <button id="btnEditCourse" class="btn ghost">Editar</button>
       </div>
     </aside>
 
     <section class="content">
       <div class="card hero">
-        <div class="hero-title" id="curTitle">Selecione uma aula</div>
-        <div class="hero-sub" id="curMeta">—</div>
-        <div class="hero-desc" id="curDesc">A aula tem passos guiados, entrega e autoavaliação.</div>
+        <div class="heroTitle" id="curTitle">Selecione uma aula</div>
+        <div class="heroMeta" id="curMeta">—</div>
+        <div class="heroDesc" id="curDesc">Aqui você estuda (conteúdo), vê exemplos e pratica.</div>
       </div>
 
       <div class="grid">
         <div class="card">
-          <div class="card-title">Passo a passo (45–50 min)</div>
-          <div id="stepList" class="task-list"></div>
+          <div class="card-title">📚 Estudo da aula (leitura curta)</div>
+          <div id="studyText" class="studyText"></div>
+          <div class="small muted">Meta: entender antes de praticar.</div>
         </div>
 
         <div class="card">
-          <div class="card-title">Entregas (obrigatório)</div>
-          <div id="deliverableList" class="deliverable-list"></div>
+          <div class="card-title">🎬 Exemplos + Links</div>
+          <div id="linksBox"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🧩 Modelos prontos (copiar/colar)</div>
+          <div id="templatesBox"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">✅ Prática (passo a passo)</div>
+          <div id="stepsBox"></div>
           <div class="row">
-            <input id="deliverableLink" class="input" placeholder="Cole link/descrição da entrega (ex.: vídeo no drive, ou 'gravei no celular')" />
+            <button id="btnMarkDone" class="btn">Marcar como concluída</button>
+            <button id="btnUnmark" class="btn ghost">Desmarcar</button>
+          </div>
+          <div id="doneMsg" class="small muted"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📦 Entrega (o que você produz)</div>
+          <div id="deliverablesBox"></div>
+          <input id="deliveryInput" class="input" placeholder="Cole aqui o link/descrição da entrega (ex.: vídeo, roteiro, slides)" />
+          <div class="row">
             <button id="btnSaveDelivery" class="btn">Salvar entrega</button>
-          </div>
-          <div id="deliverySaved" class="small muted"></div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Autoavaliação (0–10)</div>
-          <div id="rubric" class="rubric"></div>
-          <div class="row">
-            <button id="btnSaveRubric" class="btn">Salvar autoavaliação</button>
-            <span id="rubricSaved" class="small muted"></span>
+            <span id="deliveryMsg" class="small muted"></span>
           </div>
         </div>
 
         <div class="card">
-          <div class="card-title">Notas e feedback</div>
-          <textarea id="notes" class="notes" placeholder="O que melhorou? O que travou? Que frase ficou forte? Que parte ficou confusa?"></textarea>
+          <div class="card-title">📝 Notas</div>
+          <textarea id="notes" class="notes" placeholder="O que aprendi? Onde travei? Qual frase ficou forte?"></textarea>
           <div class="row">
             <button id="btnSaveNotes" class="btn">Salvar notas</button>
-            <span id="notesSaved" class="small muted"></span>
-          </div>
-          <div class="muted small">
-            Quando quiser, cole aqui no chat sua entrega/roteiro e eu te devolvo a correção com rubrica.
+            <span id="notesMsg" class="small muted"></span>
           </div>
         </div>
       </div>
 
       <dialog id="importDlg" class="dlg">
-        <form method="dialog" class="dlg-body">
+        <form method="dialog" class="dlgBody">
           <h3>Importar</h3>
           <textarea id="importText" class="notes" placeholder='{"version":1,...}'></textarea>
-          <div class="dlg-actions">
+          <div class="row right">
             <button class="btn ghost">Cancelar</button>
             <button id="btnDoImport" class="btn">Importar</button>
           </div>
@@ -120,10 +124,10 @@
       </dialog>
 
       <dialog id="editDlg" class="dlg">
-        <form method="dialog" class="dlg-body">
+        <form method="dialog" class="dlgBody">
           <h3>Editar curso (JSON)</h3>
           <textarea id="courseEditor" class="notes"></textarea>
-          <div class="dlg-actions">
+          <div class="row right">
             <button class="btn ghost">Cancelar</button>
             <button id="btnSaveCourse" class="btn">Salvar</button>
           </div>
@@ -135,4 +139,3 @@
   <script src="assets/app.js"></script>
 </body>
 </html>
-
