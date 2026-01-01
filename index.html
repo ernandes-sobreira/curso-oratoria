@@ -3,19 +3,23 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Meu Curso (Aluno) — Oratória & Storytelling</title>
+  <title>Curso (Aluno) — Oratória & Storytelling</title>
   <link rel="stylesheet" href="assets/style.css" />
 </head>
 <body>
   <header class="topbar">
-    <div class="brand">
-      <div class="logo">🎙️</div>
-      <div>
-        <div class="title">Meu Curso — Oratória & Storytelling (20h)</div>
-        <div class="subtitle">Estudo guiado + prática. Personalizável. Progresso salvo no navegador.</div>
+    <div class="left">
+      <button id="btnHome" class="iconBtn" title="Voltar ao painel">←</button>
+      <div class="brand">
+        <div class="logo">🎙️</div>
+        <div>
+          <div class="title">Meu Curso — Oratória & Storytelling (20h)</div>
+          <div class="subtitle">Estudo guiado + prática. Progresso salvo. Você é o aluno.</div>
+        </div>
       </div>
     </div>
-    <div class="top-actions">
+
+    <div class="right">
       <button id="btnExport" class="btn ghost">Exportar</button>
       <button id="btnImport" class="btn ghost">Importar</button>
       <button id="btnReset" class="btn ghost danger">Reset</button>
@@ -25,96 +29,128 @@
   <main class="layout">
     <aside class="sidebar">
       <div class="card">
-        <div class="card-title">Progresso</div>
-        <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
-        <div class="progress-meta">
+        <div class="cardTitle">Progresso</div>
+        <div class="progressBar"><div id="progressFill" class="progressFill"></div></div>
+        <div class="progressMeta">
           <span id="progressText">0%</span>
           <span id="hoursText">0/20h</span>
         </div>
         <div class="pills">
-          <span class="pill" id="pillDone">0 concluídas</span>
-          <span class="pill" id="pillTotal">0 aulas</span>
+          <span class="pill" id="pillLessons">0/0 aulas</span>
+          <span class="pill" id="pillItems">0/0 itens vistos</span>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-title">Aula de hoje</div>
+        <div class="cardTitle">Aula de hoje</div>
         <div id="todayBox" class="todayBox"></div>
         <div class="row">
           <button id="btnStartToday" class="btn">Começar</button>
-          <button id="btnPickAnother" class="btn ghost">Trocar</button>
+          <button id="btnNext" class="btn ghost">Próxima</button>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-title">Aulas</div>
+        <div class="cardTitle">Aulas</div>
         <div id="lessonList" class="lessonList"></div>
       </div>
 
       <div class="card">
-        <div class="card-title">Personalizar curso</div>
-        <p class="muted">Edite temas, públicos, aulas e links no JSON.</p>
-        <button id="btnEditCourse" class="btn ghost">Editar</button>
+        <div class="cardTitle">Personalizar</div>
+        <p class="muted">Edite aulas/links/textos no JSON interno.</p>
+        <button id="btnEditCourse" class="btn ghost">Editar curso</button>
       </div>
     </aside>
 
     <section class="content">
-      <div class="card hero">
-        <div class="heroTitle" id="curTitle">Selecione uma aula</div>
-        <div class="heroMeta" id="curMeta">—</div>
-        <div class="heroDesc" id="curDesc">Aqui você estuda (conteúdo), vê exemplos e pratica.</div>
+      <div id="dashboard" class="card hero">
+        <div class="heroTitle">Painel do aluno</div>
+        <div class="heroSub" id="dashSub">Escolha uma aula na lista à esquerda.</div>
+
+        <div class="heroGrid">
+          <div class="mini">
+            <div class="miniTitle">Seu foco (perfil)</div>
+            <div id="profileBox" class="miniBody"></div>
+          </div>
+          <div class="mini">
+            <div class="miniTitle">Como usar</div>
+            <div class="miniBody">
+              <ol class="ol">
+                <li>Abra “Aula de hoje”.</li>
+                <li>Leia o texto curto.</li>
+                <li>Assista 1–2 vídeos e marque como visto.</li>
+                <li>Faça a atividade e salve a entrega.</li>
+                <li>Quando completar o mínimo, a aula vira “assistida”.</li>
+              </ol>
+            </div>
+          </div>
+          <div class="mini">
+            <div class="miniTitle">Resultado esperado</div>
+            <div class="miniBody">
+              Você vai sair com um talk repetível (12–15 min) + aula universitária mais clara + capacidade de falar com gestor/policy maker.
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="grid">
-        <div class="card">
-          <div class="card-title">📚 Estudo da aula (leitura curta)</div>
-          <div id="studyText" class="studyText"></div>
-          <div class="small muted">Meta: entender antes de praticar.</div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">🎬 Exemplos + Links</div>
-          <div id="linksBox"></div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">🧩 Modelos prontos (copiar/colar)</div>
-          <div id="templatesBox"></div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">✅ Prática (passo a passo)</div>
-          <div id="stepsBox"></div>
+      <div id="lessonView" class="hidden">
+        <div class="card hero">
+          <div class="heroTitle" id="curTitle">—</div>
+          <div class="heroSub" id="curMeta">—</div>
+          <div class="heroDesc" id="curOutcome">—</div>
           <div class="row">
-            <button id="btnMarkDone" class="btn">Marcar como concluída</button>
-            <button id="btnUnmark" class="btn ghost">Desmarcar</button>
-          </div>
-          <div id="doneMsg" class="small muted"></div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">📦 Entrega (o que você produz)</div>
-          <div id="deliverablesBox"></div>
-          <input id="deliveryInput" class="input" placeholder="Cole aqui o link/descrição da entrega (ex.: vídeo, roteiro, slides)" />
-          <div class="row">
-            <button id="btnSaveDelivery" class="btn">Salvar entrega</button>
-            <span id="deliveryMsg" class="small muted"></span>
+            <span class="badge" id="badgeStatus">Pendente</span>
+            <button id="btnMarkLesson" class="btn">Marcar aula como assistida</button>
+            <button id="btnUnmarkLesson" class="btn ghost">Desmarcar</button>
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-title">📝 Notas</div>
-          <textarea id="notes" class="notes" placeholder="O que aprendi? Onde travei? Qual frase ficou forte?"></textarea>
-          <div class="row">
-            <button id="btnSaveNotes" class="btn">Salvar notas</button>
-            <span id="notesMsg" class="small muted"></span>
+        <div class="grid">
+          <div class="card">
+            <div class="cardTitle">📚 Texto para estudar (curto e direto)</div>
+            <div id="studyBox" class="studyBox"></div>
+          </div>
+
+          <div class="card">
+            <div class="cardTitle">🎬 Links (YouTube / sites / PDFs)</div>
+            <div class="muted small">Marque como “visto/lido” para contar progresso.</div>
+            <div id="resourcesBox"></div>
+          </div>
+
+          <div class="card">
+            <div class="cardTitle">🧩 Modelos prontos (copiar/colar)</div>
+            <div id="templatesBox"></div>
+          </div>
+
+          <div class="card">
+            <div class="cardTitle">✅ Atividade (o que fazer hoje)</div>
+            <div id="tasksBox"></div>
+          </div>
+
+          <div class="card">
+            <div class="cardTitle">📦 Entrega (o que você produz)</div>
+            <div id="deliverablesBox"></div>
+            <input id="deliveryInput" class="input" placeholder="Cole aqui link/descrição: vídeo, roteiro, slides, áudio..." />
+            <div class="row">
+              <button id="btnSaveDelivery" class="btn">Salvar entrega</button>
+              <span id="deliveryMsg" class="muted small"></span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="cardTitle">📝 Notas</div>
+            <textarea id="notes" class="notes" placeholder="O que aprendi? Onde travei? Qual frase ficou forte?"></textarea>
+            <div class="row">
+              <button id="btnSaveNotes" class="btn">Salvar notas</button>
+              <span id="notesMsg" class="muted small"></span>
+            </div>
           </div>
         </div>
       </div>
 
       <dialog id="importDlg" class="dlg">
         <form method="dialog" class="dlgBody">
-          <h3>Importar</h3>
+          <h3>Importar progresso</h3>
           <textarea id="importText" class="notes" placeholder='{"version":1,...}'></textarea>
           <div class="row right">
             <button class="btn ghost">Cancelar</button>
