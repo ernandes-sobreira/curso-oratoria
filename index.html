@@ -26,6 +26,8 @@
     </div>
   </header>
 
+  <div id="errorBar" class="errorBar hidden"></div>
+
   <main class="layout">
     <aside class="sidebar">
       <div class="card">
@@ -57,15 +59,15 @@
 
       <div class="card">
         <div class="cardTitle">Personalizar</div>
-        <p class="muted">Edite aulas/links/textos no JSON interno.</p>
-        <button id="btnEditCourse" class="btn ghost">Editar curso</button>
+        <p class="muted">Edite o arquivo <b>assets/course.json</b> (aulas/links/textos).</p>
+        <div class="muted small">Dica: você pode manter uma cópia no Drive e só colar aqui quando quiser.</div>
       </div>
     </aside>
 
     <section class="content">
       <div id="dashboard" class="card hero">
         <div class="heroTitle">Painel do aluno</div>
-        <div class="heroSub" id="dashSub">Escolha uma aula na lista à esquerda.</div>
+        <div class="heroSub" id="dashSub">Escolha uma aula na lista à esquerda ou clique em “Começar”.</div>
 
         <div class="heroGrid">
           <div class="mini">
@@ -76,18 +78,18 @@
             <div class="miniTitle">Como usar</div>
             <div class="miniBody">
               <ol class="ol">
-                <li>Abra “Aula de hoje”.</li>
+                <li>Clique em <b>Começar</b> (Aula de hoje).</li>
                 <li>Leia o texto curto.</li>
-                <li>Assista 1–2 vídeos e marque como visto.</li>
+                <li>Assista 1–2 vídeos / leia 1 texto e marque “visto/lido”.</li>
                 <li>Faça a atividade e salve a entrega.</li>
-                <li>Quando completar o mínimo, a aula vira “assistida”.</li>
+                <li>Marque a aula como assistida.</li>
               </ol>
             </div>
           </div>
           <div class="mini">
             <div class="miniTitle">Resultado esperado</div>
             <div class="miniBody">
-              Você vai sair com um talk repetível (12–15 min) + aula universitária mais clara + capacidade de falar com gestor/policy maker.
+              Você vai sair com um talk repetível (12–15 min) + aula universitária mais clara + fala forte para gestores/policy makers.
             </div>
           </div>
         </div>
@@ -107,13 +109,13 @@
 
         <div class="grid">
           <div class="card">
-            <div class="cardTitle">📚 Texto para estudar (curto e direto)</div>
+            <div class="cardTitle">📚 Texto para estudar</div>
             <div id="studyBox" class="studyBox"></div>
           </div>
 
           <div class="card">
             <div class="cardTitle">🎬 Links (YouTube / sites / PDFs)</div>
-            <div class="muted small">Marque como “visto/lido” para contar progresso.</div>
+            <div class="muted small">Marque como “visto/lido”.</div>
             <div id="resourcesBox"></div>
           </div>
 
@@ -123,14 +125,14 @@
           </div>
 
           <div class="card">
-            <div class="cardTitle">✅ Atividade (o que fazer hoje)</div>
+            <div class="cardTitle">✅ Atividade (passo a passo)</div>
             <div id="tasksBox"></div>
           </div>
 
           <div class="card">
-            <div class="cardTitle">📦 Entrega (o que você produz)</div>
+            <div class="cardTitle">📦 Entrega</div>
             <div id="deliverablesBox"></div>
-            <input id="deliveryInput" class="input" placeholder="Cole aqui link/descrição: vídeo, roteiro, slides, áudio..." />
+            <input id="deliveryInput" class="input" placeholder="Cole aqui link/descrição: vídeo, roteiro, slides..." />
             <div class="row">
               <button id="btnSaveDelivery" class="btn">Salvar entrega</button>
               <span id="deliveryMsg" class="muted small"></span>
@@ -155,17 +157,6 @@
           <div class="row right">
             <button class="btn ghost">Cancelar</button>
             <button id="btnDoImport" class="btn">Importar</button>
-          </div>
-        </form>
-      </dialog>
-
-      <dialog id="editDlg" class="dlg">
-        <form method="dialog" class="dlgBody">
-          <h3>Editar curso (JSON)</h3>
-          <textarea id="courseEditor" class="notes"></textarea>
-          <div class="row right">
-            <button class="btn ghost">Cancelar</button>
-            <button id="btnSaveCourse" class="btn">Salvar</button>
           </div>
         </form>
       </dialog>
