@@ -4,173 +4,1485 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Meu Curso — Oratória & Storytelling (20h)</title>
-  <link rel="stylesheet" href="./style.css" />
+  <meta name="description" content="Curso pessoal de oratória e storytelling. Você é o aluno. Progresso salvo com export/import." />
+  <style>
+    :root{
+      --bg:#e9e3f2;
+      --card:rgba(255,255,255,.92);
+      --text:#1f2330;
+      --muted:#586176;
+      --line:rgba(55, 45, 85, .14);
+
+      --a:#4057d6;     /* azul arroxeado (mais escuro) */
+      --b:#a93fd1;     /* magenta (mais escuro) */
+      --c:#2a8bd6;     /* azul vivo p/ detalhes */
+      --ok:#1a8f5a;
+      --warn:#d68a2a;
+      --bad:#b3153a;
+
+      --shadow: 0 14px 40px rgba(20, 16, 40, .14);
+      --r: 18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 560px at 14% -10%, rgba(169,63,209,.26), transparent 55%),
+        radial-gradient(1100px 560px at 88% 10%, rgba(64,87,214,.24), transparent 55%),
+        var(--bg);
+    }
+    .topbar{
+      position:sticky; top:0; z-index:10;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:14px 16px;
+      background: rgba(255,255,255,.76);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{
+      width:44px; height:44px; border-radius:16px;
+      display:grid; place-items:center;
+      border:1px solid var(--line);
+      background: linear-gradient(135deg, rgba(64,87,214,.22), rgba(169,63,209,.18));
+      font-size:20px;
+    }
+    .title{font-weight:1100; font-size:16px}
+    .subtitle{color:var(--muted); font-size:12px; margin-top:2px}
+    .chip{
+      font-size:12px; font-weight:1100;
+      padding:3px 8px; border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.7);
+      margin-left:8px;
+    }
+    .actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+    .layout{
+      max-width:1300px;
+      margin:0 auto;
+      padding:16px;
+      display:grid;
+      grid-template-columns: 360px 1fr;
+      gap:16px;
+    }
+    @media (max-width: 980px){ .layout{grid-template-columns:1fr} }
+
+    .card{
+      border:1px solid var(--line);
+      background: var(--card);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      padding:14px;
+    }
+    .hero{
+      background: linear-gradient(135deg, rgba(64,87,214,.18), rgba(169,63,209,.12));
+      border-radius: 22px;
+    }
+    .cardTitle{font-weight:1100; margin-bottom:10px}
+    .muted{color:var(--muted)}
+    .small{font-size:12px}
+
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:10px}
+    .row.right{justify-content:flex-end}
+    .row2{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    @media (max-width: 980px){ .row2{grid-template-columns:1fr} }
+
+    .label{display:block; font-size:12px; color:var(--muted); margin:8px 0 6px}
+    .input, .textarea{
+      width:100%;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.82);
+      padding:10px 12px;
+      outline:none;
+    }
+    .textarea{min-height:110px; resize:vertical; line-height:1.45}
+
+    .btn{
+      border:0; cursor:pointer;
+      border-radius:14px;
+      padding:10px 12px;
+      font-weight:1100;
+      color:white;
+      background: linear-gradient(90deg, var(--a), var(--b));
+    }
+    .btn:hover{filter:brightness(0.98)}
+    .btn.ghost{
+      background: rgba(255,255,255,.65);
+      color: var(--text);
+      border:1px solid var(--line);
+    }
+    .btn.danger{color:var(--bad)}
+    .btn.mini{padding:7px 10px; border-radius:12px}
+
+    .badge{
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.65);
+      font-size:12px;
+      font-weight:1100;
+    }
+    .spacer{flex:1}
+
+    .progressBar{
+      height:10px; border-radius:999px;
+      background: rgba(255,255,255,.6);
+      border:1px solid var(--line);
+      overflow:hidden;
+    }
+    .progressFill{
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, var(--c), var(--b));
+    }
+    .progressMeta{display:flex; justify-content:space-between; margin-top:8px; color:var(--muted); font-size:12px}
+    .pills{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+    .pill{
+      font-size:12px; color:var(--muted);
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.66);
+    }
+
+    .lessonList{display:flex; flex-direction:column; gap:8px; margin-top:8px}
+    .lessonItem{
+      cursor:pointer;
+      padding:10px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background: linear-gradient(135deg, rgba(64,87,214,.10), rgba(169,63,209,.08));
+    }
+    .lessonItem:hover{filter:brightness(0.99)}
+    .lessonItem.active{
+      border-color: rgba(64,87,214,.45);
+      background: linear-gradient(135deg, rgba(64,87,214,.18), rgba(169,63,209,.14));
+    }
+    .lessonItem .t{font-weight:1100}
+    .lessonItem .m{font-size:12px; color:var(--muted); margin-top:4px}
+
+    .grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    @media (max-width: 980px){ .grid{grid-template-columns:1fr} }
+
+    .heroTop{display:flex; justify-content:space-between; align-items:flex-start; gap:10px}
+    .heroTitle{font-weight:1200; font-size:18px}
+    .heroSub{margin-top:6px; color:var(--muted); font-size:13px}
+    .heroBtns{display:flex; gap:10px; flex-wrap:wrap}
+
+    .studyBox{line-height:1.6}
+    .block{
+      padding:10px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.7);
+      margin-bottom:10px;
+    }
+    .block.color{
+      background: linear-gradient(135deg, rgba(42,139,214,.10), rgba(169,63,209,.10));
+    }
+    .block.ok{border-left:6px solid rgba(26,143,90,.45)}
+    .block.bad{border-left:6px solid rgba(179,21,58,.35)}
+    .block.warn{border-left:6px solid rgba(214,138,42,.40)}
+
+    a{color:var(--a); font-weight:1100; text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    .timerRow{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap}
+    .timer{font-size:28px; font-weight:1200; letter-spacing:1px}
+    .timerBtns{display:flex; gap:10px; flex-wrap:wrap}
+
+    .profilePreview{
+      margin-top:10px;
+      padding:10px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.66);
+    }
+    .profilePreview img{
+      margin-top:8px;
+      width:84px; height:84px;
+      border-radius:18px;
+      object-fit:cover;
+      border:1px solid var(--line);
+    }
+
+    .error{
+      max-width:1300px;
+      margin:12px auto 0 auto;
+      padding:10px 14px;
+      border-radius:14px;
+      border:1px solid rgba(179,21,58,.35);
+      background: rgba(179,21,58,.10);
+      color:#7a0f28;
+      font-weight:1100;
+    }
+    .hidden{display:none}
+
+    .kbd{
+      padding:2px 6px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      background: rgba(255,255,255,.7);
+      font-weight:1100;
+      font-size:12px;
+    }
+
+    dialog{
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow: var(--shadow);
+      background: rgba(255,255,255,.95);
+      width:min(900px,92vw);
+    }
+    dialog::backdrop{background:rgba(20,16,40,.25); backdrop-filter: blur(4px)}
+  </style>
 </head>
+
 <body>
-  <header class="topbar">
-    <div class="brand">
-      <div class="logo">🎙️</div>
-      <div>
-        <div class="title">Meu Curso — Oratória & Storytelling <span class="chip">20h</span></div>
-        <div class="subtitle">Curso personalizado. Você é o aluno. Progresso salvo no navegador (com export/import).</div>
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">🎙️</div>
+    <div>
+      <div class="title">Meu Curso — Oratória & Storytelling <span class="chip">20h</span></div>
+      <div class="subtitle">Você é o aluno. Conteúdo na plataforma + links. Progresso salvo (export/import).</div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn ghost" id="btnQuick">Como usar</button>
+    <button class="btn ghost" id="btnExport">Exportar</button>
+    <button class="btn ghost" id="btnImportOpen">Importar</button>
+    <button class="btn ghost danger" id="btnReset">Reset</button>
+  </div>
+</header>
+
+<div id="errorBar" class="error hidden"></div>
+
+<main class="layout">
+  <aside class="side">
+    <section class="card">
+      <div class="cardTitle">👤 Seu perfil</div>
+
+      <div class="row2">
+        <div>
+          <label class="label">Nome</label>
+          <input id="inpName" class="input" placeholder="Ernandes (ou como quiser)" />
+        </div>
+        <div>
+          <label class="label">Foto (arquivo)</label>
+          <input id="inpPhoto" class="input" type="file" accept="image/*" />
+        </div>
       </div>
-    </div>
 
-    <div class="actions">
-      <button class="btn ghost" id="btnExport">Exportar</button>
-      <button class="btn ghost" id="btnImportOpen">Importar</button>
-      <button class="btn ghost danger" id="btnReset">Reset</button>
-    </div>
-  </header>
+      <label class="label">Seu objetivo com o curso</label>
+      <textarea id="inpGoal" class="textarea" placeholder="Ex: ser palestrante influente em clima/saúde/extensão, com clareza e presença."></textarea>
 
-  <div id="errorBar" class="error hidden"></div>
+      <div class="row">
+        <button class="btn" id="btnSaveProfile">Salvar perfil</button>
+        <button class="btn ghost" id="btnClearPhoto">Remover foto</button>
+      </div>
 
-  <main class="layout">
-    <!-- Sidebar -->
-    <aside class="side">
-      <section class="card">
-        <div class="cardTitle">👤 Seu perfil</div>
+      <div id="profilePreview" class="profilePreview"></div>
+    </section>
 
-        <div class="row2">
-          <div>
-            <label class="label">Nome</label>
-            <input id="inpName" class="input" placeholder="Ernandes (ou como quiser)" />
-          </div>
-          <div>
-            <label class="label">Foto (arquivo)</label>
-            <input id="inpPhoto" class="input" type="file" accept="image/*" />
-          </div>
+    <section class="card">
+      <div class="cardTitle">⏱️ Tempo conectado (estudo)</div>
+      <div class="timerRow">
+        <div class="timer" id="timerText">00:00:00</div>
+        <div class="timerBtns">
+          <button class="btn" id="btnTimerStart">Iniciar</button>
+          <button class="btn ghost" id="btnTimerStop">Parar</button>
         </div>
+      </div>
+      <div class="muted small">Isso mede seu tempo real usando o app (não o tempo do vídeo).</div>
+    </section>
 
-        <label class="label">Seu objetivo com o curso</label>
-        <textarea id="inpGoal" class="textarea" placeholder="Ex: ser palestrante influente em clima/saúde/extensionismo, com clareza e presença."></textarea>
-
-        <div class="row">
-          <button class="btn" id="btnSaveProfile">Salvar perfil</button>
-          <button class="btn ghost" id="btnClearPhoto">Remover foto</button>
-        </div>
-
-        <div id="profilePreview" class="profilePreview"></div>
-      </section>
-
-      <section class="card">
-        <div class="cardTitle">⏱️ Tempo conectado (estudo)</div>
-        <div class="timerRow">
-          <div class="timer" id="timerText">00:00:00</div>
-          <div class="timerBtns">
-            <button class="btn" id="btnTimerStart">Iniciar</button>
-            <button class="btn ghost" id="btnTimerStop">Parar</button>
-          </div>
-        </div>
-        <div class="muted small">Dica: isso mede seu tempo real usando o app (não o tempo do vídeo).</div>
-      </section>
-
-      <section class="card">
-        <div class="cardTitle">📈 Progresso</div>
-        <div class="progressBar"><div id="progFill" class="progressFill"></div></div>
-        <div class="progressMeta">
-          <span id="progText">0%</span>
-          <span id="progCount">0/20 aulas</span>
-        </div>
-        <div class="pills">
-          <span class="pill" id="pillSeen">0 itens vistos</span>
-          <span class="pill" id="pillTime">0h estudadas</span>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="cardTitle">📚 Aulas</div>
-        <div id="lessonList" class="lessonList"></div>
-      </section>
-    </aside>
-
-    <!-- Content -->
-    <section class="main">
-      <section class="card hero">
-        <div class="heroTop">
-          <div>
-            <div class="heroTitle" id="lessonTitle">Selecione uma aula</div>
-            <div class="heroSub" id="lessonMeta">Você vai ver leitura, links (PT/EN), exemplos, templates editáveis e tarefas.</div>
-          </div>
-
-          <div class="heroBtns">
-            <button class="btn ghost" id="btnPrev">← Anterior</button>
-            <button class="btn ghost" id="btnNext">Próxima →</button>
-          </div>
-        </div>
-
-        <div class="row" id="lessonControls">
-          <span class="badge" id="badgeStatus">—</span>
-          <button class="btn" id="btnDone">Marcar como concluída</button>
-          <button class="btn ghost" id="btnUndone">Desmarcar</button>
-
-          <div class="spacer"></div>
-
-          <span class="muted small">Você gostou desta aula?</span>
-          <button class="btn ghost mini" id="btnLike">👍</button>
-          <button class="btn ghost mini" id="btnDislike">👎</button>
-        </div>
-      </section>
-
-      <div class="grid">
-        <section class="card">
-          <div class="cardTitle">📖 Leitura na plataforma (direto ao ponto)</div>
-          <div id="studyBox" class="studyBox"></div>
-        </section>
-
-        <section class="card">
-          <div class="cardTitle">🎬 Links (PT/EN) + marcar como visto</div>
-          <div id="linksBox"></div>
-        </section>
-
-        <section class="card">
-          <div class="cardTitle">✅ O que fazer / ❌ O que NÃO fazer</div>
-          <div id="doDontBox"></div>
-        </section>
-
-        <section class="card">
-          <div class="cardTitle">🧩 Templates editáveis (escreva aqui)</div>
-          <div id="tplBox"></div>
-        </section>
-
-        <section class="card">
-          <div class="cardTitle">🧪 Tarefas práticas</div>
-          <div id="tasksBox"></div>
-        </section>
-
-        <section class="card">
-          <div class="cardTitle">📦 Sua entrega + notas</div>
-
-          <label class="label">Entrega (cole link do vídeo, texto, roteiro, slides…)</label>
-          <input id="inpDelivery" class="input" placeholder="Cole aqui…" />
-          <div class="row">
-            <button class="btn" id="btnSaveDelivery">Salvar entrega</button>
-            <span class="muted small" id="msgDelivery"></span>
-          </div>
-
-          <label class="label">Notas</label>
-          <textarea id="inpNotes" class="textarea" placeholder="O que aprendi? Onde travei? Qual frase ficou forte?"></textarea>
-          <div class="row">
-            <button class="btn" id="btnSaveNotes">Salvar notas</button>
-            <span class="muted small" id="msgNotes"></span>
-          </div>
-        </section>
+    <section class="card">
+      <div class="cardTitle">📈 Progresso</div>
+      <div class="progressBar"><div id="progFill" class="progressFill"></div></div>
+      <div class="progressMeta">
+        <span id="progText">0%</span>
+        <span id="progCount">0/20 aulas</span>
+      </div>
+      <div class="pills">
+        <span class="pill" id="pillSeen">0 itens vistos</span>
+        <span class="pill" id="pillTime">0h estudadas</span>
       </div>
     </section>
-  </main>
 
-  <dialog id="dlgImport" class="dlg">
-    <form method="dialog" class="dlgBody">
-      <h3>Importar progresso</h3>
-      <p class="muted">Cole o JSON exportado aqui.</p>
-      <textarea id="importText" class="textarea" style="min-height:220px" placeholder='{ "version": 1, ... }'></textarea>
-      <div class="row right">
-        <button class="btn ghost">Cancelar</button>
-        <button class="btn" id="btnDoImport">Importar</button>
+    <section class="card">
+      <div class="cardTitle">📚 Aulas</div>
+      <div id="lessonList" class="lessonList"></div>
+    </section>
+  </aside>
+
+  <section class="main">
+    <section class="card hero">
+      <div class="heroTop">
+        <div>
+          <div class="heroTitle" id="lessonTitle">Selecione uma aula</div>
+          <div class="heroSub" id="lessonMeta">Você vai ter leitura, links (PT/EN), exemplos, templates editáveis e tarefas.</div>
+        </div>
+
+        <div class="heroBtns">
+          <button class="btn ghost" id="btnPrev">← Anterior</button>
+          <button class="btn ghost" id="btnNext">Próxima →</button>
+        </div>
       </div>
-    </form>
-  </dialog>
 
-  <script src="./app.js"></script>
+      <div class="row">
+        <span class="badge" id="badgeStatus">—</span>
+        <button class="btn" id="btnDone">Marcar como concluída</button>
+        <button class="btn ghost" id="btnUndone">Desmarcar</button>
+
+        <div class="spacer"></div>
+
+        <span class="muted small">Você gostou desta aula?</span>
+        <button class="btn ghost mini" id="btnLike">👍</button>
+        <button class="btn ghost mini" id="btnDislike">👎</button>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <div class="cardTitle">📖 Leitura na plataforma</div>
+        <div id="studyBox" class="studyBox"></div>
+      </section>
+
+      <section class="card">
+        <div class="cardTitle">🎬 Links + marcar como visto</div>
+        <div class="muted small">Marque como <span class="kbd">visto</span> para contar no progresso.</div>
+        <div id="linksBox"></div>
+      </section>
+
+      <section class="card">
+        <div class="cardTitle">✅ Faça / ❌ Evite</div>
+        <div id="doDontBox"></div>
+      </section>
+
+      <section class="card">
+        <div class="cardTitle">🧩 Templates editáveis (escreva e salve)</div>
+        <div id="tplBox"></div>
+      </section>
+
+      <section class="card">
+        <div class="cardTitle">🧪 Tarefas práticas</div>
+        <div id="tasksBox"></div>
+      </section>
+
+      <section class="card">
+        <div class="cardTitle">📦 Entrega + notas</div>
+
+        <label class="label">Entrega (link do vídeo, texto, slides, roteiro…)</label>
+        <input id="inpDelivery" class="input" placeholder="Cole aqui…" />
+        <div class="row">
+          <button class="btn" id="btnSaveDelivery">Salvar entrega</button>
+          <span class="muted small" id="msgDelivery"></span>
+        </div>
+
+        <label class="label">Notas</label>
+        <textarea id="inpNotes" class="textarea" placeholder="O que aprendi? Onde travei? Qual frase ficou forte?"></textarea>
+        <div class="row">
+          <button class="btn" id="btnSaveNotes">Salvar notas</button>
+          <span class="muted small" id="msgNotes"></span>
+        </div>
+
+        <div class="block warn">
+          <b>Frase de orgulho (para você usar depois):</b><br>
+          “Eu fiz minha própria plataforma de estudo em oratória e storytelling, com apoio do ChatGPT, e completei 20 horas.”
+        </div>
+      </section>
+    </div>
+  </section>
+</main>
+
+<dialog id="dlgImport">
+  <form method="dialog" style="padding:14px">
+    <h3>Importar progresso</h3>
+    <p class="muted">Cole o JSON exportado aqui.</p>
+    <textarea id="importText" class="textarea" style="min-height:240px" placeholder='{ "version": 1, "state": {...} }'></textarea>
+    <div class="row right">
+      <button class="btn ghost">Cancelar</button>
+      <button class="btn" id="btnDoImport">Importar</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlgQuick">
+  <form method="dialog" style="padding:14px">
+    <h3>Como usar (2 minutos)</h3>
+    <div class="block color">
+      <b>Passo 1</b> — Preencha seu perfil + objetivo.<br>
+      <b>Passo 2</b> — Clique numa aula e leia a “Leitura na plataforma”.<br>
+      <b>Passo 3</b> — Abra 2 links e marque como <b>visto</b>.<br>
+      <b>Passo 4</b> — Faça 1 tarefa prática e escreva no template.<br>
+      <b>Passo 5</b> — Cole sua entrega (texto/slide/vídeo) + notas.
+    </div>
+    <div class="block">
+      <b>Dica real:</b> Não faça 3 aulas num dia. Faça 1 bem feita. Você quer consistência e repetição (habilidade corporal).
+    </div>
+    <div class="row right">
+      <button class="btn">Entendi</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+"use strict";
+
+/** =========================
+ *  CURSO COMPLETO L1–L20 (20h)
+ *  ========================= */
+const COURSE = {
+  version: 1,
+  totalLessons: 20,
+  lessons: [
+    // -------- L1–L5: Fundamentos (base) --------
+    {
+      id:"L1",
+      title:"Aula 1 — O que é storytelling (sem historinha)",
+      minutes:60,
+      outcome:"Definir sua ideia central em 12–15 palavras e entender storytelling científico.",
+      study:[
+        "Storytelling científico não é inventar: é organizar a verdade como transformação.",
+        "Uma palestra excelente muda algo no público: entendimento, decisão, prioridade ou ação.",
+        "Você não precisa ser engraçado. Precisa ser claro. Clareza vira autoridade.",
+        "Storytelling (modelo simples): realidade atual → tensão → virada → caminho → fecho com ação.",
+        "Regra do professor: 1 ideia central por fala. O resto serve a ela.",
+        "Seu diferencial (clima/extensão/gestão): você tem campo, impacto social e dados. Isso é material narrativo forte."
+      ],
+      links:[
+        {label:"TED — Chris Anderson: TED’s secret to great public speaking (EN/legendável)", url:"https://www.ted.com/talks/chris_anderson_ted_s_secret_to_great_public_speaking", type:"TED", note:"Observe como ele simplifica a ‘ideia central’."},
+        {label:"Nancy Duarte — The secret structure of great talks (EN/legendável)", url:"https://www.ted.com/talks/nancy_duarte_the_secret_structure_of_great_talks", type:"TED", note:"Estrutura de contraste (o que é vs o que poderia ser)."},
+        {label:"COMPASS — Message Box Workbook (PDF)", url:"https://www.compassscicomm.org/wp-content/uploads/2020/05/The-Message-Box-Workbook.pdf", type:"PDF", note:"Ferramenta excelente para ciência → política pública."}
+      ],
+      doDont:{
+        do:[
+          "Escreva uma frase de ideia central e repita 2–3x na palestra.",
+          "Use 1 exemplo real do Pantanal (cena) para dar chão aos dados.",
+          "Diga logo por que isso importa para pessoas (vida real)."
+        ],
+        dont:[
+          "Não abra com currículo/agradecimentos longos.",
+          "Não despeje resultados sem explicar a mensagem.",
+          "Não confunda tema (“clima”) com mensagem (“decisão X salva Y”)."
+        ]
+      },
+      templates:[
+        {name:"Ideia central (12–15 palavras)", text:"Minha ideia central é: ________ (verbo forte) ________ para ________ (impacto)."},
+        {name:"Mapa em 3 passos (30s)", text:"Hoje eu vou te mostrar: (1) ________, (2) ________, (3) ________. No final, você vai conseguir ________."}
+      ],
+      tasks:[
+        "Escreva sua ideia central (12–15 palavras).",
+        "Escolha 1 cena real (campo/extensão) que ilustra a tensão do tema.",
+        "Escreva um mapa em 3 passos (30–40s)."
+      ]
+    },
+    {
+      id:"L2",
+      title:"Aula 2 — Como começar a falar (aberturas que funcionam)",
+      minutes:60,
+      outcome:"Criar 3 aberturas (acadêmico / gestor / extensão) e escolher a melhor.",
+      study:[
+        "Abertura tem 3 funções: (1) atenção, (2) promessa de valor, (3) direção (mapa).",
+        "Erro acadêmico clássico: contexto longo antes de dizer o ponto. Isso mata o interesse.",
+        "Gestor/policy maker precisa sentir: ‘qual decisão está na mesa?’ antes do dado.",
+        "Extensão precisa sentir: ‘isso toca a vida real’. Uma cena curta resolve.",
+        "Meta: 25–35 segundos. Abertura boa é curta e assertiva.",
+        "Você (perfil professor + liderança): use autoridade pela clareza, não pela pose."
+      ],
+      links:[
+        {label:"Julian Treasure — How to speak so people want to listen (EN/legendável)", url:"https://www.ted.com/talks/julian_treasure_how_to_speak_so_that_people_want_to_listen", type:"TED", note:"Voz, ritmo e hábitos."},
+        {label:"Sônia Bridi — Como eu testemunhei a mudança climática (PT)", url:"https://www.ted.com/talks/sonia_bridi_como_eu_testemunhei_a_mudanca_climatica", type:"TED", note:"Abertura com autoridade + narrativa."},
+        {label:"Canal oficial Leandro Karnal (PT)", url:"https://www.youtube.com/@LeandroKarnal", type:"YouTube", note:"Use para observar ritmo e estrutura em português."}
+      ],
+      doDont:{
+        do:[
+          "Comece com pergunta real (decisão).",
+          "Prometa valor: ‘em 5 min você entende X’.",
+          "Dê o mapa: 3 pontos, simples."
+        ],
+        dont:[
+          "Não comece com ‘vou falar sobre…’ sem tensão.",
+          "Não leia slide na abertura.",
+          "Não conte história longa antes do ponto."
+        ]
+      },
+      templates:[
+        {name:"Abertura acadêmica (mapa)", text:"Hoje eu vou responder: ________. Em 3 passos: (1) ___, (2) ___, (3) ___. No final: ___ + próximo passo ___."},
+        {name:"Abertura gestor (risco→ação)", text:"A decisão aqui é: ________. Se não, o risco é: ________. Em 5 min: evidência → impacto → ação em 90 dias."},
+        {name:"Abertura extensão (cena)", text:"Cena real (30s): ________. Isso mostra por que ________ importa. No final, 1 ação simples: ________."}
+      ],
+      tasks:[
+        "Escreva 3 aberturas (acadêmico/gestor/extensão).",
+        "Leia em voz alta e corte 20% sem perder sentido.",
+        "Escolha 1 e refine para 25–35s."
+      ]
+    },
+    {
+      id:"L3",
+      title:"Aula 3 — Objetivo, resultado esperado e CTA",
+      minutes:60,
+      outcome:"Definir objetivo (verbo), resultado mensurável e CTA (chamada final).",
+      study:[
+        "Objetivo precisa de verbo forte: ensinar, convencer, mobilizar, destravar, fazer decidir.",
+        "Resultado esperado deve ser mensurável: ‘ao final, você consegue…’.",
+        "CTA é o que acontece depois, com prazo: ‘nos próximos 30 dias…’.",
+        "Para você: uma pesquisa vira 3 versões: aluno (aprender), gestor (decidir), sociedade (engajar).",
+        "Você fica ‘influente’ quando entrega clareza + próximo passo.",
+        "O segredo: menos objetivos, mais precisão."
+      ],
+      links:[
+        {label:"COMPASS — Message Box Workbook (PDF)", url:"https://www.compassscicomm.org/wp-content/uploads/2020/05/The-Message-Box-Workbook.pdf", type:"PDF", note:"Definição clara de ‘So what’."},
+        {label:"Matthew Shirts — Como falar de mudanças climáticas em festas (PT)", url:"https://www.ted.com/talks/matthew_shirts_como_falar_de_mudancas_climaticas_em_festas", type:"TED", note:"Tom humano e CTA implícito."},
+        {label:"Canal oficial Clóvis de Barros (PT)", url:"https://www.youtube.com/@ClovisdeBarrosFilho", type:"YouTube", note:"Observe chamadas finais e frases-marca."}
+      ],
+      doDont:{
+        do:[
+          "Escreva objetivo + resultado + CTA em 3 linhas.",
+          "Inclua prazo e responsável no CTA (especialmente para gestores).",
+          "Fale como decisão e não como ‘tema’."
+        ],
+        dont:[
+          "Evite ‘conscientizar’ como objetivo (vago).",
+          "Não termine sem dizer próximo passo.",
+          "Não tente fazer 4 objetivos numa fala."
+        ]
+      },
+      templates:[
+        {name:"Objetivo / Resultado / CTA (pronto)", text:"Objetivo: fazer o público ________.\nResultado: ao final, eles conseguem ________.\nCTA: eu quero que eles ________ até ________."},
+        {name:"CTA gestor (90 dias)", text:"Em 90 dias: (1) ________, (2) ________, (3) ________. Indicador de sucesso: ________."}
+      ],
+      tasks:[
+        "Escolha um tema seu (ex: restauração e saúde humana).",
+        "Preencha Objetivo/Resultado/CTA em 3 versões: aluno/gestor/extensão.",
+        "Escolha a versão ‘gestor’ e refine para 2 frases."
+      ]
+    },
+    {
+      id:"L4",
+      title:"Aula 4 — Estrutura 3 blocos (sem fala em espiral)",
+      minutes:60,
+      outcome:"Montar roteiro de 6–8 min em 3 blocos com transições.",
+      study:[
+        "Estrutura segura: (1) o que está acontecendo, (2) por que importa, (3) o que fazer.",
+        "Cada bloco termina com ponte (1 frase que leva ao próximo).",
+        "1 evidência por bloco. Não é revisão bibliográfica oral.",
+        "Para clima/saúde: o bloco 2 precisa ter impacto humano e custo de não agir.",
+        "Você quer uma espinha dorsal repetível para qualquer palestra.",
+        "Roteiro bom é ‘andável’: você consegue falar sem ler."
+      ],
+      links:[
+        {label:"Nancy Duarte — estrutura (EN/legendável)", url:"https://www.ted.com/talks/nancy_duarte_the_secret_structure_of_great_talks", type:"TED", note:"Veja o contraste e transições."},
+        {label:"Toastmasters — Fundamentals (PDF)", url:"https://ccdn.toastmasters.org/medias/files/department-documents/club-documents/fundamentals-of-public-speaking/fundamentals-of-public-speaking-english.pdf", type:"PDF", note:"Abertura/meio/fecho na prática."}
+      ],
+      doDont:{
+        do:[
+          "Dê títulos para cada bloco em 1 frase.",
+          "Escreva 2 pontes curtas (transições).",
+          "Corte tudo que não serve a um dos blocos."
+        ],
+        dont:[
+          "Não faça vai-e-volta de assuntos.",
+          "Não detalhe método no meio do talk (só o necessário).",
+          "Não use jargão sem traduzir."
+        ]
+      },
+      templates:[
+        {name:"Roteiro 3 blocos (6–8 min)", text:"Bloco 1 (o que acontece): ________ (1 evidência)\nPonte: “O ponto é ________.”\nBloco 2 (por que importa): ________ (impacto)\nPonte: “Então precisamos ________.”\nBloco 3 (o que fazer): 3 ações: (1) ___ (2) ___ (3) ___."}
+      ],
+      tasks:[
+        "Monte roteiro 3 blocos + 2 pontes.",
+        "Leia cronometrando 6–8 min.",
+        "Marque 2 trechos confusos e reescreva."
+      ]
+    },
+    {
+      id:"L5",
+      title:"Aula 5 — Fechamento que deixa rastro (memória + ação)",
+      minutes:60,
+      outcome:"Criar 3 fechamentos e escolher 1 memorável com CTA.",
+      study:[
+        "O fechamento decide se você será lembrado.",
+        "3 formatos: pergunta forte (decisão), convite prático (prazo), frase-marca (identidade).",
+        "Seu fecho precisa reconectar com a ideia central (Aula 1).",
+        "Para política pública: fecho tem que ser executável (quem faz + quando).",
+        "Você quer um fecho que repete em qualquer palestra do tema."
+      ],
+      links:[
+        {label:"Sônia Bridi — rever o final (PT)", url:"https://www.ted.com/talks/sonia_bridi_como_eu_testemunhei_a_mudanca_climatica", type:"TED", note:"Observe como ela fecha com impacto."},
+        {label:"Chris Anderson — talk (EN/legendável)", url:"https://www.ted.com/talks/chris_anderson_ted_s_secret_to_great_public_speaking", type:"TED", note:"Veja como ele amarra a mensagem."}
+      ],
+      doDont:{
+        do:[
+          "Feche com 1 frase curta + CTA.",
+          "Volte na ideia central do começo.",
+          "Finalize com calma (sem acelerar)."
+        ],
+        dont:[
+          "Não termine com ‘é isso’ sem mensagem.",
+          "Não abra assunto novo no final.",
+          "Não peça desculpa por tempo/conteúdo."
+        ]
+      },
+      templates:[
+        {name:"Fecho pergunta", text:"“Se você tivesse que decidir hoje, escolheria ________ ou ________?”"},
+        {name:"Fecho convite (30 dias)", text:"“Nos próximos 30 dias, vamos ________. Eu me comprometo com ________.”"},
+        {name:"Fecho frase-marca", text:"“No Pantanal, ________. E é por isso que ________.”"}
+      ],
+      tasks:[
+        "Escreva 3 fechamentos (um de cada tipo).",
+        "Escolha o mais forte e refine para 20–25s.",
+        "Cole aqui sua versão final na Entrega."
+      ]
+    },
+
+    // -------- L6–L10: Voz, presença, slides, exemplos e anti-erros --------
+    {
+      id:"L6",
+      title:"Aula 6 — Voz que sustenta autoridade (ritmo, pausa, ênfase)",
+      minutes:60,
+      outcome:"Controlar ritmo e pausa para soar seguro sem ‘forçar’ a voz.",
+      study:[
+        "Voz não é volume; é controle.",
+        "Pausa cria autoridade: você mostra que sabe onde está indo.",
+        "Ritmo bom alterna: frase curta (impacto) + frase média (explica).",
+        "Ênfase: escolha 1 palavra por frase para marcar (não tudo).",
+        "Exercício-chave: ‘fala com freio’ — você corta 15% da velocidade."
+      ],
+      links:[
+        {label:"Julian Treasure — voz (EN/legendável)", url:"https://www.ted.com/talks/julian_treasure_how_to_speak_so_that_people_want_to_listen", type:"TED", note:"Pontos práticos de voz."},
+        {label:"Pesquisa por ‘pausas na fala’ (PT) — YouTube", url:"https://www.youtube.com/results?search_query=pausas+na+fala+orat%C3%B3ria", type:"YouTube", note:"Selecione 1 vídeo em PT e marque como visto."}
+      ],
+      doDont:{
+        do:["Use pausa antes da frase mais importante.","Finalize frase no fim (não deixe cair).","Respire antes do ponto-chave."],
+        dont:["Não acelere para ‘terminar logo’.","Não use muletas (‘né’, ‘tipo’) sem perceber.","Não fale o tempo todo sem pausa."]
+      },
+      templates:[
+        {name:"Frase de impacto (com pausa)", text:"[Pausa] A verdade é: ________. [Pausa] E isso muda ________."}
+      ],
+      tasks:[
+        "Leia o template 10x com pausa e grave 30s (opcional).",
+        "Conte quantos ‘né/tipo’ aparecem. Regrave reduzindo pela metade.",
+        "Escreva 3 frases de impacto sobre seu tema."
+      ]
+    },
+    {
+      id:"L7",
+      title:"Aula 7 — Presença (olhar, mãos, postura) sem virar teatro",
+      minutes:60,
+      outcome:"Reduzir nervosismo visível e ganhar presença com 3 regras simples.",
+      study:[
+        "Presença é estabilidade + intenção. Não é ‘performance’.",
+        "Regra 1: pé firme, ombro relaxado, queixo neutro.",
+        "Regra 2: mãos servem ao raciocínio (apontar, comparar, enumerar).",
+        "Regra 3: olhar ‘varre’ o público em blocos (3–4 pontos).",
+        "Se você treme: diminua a velocidade e aumente a pausa."
+      ],
+      links:[
+        {label:"Pesquisa ‘linguagem corporal apresentação’ (PT) — YouTube", url:"https://www.youtube.com/results?search_query=linguagem+corporal+apresenta%C3%A7%C3%A3o+orat%C3%B3ria", type:"YouTube", note:"Pegue 1 vídeo em PT e marque como visto."}
+      ],
+      doDont:{
+        do:["Faça gesto apenas quando ajuda entendimento.","Olhe quando falar a frase mais importante.","Use enumeração com dedos (1,2,3) com calma."],
+        dont:["Não ‘dance’ nem balance sem motivo.","Não esconda as mãos o tempo todo.","Não olhe só para o slide."]
+      },
+      templates:[
+        {name:"Gestos por função", text:"Quando eu comparar duas coisas, eu abro as mãos (A vs B).\nQuando eu listar, eu marco (1)(2)(3).\nQuando eu concluir, eu paro e faço pausa."}
+      ],
+      tasks:[
+        "Faça 1 minuto em pé: 3 pontos (1)(2)(3) com gesto de enumeração.",
+        "Grave (opcional) e marque 1 ajuste corporal.",
+        "Anote 1 ‘tic’ (mexer pé, balançar) e reduza 50%."
+      ]
+    },
+    {
+      id:"L8",
+      title:"Aula 8 — Slides que não atrapalham (menos texto, mais mensagem)",
+      minutes:60,
+      outcome:"Transformar slides em apoio visual: 1 ideia por slide, 6 palavras ou menos.",
+      study:[
+        "Slide não é roteiro; é apoio visual.",
+        "Regra de ouro: 1 ideia por slide. O resto vira fala.",
+        "Texto demais cria ‘leitura simultânea’ e derruba atenção.",
+        "Seu público (gestor/policy): quer síntese + decisão, não ‘tabela infinita’.",
+        "Use gráficos com frase-título: ‘O pico de X ocorreu em Y — por causa de Z’."
+      ],
+      links:[
+        {label:"Pesquisa ‘slides minimalistas apresentação’ (PT) — YouTube", url:"https://www.youtube.com/results?search_query=slides+minimalistas+apresenta%C3%A7%C3%A3o", type:"YouTube", note:"Escolha 1 vídeo em PT e marque como visto."},
+        {label:"TED — Nancy Duarte (estrutura) (EN)", url:"https://www.ted.com/talks/nancy_duarte_the_secret_structure_of_great_talks", type:"TED", note:"Observe como a ideia manda nos slides."}
+      ],
+      doDont:{
+        do:["Escreva o título do slide como conclusão.","Use 1 gráfico por slide.","Deixe espaço em branco (respira)."],
+        dont:["Não copie parágrafo para slide.","Não use 10 cores sem sentido.","Não deixe eixo/legenda ilegíveis."]
+      },
+      templates:[
+        {name:"Título-conclusão", text:"Em vez de: ‘Resultados’\nUse: ‘A restauração reduz risco de mortalidade em ondas de calor’"}
+      ],
+      tasks:[
+        "Pegue 1 slide seu e corte 70% do texto.",
+        "Reescreva o título como conclusão.",
+        "Cole a versão final na Entrega (texto)."
+      ]
+    },
+    {
+      id:"L9",
+      title:"Aula 9 — Exemplos: o que faz uma fala científica ser memorável",
+      minutes:60,
+      outcome:"Criar 2 exemplos fortes (cena + dado) para seu tema principal.",
+      study:[
+        "Memória vem de: cena concreta + número simples + consequência humana.",
+        "Cena: 10–20s. Dado: 1 linha. Consequência: 1 frase.",
+        "Para clima: sempre responda ‘e daí?’ — impacto, custo, decisão.",
+        "Exemplo ruim: abstrato e longo. Exemplo bom: concreto e curto.",
+        "Você tem material: campo no Pantanal, extensão, saúde, políticas públicas."
+      ],
+      links:[
+        {label:"TED — Sônia Bridi (PT) (observe cenas)", url:"https://www.ted.com/talks/sonia_bridi_como_eu_testemunhei_a_mudanca_climatica", type:"TED", note:"Ela alterna cena + evidência."},
+        {label:"Pesquisa ‘storytelling científico’ (PT) — YouTube", url:"https://www.youtube.com/results?search_query=storytelling+cient%C3%ADfico+comunica%C3%A7%C3%A3o+da+ci%C3%AAncia", type:"YouTube", note:"Escolha 1 vídeo em PT."}
+      ],
+      doDont:{
+        do:["Use exemplos com lugar/tempo (‘em Cáceres, 2023…’).","Use número redondo (aprox.) quando possível.","Diga a consequência em 1 frase."],
+        dont:["Não use 5 números seguidos.","Não conte caso sem ponto.","Não descreva método inteiro como exemplo."]
+      },
+      templates:[
+        {name:"Exemplo cena+dado+consequência", text:"Cena (15s): ________.\nDado (1 linha): ________.\nConsequência (1 frase): ________.\nPonte: “Isso nos leva a ________.”"}
+      ],
+      tasks:[
+        "Crie 2 exemplos completos com o template.",
+        "Escolha o melhor e encaixe no bloco 2 do seu roteiro (Aula 4).",
+        "Cole na Entrega."
+      ]
+    },
+    {
+      id:"L10",
+      title:"Aula 10 — Erros fatais (e como corrigir rápido)",
+      minutes:60,
+      outcome:"Identificar 5 erros pessoais e montar um plano de correção de 7 dias.",
+      study:[
+        "Você não precisa virar outra pessoa. Você precisa cortar ruídos.",
+        "5 erros comuns: contexto longo, frases longas, sem pausa, sem CTA, slide-texto.",
+        "Correção rápida: 1 erro por semana, não tudo de uma vez.",
+        "Aula prática: você vai criar seu ‘manual pessoal’ de oratória.",
+        "Professor bom é quem se auto-observa com gentileza e método."
+      ],
+      links:[
+        {label:"Pesquisa ‘vícios de linguagem apresentação’ (PT) — YouTube", url:"https://www.youtube.com/results?search_query=v%C3%ADcios+de+linguagem+apresenta%C3%A7%C3%A3o", type:"YouTube", note:"Escolha 1 vídeo em PT."}
+      ],
+      doDont:{
+        do:["Escolha 1 erro para corrigir nesta semana.","Crie um lembrete antes da palestra.","Peça 1 feedback específico (clareza/ritmo/CTA)."],
+        dont:["Não tente corrigir 10 coisas de uma vez.","Não se ataque — foque em ajuste.","Não ignore gravação curta (30s)."]
+      },
+      templates:[
+        {name:"Plano de 7 dias", text:"Erro principal: ________.\nSinal de alerta: ________.\nRegra simples: ________.\nTreino diário (3 min): ________.\nMeta em 7 dias: ________."}
+      ],
+      tasks:[
+        "Marque seus 5 erros mais prováveis (escreva).",
+        "Escolha 1 para a semana e preencha o plano de 7 dias.",
+        "Cole a versão final na Entrega."
+      ]
+    },
+
+    // -------- L11–L15: Storytelling avançado + persuasão + público --------
+    {
+      id:"L11",
+      title:"Aula 11 — Tensão e virada (a engrenagem do storytelling)",
+      minutes:60,
+      outcome:"Transformar seu tema em narrativa: tensão → virada → caminho.",
+      study:[
+        "Sem tensão não existe história: existe exposição.",
+        "Tensão = o que está em risco (humano, econômico, ecológico).",
+        "Virada = o momento de insight: ‘o que ninguém está vendo’.",
+        "Caminho = 3 ações possíveis (o público sai com direção).",
+        "Você vai usar isso em clima, restauração, saúde, extensão."
+      ],
+      links:[
+        {label:"Nancy Duarte — estrutura (EN)", url:"https://www.ted.com/talks/nancy_duarte_the_secret_structure_of_great_talks", type:"TED", note:"Tensão/contraste na prática."},
+        {label:"Pesquisa ‘como criar tensão em apresentação’ (PT) — YouTube", url:"https://www.youtube.com/results?search_query=criar+tens%C3%A3o+em+apresenta%C3%A7%C3%A3o", type:"YouTube", note:"Selecione 1 vídeo em PT."}
+      ],
+      doDont:{
+        do:["Declare o risco em 1 frase curta.","Mostre a virada com 1 exemplo claro.","Ofereça 3 caminhos, não 20."],
+        dont:["Não esconda o risco até o final.","Não complique a virada com jargão.","Não entregue solução sem mostrar tensão."]
+      },
+      templates:[
+        {name:"Tensão → Virada → Caminho", text:"Tensão (risco): ________.\nVirada (insight): ________.\nCaminho (3 ações): (1) ___ (2) ___ (3) ___."}
+      ],
+      tasks:[
+        "Escreva tensão/virada/caminho do seu tema principal.",
+        "Leia em voz alta e corte 20%.",
+        "Cole na Entrega."
+      ]
+    },
+    {
+      id:"L12",
+      title:"Aula 12 — Storyboard do talk (12–15 min repetível)",
+      minutes:60,
+      outcome:"Montar storyboard completo e repetível para seu talk principal.",
+      study:[
+        "Storyboard = sequência de cenas/pontos (não texto corrido).",
+        "Você vai montar: abertura → bloco 1 → bloco 2 → bloco 3 → fecho.",
+        "Cada parte precisa de 1 frase de função: o que esta parte faz?",
+        "Talk repetível = você consegue dar em qualquer lugar mudando só exemplo/dado.",
+        "Seu alvo: falar com clareza para público misto (academia + gestão + sociedade)."
+      ],
+      links:[
+        {label:"Chris Anderson — talk (EN)", url:"https://www.ted.com/talks/chris_anderson_ted_s_secret_to_great_public_speaking", type:"TED", note:"Estrutura e ritmo."}
+      ],
+      doDont:{
+        do:["Use post-its (mentalmente) — 8 a 12 cartões.","Cada cartão tem 1 frase.","Tenha 2 exemplos prontos (um curto, um forte)."],
+        dont:["Não escreva texto inteiro para decorar.","Não tenha 40 cartões.","Não pule direto para slide sem storyboard."]
+      },
+      templates:[
+        {name:"Storyboard (cartões)", text:"Cartão 1 (abertura): ________\n2 (bloco 1): ________\n3 (ponte): ________\n4 (bloco 2): ________\n5 (ponte): ________\n6 (bloco 3): ________\n7 (fecho): ________\n8 (CTA): ________"}
+      ],
+      tasks:[
+        "Monte storyboard com 8–12 cartões (frases curtas).",
+        "Fale 5 minutos olhando só para os cartões (sem ler texto).",
+        "Cole storyboard final na Entrega."
+      ]
+    },
+    {
+      id:"L13",
+      title:"Aula 13 — Falar com gestores/policy makers (e não perder rigor)",
+      minutes:60,
+      outcome:"Converter pesquisa em decisão: pergunta de decisão, evidência, impacto, ação.",
+      study:[
+        "Policy não compra ‘tema’. Compra clareza para decidir.",
+        "Pergunta de decisão: ‘o que vocês precisam decidir hoje?’",
+        "Evidência: 1 número ou tendência + confiança (sem jargão excessivo).",
+        "Impacto: custo de não agir e benefício de agir.",
+        "Ação: 3 medidas em 90 dias (responsável + indicador)."
+      ],
+      links:[
+        {label:"COMPASS — Message Box Workbook (PDF)", url:"https://www.compassscicomm.org/wp-content/uploads/2020/05/The-Message-Box-Workbook.pdf", type:"PDF", note:"Ferramenta de política pública."},
+        {label:"Pesquisa ‘comunicação científica para gestores’ (PT) — YouTube", url:"https://www.youtube.com/results?search_query=comunica%C3%A7%C3%A3o+cient%C3%ADfica+para+gestores", type:"YouTube", note:"Selecione 1 vídeo em PT."}
+      ],
+      doDont:{
+        do:["Abra com decisão e risco.","Mostre 1 gráfico com título-conclusão.","Feche com ação em 90 dias."],
+        dont:["Não entregue método detalhado antes da decisão.","Não jogue 12 gráficos.","Não termine sem responsável/indicador."]
+      },
+      templates:[
+        {name:"Modelo policy (5 min)", text:"Decisão: ________.\nRisco se não agir: ________.\nEvidência (1): ________.\nImpacto humano/econômico: ________.\nAção em 90 dias: (1) ___ (2) ___ (3) ___.\nIndicador: ________."}
+      ],
+      tasks:[
+        "Escolha 1 decisão real (ex: restauração, saúde, fogo).",
+        "Preencha o modelo policy completo.",
+        "Cole na Entrega."
+      ]
+    },
+    {
+      id:"L14",
+      title:"Aula 14 — Aula universitária memorável (docência com storytelling)",
+      minutes:60,
+      outcome:"Transformar uma aula em jornada: pergunta central, exemplos, prática, fecho.",
+      study:[
+        "Boa aula não é só conteúdo: é organização + prática + sentido.",
+        "Pergunta central: o que o aluno precisa saber fazer ao final?",
+        "Exemplo concreto → conceito → exercício curto → feedback.",
+        "Você mantém rigor, mas entrega em blocos digeríveis.",
+        "Docência de excelência: clareza, ritmo, checagem de entendimento."
+      ],
+      links:[
+        {label:"Pesquisa ‘metodologias ativas aula universitária’ (PT) — YouTube", url:"https://www.youtube.com/results?search_query=metodologias+ativas+aula+universit%C3%A1ria", type:"YouTube", note:"Escolha 1 vídeo em PT."}
+      ],
+      doDont:{
+        do:["Comece com pergunta-problema.","Faça micro-exercício de 3–5 min.","Feche recapitulando 1 ideia central."],
+        dont:["Não faça 50 min sem interação.","Não confunda ‘falar muito’ com ‘ensinar’.","Não finalize sem checar entendimento."]
+      },
+      templates:[
+        {name:"Roteiro de aula (50 min)", text:"Pergunta central: ________.\nExemplo 1: ________.\nConceito: ________.\nExercício 5 min: ________.\nDiscussão: ________.\nFecho (1 frase): ________."}
+      ],
+      tasks:[
+        "Escolha uma aula real sua e aplique o roteiro.",
+        "Crie 1 exercício de 5 min para a turma.",
+        "Cole o roteiro final na Entrega."
+      ]
+    },
+    {
+      id:"L15",
+      title:"Aula 15 — Storytelling na extensão (mobilizar sem manipular)",
+      minutes:60,
+      outcome:"Criar fala de extensão com respeito: cena, sentido, convite, pertença.",
+      study:[
+        "Extensão é relação: você fala com, não fala sobre.",
+        "Comece com cena real e devolva protagonismo às pessoas.",
+        "Use ‘nós’ com cuidado: pertença sem apagar diversidade.",
+        "Convite simples e realizável (micro-ação).",
+        "Resultado: mobilização por dignidade, não por medo."
+      ],
+      links:[
+        {label:"Pesquisa ‘comunicação pública da ciência’ (PT) — YouTube", url:"https://www.youtube.com/results?search_query=comunica%C3%A7%C3%A3o+p%C3%BAblica+da+ci%C3%AAncia+Brasil", type:"YouTube", note:"Selecione 1 vídeo em PT."},
+        {label:"TED — como falar de clima em festas (PT)", url:"https://www.ted.com/talks/matthew_shirts_como_falar_de_mudancas_climaticas_em_festas", type:"TED", note:"Tom acessível e humano."}
+      ],
+      doDont:{
+        do:["Traga cena + respeito + convite.","Traduza jargão em linguagem cotidiana.","Feche com 1 ação pequena."],
+        dont:["Não trate público como ignorante.","Não faça terror sem saída.","Não dê 10 chamadas de uma vez."]
+      },
+      templates:[
+        {name:"Fala de extensão (3 min)", text:"Cena: ________.\nSentido: por que isso importa: ________.\nConvite: hoje a gente pode ________.\nFecho: ‘se a gente fizer isso, ________.’"}
+      ],
+      tasks:[
+        "Escreva uma fala de extensão de 3 min.",
+        "Refine para linguagem simples (sem jargão).",
+        "Cole na Entrega."
+      ]
+    },
+
+    // -------- L16–L20: Maestria: improviso, Q&A, nervosismo, talk final --------
+    {
+      id:"L16",
+      title:"Aula 16 — Improviso com método (sem perder o fio)",
+      minutes:60,
+      outcome:"Responder sem travar: técnica de 3 passos + ponte.",
+      study:[
+        "Improviso não é falar qualquer coisa: é responder com estrutura.",
+        "Técnica 3 passos: (1) responda direto, (2) explique 1 evidência, (3) amarre com implicação.",
+        "Ponte: ‘isso nos leva a…’ para voltar ao seu roteiro.",
+        "Você nunca precisa ‘saber tudo’. Precisa ser honesto e claro.",
+        "Treino: respostas de 20–40s."
+      ],
+      links:[
+        {label:"Pesquisa ‘como responder perguntas em palestra’ (PT) — YouTube", url:"https://www.youtube.com/results?search_query=como+responder+perguntas+em+palestra", type:"YouTube", note:"Escolha 1 vídeo em PT."}
+      ],
+      doDont:{
+        do:["Responda direto em 1 frase.","Use 1 evidência, não 10.","Volte para a mensagem central."],
+        dont:["Não comece com ‘depende’ por hábito.","Não ataque o perguntador.","Não se perca em tangentes."]
+      },
+      templates:[
+        {name:"Resposta 3 passos (40s)", text:"Resposta direta: ________.\nEvidência curta: ________.\nImplicação/ponte: ________ (e isso nos leva a…)."}
+      ],
+      tasks:[
+        "Escreva 5 perguntas difíceis que já te fizeram.",
+        "Responda com o template (1 por pergunta).",
+        "Cole a melhor resposta na Entrega."
+      ]
+    },
+    {
+      id:"L17",
+      title:"Aula 17 — Q&A de gestor (perguntas duras sem perder elegância)",
+      minutes:60,
+      outcome:"Dominar perguntas críticas com calma: limites, incerteza e decisão.",
+      study:[
+        "Gestor testa: custo, evidência, prazo, responsabilidade.",
+        "Você precisa nomear limites sem perder autoridade: ‘o que sabemos’, ‘o que não sabemos’, ‘o que recomendamos mesmo assim’.",
+        "Repetir a decisão ajuda a manter o foco.",
+        "Use linguagem de risco: probabilidade, severidade, custo de oportunidade.",
+        "Objetivo: você sair como ‘profissional confiável’."
+      ],
+      links:[
+        {label:"COMPASS — Message Box Workbook (PDF)", url:"https://www.compassscicomm.org/wp-content/uploads/2020/05/The-Message-Box-Workbook.pdf", type:"PDF", note:"Excelente para responder ‘so what’."}
+      ],
+      doDont:{
+        do:["Diga limites sem se desculpar.","Traga recomendação prática apesar da incerteza.","Traduza estatística em decisão."],
+        dont:["Não se esconda atrás de jargão.","Não prometa o que não tem.","Não vire defensivo."]
+      },
+      templates:[
+        {name:"Limite + recomendação", text:"O que sabemos: ________.\nO que ainda é incerto: ________.\nMesmo assim, recomendamos: ________ (porque ________)."}
+      ],
+      tasks:[
+        "Escreva 3 perguntas ‘duras’ e responda com o template.",
+        "Refine para tom calmo e firme.",
+        "Cole a melhor na Entrega."
+      ]
+    },
+    {
+      id:"L18",
+      title:"Aula 18 — Nervosismo e autoconfiança (controle prático, não motivação)",
+      minutes:60,
+      outcome:"Ter um protocolo pré-palestra de 5 min que estabiliza corpo e voz.",
+      study:[
+        "Nervosismo é energia. O problema é falta de direção.",
+        "Protocolo 5 min: respiração (1 min) + postura (1 min) + frase de abertura (2 min) + pausa (1 min).",
+        "Seu corpo aprende por repetição, não por vontade.",
+        "Autoconfiança = evidência interna: ‘eu já fiz isso 10 vezes’.",
+        "Meta: reduzir sintomas em 30–50% com rotina."
+      ],
+      links:[
+        {label:"Pesquisa ‘respiração para falar em público’ (PT) — YouTube", url:"https://www.youtube.com/results?search_query=respira%C3%A7%C3%A3o+para+falar+em+p%C3%BAblico", type:"YouTube", note:"Escolha 1 vídeo em PT."}
+      ],
+      doDont:{
+        do:["Faça protocolo antes de qualquer fala.","Treine abertura diariamente por 3 min.","Use pausas para controlar ansiedade."],
+        dont:["Não ‘apague’ nervosismo com pressa.","Não se ataque mentalmente.","Não mude tudo em cima da hora."]
+      },
+      templates:[
+        {name:"Protocolo 5 min", text:"1) Respiração (1 min): ________\n2) Postura (1 min): ________\n3) Abertura (2 min): ________\n4) Pausa (1 min): ________\nMeta: começar com calma e clareza."}
+      ],
+      tasks:[
+        "Escreva seu protocolo pessoal.",
+        "Execute hoje antes de falar 30s (qualquer tema).",
+        "Cole o protocolo final na Entrega."
+      ]
+    },
+    {
+      id:"L19",
+      title:"Aula 19 — Talk final (12–15 min): versão pronta para palco",
+      minutes:60,
+      outcome:"Montar talk final: abertura, 3 blocos, 2 exemplos, fecho e CTA.",
+      study:[
+        "Aqui você junta tudo: mensagem, estrutura, exemplos, voz e fecho.",
+        "Você vai produzir um talk que dá orgulho e é repetível.",
+        "Seu talk precisa funcionar para público misto: academia + gestão + sociedade.",
+        "Checklist: abertura 30s, blocos claros, 2 exemplos fortes, fecho 25s, CTA executável.",
+        "Objetivo: você sair com um talk ‘assinatura’."
+      ],
+      links:[
+        {label:"TED — Chris Anderson (rever estrutura)", url:"https://www.ted.com/talks/chris_anderson_ted_s_secret_to_great_public_speaking", type:"TED", note:"Ritmo e clareza."}
+      ],
+      doDont:{
+        do:["Tenha 1 slide por ideia.","Use 2 exemplos fortes.","Feche com CTA e prazo."],
+        dont:["Não tente colocar tudo que você sabe.","Não fale 25 min se prometeu 12.","Não termine sem próximo passo."]
+      },
+      templates:[
+        {name:"Roteiro talk final (12–15 min)", text:"Abertura (30s): ________\nBloco 1: ________\nExemplo 1: ________\nBloco 2: ________\nExemplo 2: ________\nBloco 3: ________\nFecho (25s): ________\nCTA (prazo): ________"}
+      ],
+      tasks:[
+        "Preencha o roteiro talk final completo.",
+        "Fale 12–15 min (cronometre).",
+        "Cole link/roteiro final na Entrega."
+      ]
+    },
+    {
+      id:"L20",
+      title:"Aula 20 — Pós-curso: seu manual pessoal + plano de evolução (30 dias)",
+      minutes:60,
+      outcome:"Criar um manual pessoal e um plano de 30 dias para virar hábito.",
+      study:[
+        "Oratória vira ‘você’ quando vira rotina curta.",
+        "Manual pessoal: seus 5 princípios + seus 3 erros + seu protocolo + sua frase-marca.",
+        "Plano 30 dias: 10 min por dia, 4 micro-metas por semana.",
+        "Você vai ter orgulho: ‘estudei sozinho com plataforma que construí’.",
+        "Agora você pode ensinar — porque viveu o método."
+      ],
+      links:[
+        {label:"Toastmasters — Fundamentals (PDF)", url:"https://ccdn.toastmasters.org/medias/files/department-documents/club-documents/fundamentals-of-public-speaking/fundamentals-of-public-speaking-english.pdf", type:"PDF", note:"Revisão de base."}
+      ],
+      doDont:{
+        do:["Faça microtreinos diários de 10 min.","Refaça seu talk final 1x por semana.","Peça feedback específico (clareza/CTA)."],
+        dont:["Não deixe 2 semanas sem falar.","Não mude tudo de uma vez.","Não pare no ‘agora tá bom’."]
+      },
+      templates:[
+        {name:"Manual pessoal (1 página)", text:"Meus 5 princípios: (1) ___ (2) ___ (3) ___ (4) ___ (5) ___\nMeus 3 erros: ___ / ___ / ___\nMeu protocolo 5 min: ________\nMinha frase-marca: ________\nMeu CTA padrão: ________"},
+        {name:"Plano 30 dias", text:"Semana 1: ________\nSemana 2: ________\nSemana 3: ________\nSemana 4: ________\nMeta final (talk): ________"}
+      ],
+      tasks:[
+        "Complete seu manual pessoal (copie no template).",
+        "Complete o plano de 30 dias.",
+        "Cole o manual + plano na Entrega."
+      ]
+    }
+  ]
+};
+
+/** =========================
+ *  ESTADO (SALVAMENTO)
+ *  ========================= */
+const KEY = "curso_oratoria_state_v1";
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return {
+      profile:{ name:"", goal:"", photoData:"" },
+      timeSec: 0,
+      timerRunning: false,
+      selected: "L1",
+      done: {},
+      liked: {},
+      watched: {},
+      tplEdits: {},
+      delivery: {},
+      notes: {}
+    };
+    return JSON.parse(raw);
+  }catch(e){
+    return {
+      profile:{ name:"", goal:"", photoData:"" },
+      timeSec: 0,
+      timerRunning: false,
+      selected: "L1",
+      done: {},
+      liked: {},
+      watched: {},
+      tplEdits: {},
+      delivery: {},
+      notes: {}
+    };
+  }
+}
+
+let state = loadState();
+
+function saveState(){ localStorage.setItem(KEY, JSON.stringify(state)); }
+function $(id){ return document.getElementById(id); }
+function showError(msg){
+  const el = $("errorBar");
+  el.textContent = "ERRO: " + msg;
+  el.classList.remove("hidden");
+}
+function hideError(){ $("errorBar").classList.add("hidden"); }
+
+/** =========================
+ *  TIMER
+ *  ========================= */
+let timerInt = null;
+function formatTime(sec){
+  const h = String(Math.floor(sec/3600)).padStart(2,"0");
+  const m = String(Math.floor((sec%3600)/60)).padStart(2,"0");
+  const s = String(sec%60).padStart(2,"0");
+  return `${h}:${m}:${s}`;
+}
+function startTimer(){
+  if(timerInt) return;
+  state.timerRunning = true;
+  timerInt = setInterval(()=>{
+    state.timeSec += 1;
+    $("timerText").textContent = formatTime(state.timeSec);
+    saveState();
+    renderProgress();
+  }, 1000);
+}
+function stopTimer(){
+  state.timerRunning = false;
+  if(timerInt){ clearInterval(timerInt); timerInt = null; }
+  saveState();
+}
+
+/** =========================
+ *  PROGRESSO
+ *  ========================= */
+function countWatched(){
+  let total = 0;
+  COURSE.lessons.forEach(l=> total += (l.links?.length || 0));
+  let seen = 0;
+  for(const lid in state.watched){
+    seen += Object.values(state.watched[lid] || {}).filter(Boolean).length;
+  }
+  return {total, seen};
+}
+function renderProgress(){
+  const doneCount = Object.values(state.done).filter(Boolean).length;
+  const pct = Math.round((doneCount / COURSE.totalLessons) * 100);
+  $("progFill").style.width = `${pct}%`;
+  $("progText").textContent = `${pct}%`;
+  $("progCount").textContent = `${doneCount}/${COURSE.totalLessons} aulas`;
+
+  const w = countWatched();
+  $("pillSeen").textContent = `${w.seen} itens vistos`;
+  $("pillTime").textContent = `${Math.round((state.timeSec/3600)*10)/10}h estudadas`;
+}
+
+/** =========================
+ *  PERFIL
+ *  ========================= */
+function renderProfile(){
+  $("inpName").value = state.profile.name || "";
+  $("inpGoal").value = state.profile.goal || "";
+
+  const box = $("profilePreview");
+  if(!state.profile.name && !state.profile.goal && !state.profile.photoData){
+    box.innerHTML = `<div class="muted small">Preencha seu perfil para personalizar o curso.</div>`;
+    return;
+  }
+  box.innerHTML = `
+    <div><b>${state.profile.name || "—"}</b></div>
+    <div class="muted">${state.profile.goal ? state.profile.goal : ""}</div>
+    ${state.profile.photoData ? `<img src="${state.profile.photoData}" alt="foto" />` : ""}
+  `;
+}
+
+/** =========================
+ *  LISTA DE AULAS
+ *  ========================= */
+function renderLessonList(){
+  const list = $("lessonList");
+  list.innerHTML = "";
+
+  COURSE.lessons.forEach((l)=>{
+    const div = document.createElement("div");
+    const isActive = state.selected === l.id;
+    div.className = "lessonItem" + (isActive ? " active" : "");
+    const done = !!state.done[l.id];
+    div.innerHTML = `
+      <div class="t">${done ? "✅ " : ""}${l.title}</div>
+      <div class="m">${l.minutes} min • ${l.outcome}</div>
+    `;
+    div.onclick = ()=>{
+      state.selected = l.id;
+      saveState();
+      renderAll();
+    };
+    list.appendChild(div);
+  });
+}
+
+function getLesson(){
+  return COURSE.lessons.find(x=>x.id===state.selected) || COURSE.lessons[0];
+}
+
+/** =========================
+ *  RENDER AULA
+ *  ========================= */
+function renderLesson(){
+  const l = getLesson();
+  if(!l) return;
+
+  $("lessonTitle").textContent = l.title;
+  $("lessonMeta").textContent = `${l.minutes} min • Resultado: ${l.outcome}`;
+
+  const done = !!state.done[l.id];
+  $("badgeStatus").textContent = done ? "Concluída ✅" : "Pendente ⏳";
+
+  // like/dislike
+  const fb = state.liked[l.id] || 0;
+  $("btnLike").style.borderColor = fb===1 ? "rgba(64,87,214,.55)" : "";
+  $("btnDislike").style.borderColor = fb===-1 ? "rgba(169,63,209,.55)" : "";
+
+  // study
+  $("studyBox").innerHTML = (l.study||[]).map(p=>`<div class="block color">${p}</div>`).join("");
+
+  // links
+  state.watched[l.id] = state.watched[l.id] || {};
+  const linksBox = $("linksBox");
+  linksBox.innerHTML = "";
+  (l.links||[]).forEach((r, idx)=>{
+    const checked = !!state.watched[l.id][idx];
+    const div = document.createElement("div");
+    div.className = "block";
+    div.innerHTML = `
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div><a href="${r.url}" target="_blank" rel="noopener">${r.label}</a></div>
+          <div class="muted small">${(r.type||"link").toUpperCase()} • ${r.note || ""}</div>
+        </div>
+        <label class="muted small" style="display:flex;gap:8px;align-items:center;white-space:nowrap">
+          <input type="checkbox" ${checked?"checked":""} /> visto
+        </label>
+      </div>
+    `;
+    const cb = div.querySelector("input");
+    cb.onchange = (e)=>{
+      state.watched[l.id][idx] = e.target.checked;
+      saveState();
+      renderProgress();
+    };
+    linksBox.appendChild(div);
+  });
+
+  // do/don't
+  const dd = l.doDont || {do:[], dont:[]};
+  $("doDontBox").innerHTML = `
+    <div class="block ok">
+      <div style="font-weight:1100">✅ Faça</div>
+      <ul>${(dd.do||[]).map(x=>`<li>${x}</li>`).join("")}</ul>
+    </div>
+    <div class="block bad">
+      <div style="font-weight:1100">❌ Evite</div>
+      <ul>${(dd.dont||[]).map(x=>`<li>${x}</li>`).join("")}</ul>
+    </div>
+  `;
+
+  // templates editáveis
+  state.tplEdits[l.id] = state.tplEdits[l.id] || {};
+  const tplBox = $("tplBox");
+  tplBox.innerHTML = "";
+  (l.templates||[]).forEach((t, ti)=>{
+    const val = state.tplEdits[l.id][ti] ?? t.text;
+    const wrap = document.createElement("div");
+    wrap.className = "block";
+    wrap.innerHTML = `
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+        <div style="font-weight:1100">${t.name}</div>
+        <button class="btn ghost mini" data-save-tpl="${ti}">Salvar</button>
+      </div>
+      <textarea class="textarea" style="min-height:120px" data-tpl="${ti}">${val}</textarea>
+      <div class="muted small">Você pode refinar esse texto ao longo do curso.</div>
+    `;
+    tplBox.appendChild(wrap);
+  });
+  tplBox.querySelectorAll("[data-save-tpl]").forEach(btn=>{
+    btn.onclick = ()=>{
+      const ti = btn.getAttribute("data-save-tpl");
+      const ta = tplBox.querySelector(`textarea[data-tpl="${ti}"]`);
+      state.tplEdits[l.id][ti] = ta.value;
+      saveState();
+      btn.textContent = "Salvo ✓";
+      setTimeout(()=>btn.textContent="Salvar", 900);
+    };
+  });
+
+  // tasks
+  $("tasksBox").innerHTML = (l.tasks||[]).map(x=>`<div class="block warn">✅ ${x}</div>`).join("");
+
+  // delivery & notes
+  $("inpDelivery").value = state.delivery[l.id] || "";
+  $("inpNotes").value = state.notes[l.id] || "";
+}
+
+/** =========================
+ *  NAVEGAÇÃO
+ *  ========================= */
+function goNext(){
+  const idx = COURSE.lessons.findIndex(x=>x.id===state.selected);
+  if(idx < COURSE.lessons.length - 1){
+    state.selected = COURSE.lessons[idx+1].id;
+    saveState();
+    renderAll();
+  }
+}
+function goPrev(){
+  const idx = COURSE.lessons.findIndex(x=>x.id===state.selected);
+  if(idx > 0){
+    state.selected = COURSE.lessons[idx-1].id;
+    saveState();
+    renderAll();
+  }
+}
+
+/** =========================
+ *  EXPORT / IMPORT
+ *  ========================= */
+function exportData(){
+  const payload = { version: COURSE.version, exportedAt: new Date().toISOString(), state };
+  const blob = new Blob([JSON.stringify(payload,null,2)], {type:"application/json;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "meu_curso_oratoria_progresso.json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+function doImport(text){
+  const parsed = JSON.parse(text);
+  if(!parsed?.state) throw new Error("JSON inválido: não encontrei 'state'.");
+  state = parsed.state;
+  saveState();
+  location.reload();
+}
+
+/** =========================
+ *  EVENTOS
+ *  ========================= */
+function bindEvents(){
+  $("btnSaveProfile").onclick = ()=>{
+    state.profile.name = $("inpName").value.trim();
+    state.profile.goal = $("inpGoal").value.trim();
+    saveState();
+    renderProfile();
+  };
+
+  $("inpPhoto").onchange = (e)=>{
+    const f = e.target.files?.[0];
+    if(!f) return;
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      state.profile.photoData = reader.result;
+      saveState();
+      renderProfile();
+    };
+    reader.readAsDataURL(f);
+  };
+
+  $("btnClearPhoto").onclick = ()=>{
+    state.profile.photoData = "";
+    saveState();
+    renderProfile();
+  };
+
+  $("btnTimerStart").onclick = startTimer;
+  $("btnTimerStop").onclick = stopTimer;
+
+  $("btnPrev").onclick = goPrev;
+  $("btnNext").onclick = goNext;
+
+  $("btnDone").onclick = ()=>{
+    const l = getLesson();
+    state.done[l.id] = true;
+    saveState();
+    renderAll();
+  };
+  $("btnUndone").onclick = ()=>{
+    const l = getLesson();
+    delete state.done[l.id];
+    saveState();
+    renderAll();
+  };
+
+  $("btnLike").onclick = ()=>{
+    const l = getLesson();
+    state.liked[l.id] = (state.liked[l.id]===1) ? 0 : 1;
+    saveState();
+    renderLesson();
+  };
+  $("btnDislike").onclick = ()=>{
+    const l = getLesson();
+    state.liked[l.id] = (state.liked[l.id]===-1) ? 0 : -1;
+    saveState();
+    renderLesson();
+  };
+
+  $("btnSaveDelivery").onclick = ()=>{
+    const l = getLesson();
+    state.delivery[l.id] = $("inpDelivery").value.trim();
+    saveState();
+    $("msgDelivery").textContent = "Entrega salva ✓";
+    setTimeout(()=>$("msgDelivery").textContent="", 1200);
+  };
+
+  $("btnSaveNotes").onclick = ()=>{
+    const l = getLesson();
+    state.notes[l.id] = $("inpNotes").value;
+    saveState();
+    $("msgNotes").textContent = "Notas salvas ✓";
+    setTimeout(()=>$("msgNotes").textContent="", 1200);
+  };
+
+  $("btnExport").onclick = exportData;
+
+  const dlgImp = $("dlgImport");
+  $("btnImportOpen").onclick = ()=>{ $("importText").value=""; dlgImp.showModal(); };
+  $("btnDoImport").onclick = (e)=>{
+    e.preventDefault();
+    try{ doImport($("importText").value.trim()); }
+    catch(err){ alert("Falha ao importar: " + err.message); }
+  };
+
+  $("btnReset").onclick = ()=>{
+    if(!confirm("Resetar TUDO neste navegador?")) return;
+    localStorage.removeItem(KEY);
+    location.reload();
+  };
+
+  const dlgQuick = $("dlgQuick");
+  $("btnQuick").onclick = ()=> dlgQuick.showModal();
+}
+
+function renderAll(){
+  hideError();
+  renderProfile();
+  $("timerText").textContent = formatTime(state.timeSec);
+  renderProgress();
+  renderLessonList();
+  renderLesson();
+}
+
+/** =========================
+ *  BOOT
+ *  ========================= */
+document.addEventListener("DOMContentLoaded", ()=>{
+  try{
+    bindEvents();
+    renderAll();
+    if(state.timerRunning) startTimer();
+  }catch(err){
+    showError(err.message || String(err));
+  }
+});
+</script>
 </body>
 </html>
