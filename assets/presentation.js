@@ -23,13 +23,13 @@
     if(bytes.length>MAX_FILE)throw Error('Use um arquivo de até 30 MB. Comprima as imagens no PowerPoint e tente novamente.');
     let end=-1;
     for(let p=bytes.length-22;p>=Math.max(0,bytes.length-65557);p--){if(v.getUint32(p,true)===0x06054b50){end=p;break;}}
-    if(end<0)throw Error('Este arquivo não é um PPTX válido. Para .ppt antigo, use Salvar como → Apresentação do PowerPoint (.pptx).');
+    if(end<0)throw Error('O arquivo não contém um pacote de documento válido. Ele pode estar incompleto ou ter uma extensão diferente do conteúdo.');
     const n=v.getUint16(end+10,true),offset=v.getUint32(end+16,true),size=v.getUint32(end+12,true);
-    if(n===65535||n>10000||offset+size>end||v.getUint16(end+4,true)!==0)throw Error('Estrutura de arquivo não suportada. Salve uma cópia em PPTX.');
+    if(n===65535||n>10000||offset+size>end||v.getUint16(end+4,true)!==0)throw Error('Estrutura ZIP não suportada. Salve uma nova cópia do documento.');
     let pos=offset,total=0;
     for(let i=0;i<n;i++){
       if(pos+46>end||v.getUint32(pos,true)!==0x02014b50)throw Error('O arquivo está incompleto ou corrompido.');
-      if(v.getUint16(pos+8,true)&1)throw Error('Remova a senha da apresentação antes de importar.');
+      if(v.getUint16(pos+8,true)&1)throw Error('Remova a senha do documento antes de importar.');
       const unpacked=v.getUint32(pos+24,true); total+=unpacked;
       if(total>MAX_EXPANDED)throw Error('A apresentação descompactada é muito grande. Reduza as imagens ou divida o arquivo.');
       pos+=46+v.getUint16(pos+28,true)+v.getUint16(pos+30,true)+v.getUint16(pos+32,true);
@@ -60,7 +60,7 @@
     }
     const pres=await part('ppt/presentation.xml'),pr=await rels('ppt/presentation.xml');
     const ids=all(pres,'sldId');
-    if(!ids.length)throw Error('A apresentação não contém slides.');
+    if(!ids.length)throw Error('Este modelo não contém slides com conteúdo. Crie uma apresentação a partir dele e salve novamente.');
     if(ids.length>150)throw Error('Importe até 150 slides por apresentação. Divida o arquivo em partes.');
     const slides=[];let totalText=0,imageBudget=0;
     for(let i=0;i<ids.length;i++){
@@ -145,6 +145,6 @@
     }
     return out;
   }
-  root.OratoriaCore={readPptx,zipPreflight,analyzeSlide,chartHighlights,connections,normalizeState,words,clean,paragraphs,xml,pathAt};
+  root.OratoriaCore={boundedPart,readPptx,zipPreflight,analyzeSlide,chartHighlights,connections,normalizeState,words,clean,paragraphs,xml,pathAt};
   if(typeof module!=='undefined')module.exports=root.OratoriaCore;
 })(typeof window!=='undefined'?window:globalThis);

@@ -1,12 +1,18 @@
 {
   "name": "curso-oratoria",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "description": "Estúdio local de palestras e curso de oratória",
   "scripts": {
     "pretest": "python3 tests/make-fixture.py .test/fixture.pptx",
-    "test": "node tests/core.cjs .test/fixture.pptx .test/extracted.json && node tests/dom.cjs .test/extracted.json"
+    "test": "node tests/core.cjs .test/fixture.pptx .test/extracted.json && node tests/documents.cjs && node tests/speech.cjs && node tests/dom.cjs .test/extracted.json && TEST_SPEECH=1 node tests/dom.cjs .test/extracted.json"
   },
-  "devDependencies": {"@xmldom/xmldom": "0.9.12", "jsdom": "30.1.2"},
-  "engines": {"node": ">=22"}
+  "devDependencies": {
+    "@xmldom/xmldom": "0.9.12",
+    "jsdom": "30.1.2",
+    "@napi-rs/canvas": "1.0.11"
+  },
+  "engines": {
+    "node": ">=22"
+  }
 }
