@@ -1,623 +1,137 @@
-"use strict";
-
-/** =========================
- *  CONFIG / DADOS DO CURSO
- *  ========================= */
-const COURSE = {
-  version: 1,
-  totalLessons: 20,
-  lessons: [
-    {
-      id: "L1",
-      title: "Aula 1 — O que é storytelling (sem historinha)",
-      minutes: 60,
-      outcome: "Definir sua ideia central em 12–15 palavras e entender a estrutura de uma fala memorável.",
-      study: [
-        "Storytelling em ciência NÃO é inventar: é organizar a verdade como transformação.",
-        "Uma palestra boa muda algo no público: entendimento, decisão, prioridade ou ação.",
-        "Você não precisa ser engraçado. Precisa ser claro. Clareza vira autoridade.",
-        "Definição prática: Storytelling = (realidade atual) → (tensão) → (virada) → (caminho) → (fecho com ação).",
-        "Sua regra de ouro (professor + pesquisador): 1 ideia central por fala. O resto serve a ela."
-      ],
-      links: [
-        { label:"TED — Chris Anderson (ideia central e clareza) [EN/legendável]", url:"https://www.youtube.com/watch?v=-FOCpMAww28", type:"vídeo", note:"Como grande talk vira 1 ideia." },
-        { label:"Nancy Duarte — estrutura secreta de grandes talks [EN/legendável]", url:"https://www.youtube.com/watch?v=LhGa0TNLUGA", type:"vídeo", note:"Estrutura (contraste) na prática." },
-        { label:"Toastmasters — Fundamentals of Public Speaking (PDF)", url:"https://ccdn.toastmasters.org/medias/files/department-documents/club-documents/fundamentals-of-public-speaking/fundamentals-of-public-speaking-english.pdf", type:"PDF", note:"Base bem prática." }
-      ],
-      doDont: {
-        do: [
-          "Comece por 1 frase: o que você quer que o público leve pra casa.",
-          "Use 1 exemplo real (Pantanal/saúde/extensão) para dar chão.",
-          "Repita a ideia central 2–3x ao longo da fala (sem ficar chato)."
-        ],
-        dont: [
-          "Não comece com currículo ou agradecimentos longos.",
-          "Não jogue 20 resultados sem dizer por que importam.",
-          "Não confunda ‘tema’ com ‘mensagem’."
-        ]
-      },
-      templates: [
-        { name:"Ideia central (12–15 palavras)", text:"Minha ideia central é: ________ (verbo forte) ________ para ________ (impacto/consequência)." },
-        { name:"Mapa em 3 passos", text:"Vou te mostrar (1) ________, (2) ________, (3) ________. No final, você vai saber ________." }
-      ],
-      tasks: [
-        "Escreva sua ideia central (12–15 palavras).",
-        "Escolha 1 exemplo real do seu trabalho que prove essa ideia.",
-        "Escreva um ‘mapa em 3 passos’ para a fala."
-      ]
-    },
-
-    {
-      id: "L2",
-      title: "Aula 2 — Como começar a falar (aberturas que funcionam)",
-      minutes: 60,
-      outcome: "Criar 3 aberturas (acadêmico / gestor / extensão) e escolher a melhor.",
-      study: [
-        "Abertura tem 3 funções: (1) atenção, (2) promessa de valor, (3) direção (mapa).",
-        "Erro clássico acadêmico: abrir com contexto longo. Resultado: o público desliga.",
-        "Gestor/policy maker precisa sentir: ‘qual decisão está em jogo?’ antes do dado.",
-        "Extensão precisa sentir: ‘isso toca a vida real de quem?’ — uma cena curta resolve.",
-        "Meta: 25–35s. Depois disso, vira enrolação."
-      ],
-      links: [
-        { label:"Julian Treasure — como falar para as pessoas quererem ouvir [EN/legendável]", url:"https://www.youtube.com/watch?v=eIho2S0ZahI", type:"vídeo", note:"Voz + hábitos práticos." },
-        { label:"TED (página) — Chris Anderson talk (texto + vídeo)", url:"https://www.ted.com/talks/chris_anderson_ted_s_secret_to_great_public_speaking", type:"site", note:"Leia e anote 5 frases fortes." },
-        { label:"TED — Sônia Bridi: mudança climática (PT)", url:"https://www.ted.com/talks/sonia_bridi_como_eu_testemunhei_a_mudanca_climatica", type:"vídeo", note:"Clima + narrativa brasileira." }
-      ],
-      doDont: {
-        do: [
-          "Abra com 1 pergunta real (não retórica vazia).",
-          "Prometa o valor: ‘Em 5 min você vai entender X’",
-          "Diga o mapa: 3 pontos, simples."
-        ],
-        dont: [
-          "Não abra com ‘Bom dia… vou falar sobre…’ (zero energia).",
-          "Não leia slide na abertura.",
-          "Não faça ‘história longa’ antes de dizer por que importa."
-        ]
-      },
-      templates: [
-        { name:"Abertura acadêmica (mapa)", text:"Hoje eu vou responder: ________. Em 3 passos: (1) ___, (2) ___, (3) ___. No final, eu deixo ___ + próximo passo ___." },
-        { name:"Abertura gestor (risco→ação)", text:"A decisão aqui é: ________. Se não, o risco é: ________. Em 5 min: evidência → impacto → ação em 90 dias." },
-        { name:"Abertura extensão (cena)", text:"Cena real (30s): ________. Isso mostra por que ________ importa. No final eu te dou 1 ação simples: ________." }
-      ],
-      tasks: [
-        "Escreva 3 aberturas (acadêmico/gestor/extensão).",
-        "Leia em voz alta e corte 20% sem perder sentido.",
-        "Escolha 1 e refine para 25–35 segundos."
-      ]
-    },
-
-    {
-      id: "L3",
-      title: "Aula 3 — Objetivo, resultado esperado e CTA",
-      minutes: 60,
-      outcome: "Definir objetivo (verbo), resultado mensurável e chamada final (CTA) — no seu contexto (clima/saúde/extensão).",
-      study: [
-        "Você fala para QUÊ? Se você não sabe, o público também não sabe.",
-        "Objetivo precisa de verbo forte: convencer, ensinar, mobilizar, destravar, fazer decidir.",
-        "Resultado esperado é mensurável: ‘ao final, a pessoa consegue…’",
-        "CTA (chamada) é o que acontece depois, com prazo: ‘nos próximos 30 dias…’",
-        "No seu perfil: a mesma pesquisa vira 3 CTAs: aluno (aprender), gestor (decidir), sociedade (engajar)."
-      ],
-      links: [
-        { label:"COMPASS — Message Box (workbook PDF)", url:"https://www.compassscicomm.org/wp-content/uploads/2020/05/The-Message-Box-Workbook.pdf", type:"PDF", note:"Ferramenta perfeita pra policy." },
-        { label:"TED — falar de clima em festas (PT)", url:"https://www.ted.com/talks/matthew_shirts_como_falar_de_mudancas_climaticas_em_festas", type:"vídeo", note:"Tom humano e prático." }
-      ],
-      doDont: {
-        do: [
-          "Escreva objetivo em 1 frase com verbo forte.",
-          "Defina ‘o que a pessoa consegue fazer’ ao final.",
-          "Crie CTA com prazo e responsável."
-        ],
-        dont: [
-          "Não use ‘conscientizar’ como objetivo (vago).",
-          "Não termine sem dizer o próximo passo.",
-          "Não coloque 4 objetivos na mesma fala."
-        ]
-      },
-      templates: [
-        { name:"Objetivo / Resultado / CTA", text:"Objetivo: fazer o público ________.\nResultado: ao final, eles conseguem ________.\nCTA: eu quero que eles ________ até ________." },
-        { name:"CTA para gestor (90 dias)", text:"Em 90 dias, proponho: (1) ________, (2) ________, (3) ________. Indicador de sucesso: ________." }
-      ],
-      tasks: [
-        "Escolha um tema seu (ex: restauração e saúde humana).",
-        "Preencha Objetivo/Resultado/CTA em 3 versões: aluno, gestor, extensão.",
-        "Escolha a versão ‘gestor’ e refine para 2 frases."
-      ]
-    },
-
-    {
-      id: "L4",
-      title: "Aula 4 — Estrutura 3 blocos (sem fala em espiral)",
-      minutes: 60,
-      outcome: "Montar roteiro de 6–8 min em 3 blocos com transições claras.",
-      study: [
-        "Estrutura mais segura do mundo: (1) o que está acontecendo, (2) por que importa, (3) o que fazer.",
-        "Cada bloco termina com uma ponte (1 frase que leva ao próximo).",
-        "1 evidência por bloco. Não é ‘revisão bibliográfica oral’.",
-        "Para clima/saúde: o bloco 2 precisa ter impacto humano e custo de não agir.",
-        "Objetivo aqui: você sair com uma espinha dorsal repetível."
-      ],
-      links: [
-        { label:"Nancy Duarte — estrutura (EN)", url:"https://www.youtube.com/watch?v=LhGa0TNLUGA", type:"vídeo", note:"Observe o contraste." },
-        { label:"Toastmasters — Fundamentals (PDF)", url:"https://ccdn.toastmasters.org/medias/files/department-documents/club-documents/fundamentals-of-public-speaking/fundamentals-of-public-speaking-english.pdf", type:"PDF", note:"Abertura/meio/fecho." }
-      ],
-      doDont: {
-        do: [
-          "Escreva 3 títulos de blocos em frases.",
-          "Faça 2 pontes curtas (uma por transição).",
-          "Corte qualquer parte que não sirva ao bloco."
-        ],
-        dont: [
-          "Não faça ‘vai e volta’ nos tópicos.",
-          "Não explique método detalhado no meio do talk (só o necessário).",
-          "Não use jargão sem traduzir."
-        ]
-      },
-      templates: [
-        { name:"Roteiro 3 blocos (6–8 min)", text:"Bloco 1 (o que acontece): ________ (1 evidência)\nPonte: “O ponto é ________.”\nBloco 2 (por que importa): ________ (impacto)\nPonte: “Então precisamos ________.”\nBloco 3 (o que fazer): 3 ações: (1) ___ (2) ___ (3) ___." }
-      ],
-      tasks: [
-        "Monte um roteiro 3 blocos com 2 pontes.",
-        "Leia cronometrando 6–8 min.",
-        "Marque onde você travou e reescreva 2 frases."
-      ]
-    },
-
-    {
-      id: "L5",
-      title: "Aula 5 — Fechamento que deixa rastro (memória + ação)",
-      minutes: 60,
-      outcome: "Criar 3 fechamentos e escolher 1 que seja memorável (com CTA).",
-      study: [
-        "O fechamento decide se você será lembrado.",
-        "Formato 1: pergunta forte (decisão). Formato 2: convite prático (prazo). Formato 3: frase-marca (identidade).",
-        "Seu fecho precisa reconectar com a ideia central da Aula 1.",
-        "Para política pública: fecho precisa de ação executável (quem faz + quando).",
-        "Objetivo: você sair com um fecho que você repete em qualquer palestra do tema."
-      ],
-      links: [
-        { label:"TED — Sônia Bridi (PT) (rever final)", url:"https://www.ted.com/talks/sonia_bridi_como_eu_testemunhei_a_mudanca_climatica", type:"vídeo", note:"Veja o fecho." },
-        { label:"COMPASS — Message Box Workbook (PDF)", url:"https://www.compassscicomm.org/wp-content/uploads/2020/05/The-Message-Box-Workbook.pdf", type:"PDF", note:"Use o ‘So what’ como fecho." }
-      ],
-      doDont: {
-        do: [
-          "Feche com 1 frase curta + CTA.",
-          "Volte na ideia central (Aula 1).",
-          "Finalize com calma (não acelerado)."
-        ],
-        dont: [
-          "Não termine com ‘é isso’ ou ‘obrigado’ sem mensagem.",
-          "Não termine abrindo assunto novo.",
-          "Não peça desculpa por tempo/conteúdo no final."
-        ]
-      },
-      templates: [
-        { name:"Fecho pergunta", text:"“Se você tivesse que decidir hoje, escolheria ________ ou ________?”" },
-        { name:"Fecho convite (30 dias)", text:"“Nos próximos 30 dias, vamos ________. Eu me comprometo com ________.”" },
-        { name:"Fecho frase-marca (identidade)", text:"“No Pantanal, ________. E é por isso que ________.”" }
-      ],
-      tasks: [
-        "Escreva 3 fechamentos (um de cada tipo).",
-        "Leia em voz alta e escolha o mais forte.",
-        "Refine para 20–25s com CTA."
-      ]
-    }
-  ]
-};
-
-/** =========================
- *  ESTADO (SALVAMENTO)
- *  ========================= */
-const KEY = "curso_oratoria_state_v1";
-
-function loadState(){
-  try{
-    const raw = localStorage.getItem(KEY);
-    if(!raw) return {
-      profile:{ name:"", goal:"", photoData:"" },
-      timeSec: 0,
-      timerRunning: false,
-      selected: "L1",
-      done: {},               // done[lessonId]=true
-      liked: {},              // liked[lessonId]= 1 | -1 | 0
-      watched: {},            // watched[lessonId][idx]=true
-      tplEdits: {},           // tplEdits[lessonId][tplIdx]=text
-      delivery: {},           // delivery[lessonId]=text
-      notes: {}               // notes[lessonId]=text
-    };
-    const s = JSON.parse(raw);
-    return s;
-  }catch(e){
-    return null;
-  }
+/* Oratória v2 — conteúdo local, persistência compatível com o curso anterior. */
+(function(){
+'use strict';
+const C=window.OratoriaCore,course=window.COURSE,$=id=>document.getElementById(id),KEY='curso_oratoria_state_v1',STUDIO='curso_oratoria_studio_v2';
+const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtDate=iso=>{const d=new Date(iso);return Number.isNaN(+d)?'Data não informada':d.toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'});};
+const time=s=>{s=Math.max(0,Math.floor(s));return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;};
+const safeText=(s,max=30000)=>typeof s==='string'?s.slice(0,max):'';
+const safeURL=u=>{try{const x=new URL(u);return ['http:','https:'].includes(x.protocol)?x.href:'';}catch{return '';}};
+let toastTimer,storageIssue=false,studyRunning=false,studyLast=0,view='studio',imageURLs=[],recordingURL='',recorder=null,recordStream=null,recordChunks=[],recordBlob=null,recordPending=false;
+let rehearsalSeconds=0,rehearsalStarted=0,rehearsalRunning=false,recordStart=0,questionIndex=0,pendingBackup=null;
+function notify(message){$('toast').textContent=message;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,4500);}
+function storageError(message){storageIssue=true;$('storageAlert').textContent=message;$('storageAlert').hidden=false;}
+function readStorage(key){try{const raw=localStorage.getItem(key);return raw?JSON.parse(raw):null;}catch{storageError('Não consegui recuperar alguns registros locais. Não apague o navegador: use um backup ou mantenha esta aba aberta.');return null;}}
+let state=C.normalizeState(readStorage(KEY));
+function normalizeStudio(raw){
+ const out={deck:null,edits:{},brief:{audience:'misto',duration:15,message:''},selected:0,rehearsal:{script:'',notes:'',rubric:[]},history:[]};
+ if(!raw||typeof raw!=='object')return out;
+ if(raw.deck){
+  if(!Array.isArray(raw.deck.slides)||raw.deck.slides.length>150)throw Error('Backup com apresentação inválida.');
+  const d=raw.deck;out.deck={name:safeText(d.name,200)||'Apresentação',importedAt:safeText(d.importedAt,40),method:safeText(d.method,50),notices:Array.isArray(d.notices)?d.notices.slice(0,10).map(x=>safeText(x,500)):[],slides:d.slides.map((s,i)=>({number:i+1,title:safeText(s.title,500)||'Slide '+(i+1),lines:Array.isArray(s.lines)?s.lines.slice(0,300).map(x=>safeText(x,10000)):[],notes:Array.isArray(s.notes)?s.notes.slice(0,100).map(x=>safeText(x,10000)):[],charts:Array.isArray(s.charts)?s.charts.slice(0,30).map(c=>({name:safeText(c.name,200),categories:normalizePoints(c.categories),values:normalizePoints(c.values)})):[],hyperlinks:Array.isArray(s.hyperlinks)?s.hyperlinks.slice(0,50).map(safeURL).filter(Boolean):[],pictureCount:Math.min(500,Math.max(0,Number(s.pictureCount)||0)),hidden:s.hidden===true,images:[]}))};
+ }
+ if(['misto','academico','alunos','gestores','comunidade'].includes(raw.brief?.audience))out.brief.audience=raw.brief.audience;
+ out.brief.duration=Math.max(1,Math.min(240,Number(raw.brief?.duration)||15));out.brief.message=safeText(raw.brief?.message,500);
+ out.selected=Math.max(0,Math.min((out.deck?.slides.length||1)-1,Math.floor(Number(raw.selected)||0)));
+ for(let i=0;i<(out.deck?.slides.length||0);i++){const e=raw.edits?.[i];if(!e||typeof e!=='object')continue;out.edits[i]={};for(const f of ['message','importance','evidence','limitation','transition','script'])out.edits[i][f]=safeText(e[f],12000);out.edits[i].seconds=Math.min(14400,Math.max(0,Number(e.seconds)||0));out.edits[i].reviewed=e.reviewed===true;out.edits[i].priority=e.priority===true;}
+ out.rehearsal={script:safeText(raw.rehearsal?.script,60000),notes:safeText(raw.rehearsal?.notes,3000),rubric:Array.isArray(raw.rehearsal?.rubric)?raw.rehearsal.rubric.slice(0,5).map(x=>['0','1','2','3'].includes(String(x))?String(x):'0'):[]};
+ out.history=Array.isArray(raw.history)?raw.history.slice(0,100).filter(h=>h&&typeof h==='object').map(h=>({date:safeText(h.date,40),seconds:Math.max(0,Math.min(86400,Number(h.seconds)||0)),words:Math.max(0,Math.min(100000,Number(h.words)||0)),matched:h.matched===true,notes:safeText(h.notes,3000),rubric:Array.isArray(h.rubric)?h.rubric.slice(0,5).map(x=>Math.max(0,Math.min(3,Number(x)||0))):[]})):[];
+ return out;
 }
-
-let state = loadState();
-if(!state){
-  state = {
-    profile:{ name:"", goal:"", photoData:"" },
-    timeSec: 0,
-    timerRunning: false,
-    selected: "L1",
-    done: {},
-    liked: {},
-    watched: {},
-    tplEdits: {},
-    delivery: {},
-    notes: {}
-  };
-}
-
-function saveState(){
-  localStorage.setItem(KEY, JSON.stringify(state));
-}
-
-function $(id){ return document.getElementById(id); }
-function showError(msg){
-  const el = $("errorBar");
-  el.textContent = "ERRO: " + msg;
-  el.classList.remove("hidden");
-}
-function hideError(){ $("errorBar").classList.add("hidden"); }
-
-/** =========================
- *  TIMER
- *  ========================= */
-let timerInt = null;
-function formatTime(sec){
-  const h = String(Math.floor(sec/3600)).padStart(2,"0");
-  const m = String(Math.floor((sec%3600)/60)).padStart(2,"0");
-  const s = String(sec%60).padStart(2,"0");
-  return `${h}:${m}:${s}`;
-}
-function startTimer(){
-  if(timerInt) return;
-  state.timerRunning = true;
-  timerInt = setInterval(()=>{
-    state.timeSec += 1;
-    $("timerText").textContent = formatTime(state.timeSec);
-    saveState();
-    renderProgress();
-  }, 1000);
-}
-function stopTimer(){
-  state.timerRunning = false;
-  if(timerInt){ clearInterval(timerInt); timerInt = null; }
-  saveState();
-}
-
-/** =========================
- *  PROGRESSO
- *  ========================= */
-function countWatched(){
-  let total = 0;
-  COURSE.lessons.forEach(l=>{
-    total += l.links.length;
-  });
-  let seen = 0;
-  for(const lid in state.watched){
-    seen += Object.values(state.watched[lid] || {}).filter(Boolean).length;
-  }
-  return {total, seen};
-}
-
-function renderProgress(){
-  const doneCount = Object.values(state.done).filter(Boolean).length;
-  const pct = Math.round((doneCount / COURSE.totalLessons) * 100);
-  $("progFill").style.width = `${pct}%`;
-  $("progText").textContent = `${pct}%`;
-  $("progCount").textContent = `${doneCount}/${COURSE.totalLessons} aulas`;
-
-  const w = countWatched();
-  $("pillSeen").textContent = `${w.seen} itens vistos`;
-  $("pillTime").textContent = `${Math.round((state.timeSec/3600)*10)/10}h estudadas`;
-}
-
-/** =========================
- *  PERFIL
- *  ========================= */
-function renderProfile(){
-  $("inpName").value = state.profile.name || "";
-  $("inpGoal").value = state.profile.goal || "";
-
-  const box = $("profilePreview");
-  if(!state.profile.name && !state.profile.goal && !state.profile.photoData){
-    box.innerHTML = `<div class="muted small">Preencha seu perfil para personalizar o curso.</div>`;
-    return;
-  }
-  box.innerHTML = `
-    <div><b>${state.profile.name || "—"}</b></div>
-    <div class="muted">${state.profile.goal ? state.profile.goal : ""}</div>
-    ${state.profile.photoData ? `<img src="${state.profile.photoData}" alt="foto" />` : ""}
-  `;
-}
-
-/** =========================
- *  LISTA DE AULAS
- *  ========================= */
-function renderLessonList(){
-  const list = $("lessonList");
-  list.innerHTML = "";
-
-  COURSE.lessons.forEach((l)=>{
-    const div = document.createElement("div");
-    const isActive = state.selected === l.id;
-    div.className = "lessonItem" + (isActive ? " active" : "");
-    const done = !!state.done[l.id];
-    div.innerHTML = `
-      <div class="t">${done ? "✅ " : ""}${l.title}</div>
-      <div class="m">${l.minutes} min • ${l.outcome}</div>
-    `;
-    div.onclick = ()=>{
-      state.selected = l.id;
-      saveState();
-      renderAll();
-    };
-    list.appendChild(div);
-  });
-}
-
-/** =========================
- *  RENDER AULA
- *  ========================= */
-function getLesson(){
-  return COURSE.lessons.find(x=>x.id===state.selected) || COURSE.lessons[0];
-}
-
+function normalizePoints(arr){return Array.isArray(arr)?arr.slice(0,1000).filter(x=>x&&Number.isInteger(Number(x.idx))&&Number(x.idx)>=0).map(x=>({idx:Number(x.idx),value:safeText(x.value,200)})):[];}
+let studio;try{studio=normalizeStudio(readStorage(STUDIO));}catch{studio=normalizeStudio(null);storageError('O registro da apresentação está incompleto. Restaure um backup para recuperá-lo.');}
+function persistentStudio(){return {...studio,deck:studio.deck?{...studio.deck,slides:studio.deck.slides.map(s=>({...s,images:[]}))}:null};}
+function persistCourse(){try{if(!localStorage.getItem('curso_oratoria_original_v1')){const raw=localStorage.getItem(KEY);if(raw)localStorage.setItem('curso_oratoria_original_v1',raw);}localStorage.setItem(KEY,JSON.stringify(state));return true;}catch{storageError('Não foi possível salvar no navegador. Seu trabalho continua nesta aba: baixe um backup em Perfil antes de fechar.');return false;}}
+function persistStudio(){try{localStorage.setItem(STUDIO,JSON.stringify(persistentStudio()));return true;}catch{storageError('Não foi possível salvar a apresentação no navegador. Baixe um backup em Perfil antes de fechar esta aba.');return false;}}
+function download(name,content,type='text/plain;charset=utf-8'){const blob=content instanceof Blob?content:new Blob([content],{type}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000);}
+function go(next,scroll=true){if(!['studio','course','rehearsal'].includes(next))next='studio';if(view==='course'&&next!=='course')pauseStudy();view=next;document.querySelectorAll('.view').forEach(el=>el.hidden=el.id!==next);document.querySelectorAll('.nav').forEach(el=>{el.classList.toggle('active',el.dataset.view===next);if(el.dataset.view===next)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current');});history.replaceState(null,'','#'+next);if(scroll)window.scrollTo({top:0,behavior:'smooth'});}
+function progress(){const n=course.lessons.filter(l=>state.done[l.id]).length,pct=n/20*100;for(const id of ['teaserProgress','courseProgress'])$(id).style.width=pct+'%';$('teaserMeta').textContent=`${n} de 20 aulas concluídas · ${Math.round(pct)}%`;$('courseProgressText').textContent=`${n} de 20 aulas`;$('studyTime').textContent=state.timeSec<3600?`${Math.floor(state.timeSec/60)} min`:`${(state.timeSec/3600).toLocaleString('pt-BR',{maximumFractionDigits:1})} h`;$('profileOpen').textContent=state.profile.name?state.profile.name.split(/\s+/).slice(0,2).map(s=>s[0]).join('').toUpperCase():'EU';}
+function tickStudy(){if(!studyRunning)return;const now=performance.now();state.timeSec+=(now-studyLast)/1000;studyLast=now;progress();}
+function pauseStudy(){if(!studyRunning)return;tickStudy();studyRunning=false;$('studyToggle').textContent='Retomar estudo';persistCourse();}
+function lessonList(){const q=$('lessonSearch').value.toLocaleLowerCase('pt-BR');let module='';$('lessonList').innerHTML=course.lessons.filter(l=>(l.title+' '+l.module).toLocaleLowerCase('pt-BR').includes(q)).map(l=>{const head=l.module!==module?`<p class="module-title">${esc(l.module)}</p>`:'';module=l.module;return head+`<button class="lesson-item ${state.selected===l.id?'active':''}" data-lesson="${l.id}" ${state.selected===l.id?'aria-current="true"':''}><span class="lesson-num">${l.id.slice(1).padStart(2,'0')}</span><span>${esc(l.title)}</span>${state.done[l.id]?'<span class="done-mark" aria-label="Concluída">✓</span>':''}</button>`;}).join('')||'<p class="empty-state">Nenhuma aula encontrada.</p>';}
 function renderLesson(){
-  const l = getLesson();
-  if(!l) return;
-
-  $("lessonTitle").textContent = l.title;
-  $("lessonMeta").textContent = `${l.minutes} min • Resultado: ${l.outcome}`;
-
-  const done = !!state.done[l.id];
-  $("badgeStatus").textContent = done ? "Concluída ✅" : "Pendente ⏳";
-
-  // like/dislike
-  const fb = state.liked[l.id] || 0;
-  $("btnLike").style.borderColor = fb===1 ? "rgba(79,99,218,.55)" : "";
-  $("btnDislike").style.borderColor = fb===-1 ? "rgba(177,75,214,.55)" : "";
-
-  // study
-  $("studyBox").innerHTML = l.study.map(p=>`<div class="block color">${p}</div>`).join("");
-
-  // links + watched + feedback
-  state.watched[l.id] = state.watched[l.id] || {};
-  const linksBox = $("linksBox");
-  linksBox.innerHTML = "";
-  l.links.forEach((r, idx)=>{
-    const checked = !!state.watched[l.id][idx];
-    const div = document.createElement("div");
-    div.className = "block";
-    div.innerHTML = `
-      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
-        <div>
-          <div><a href="${r.url}" target="_blank" rel="noopener">${r.label}</a></div>
-          <div class="muted small">${r.type.toUpperCase()} • ${r.note || ""}</div>
-        </div>
-        <label class="muted small" style="display:flex;gap:8px;align-items:center;white-space:nowrap">
-          <input type="checkbox" ${checked?"checked":""} /> visto
-        </label>
-      </div>
-    `;
-    const cb = div.querySelector("input");
-    cb.onchange = (e)=>{
-      state.watched[l.id][idx] = e.target.checked;
-      saveState();
-      renderProgress();
-    };
-    linksBox.appendChild(div);
-  });
-
-  // do/don't
-  const dd = l.doDont;
-  $("doDontBox").innerHTML = `
-    <div class="block">
-      <div style="font-weight:1000">✅ Faça</div>
-      <ul>${dd.do.map(x=>`<li>${x}</li>`).join("")}</ul>
-    </div>
-    <div class="block">
-      <div style="font-weight:1000">❌ Evite</div>
-      <ul>${dd.dont.map(x=>`<li>${x}</li>`).join("")}</ul>
-    </div>
-  `;
-
-  // templates editáveis
-  state.tplEdits[l.id] = state.tplEdits[l.id] || {};
-  const tplBox = $("tplBox");
-  tplBox.innerHTML = "";
-  l.templates.forEach((t, ti)=>{
-    const val = state.tplEdits[l.id][ti] ?? t.text;
-    const wrap = document.createElement("div");
-    wrap.className = "block";
-    wrap.innerHTML = `
-      <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
-        <div style="font-weight:1000">${t.name}</div>
-        <button class="btn ghost mini" data-save-tpl="${ti}">Salvar</button>
-      </div>
-      <textarea class="textarea" style="min-height:120px" data-tpl="${ti}">${val}</textarea>
-      <div class="muted small">Você pode refinar esse texto ao longo do curso.</div>
-    `;
-    tplBox.appendChild(wrap);
-  });
-  tplBox.querySelectorAll("[data-save-tpl]").forEach(btn=>{
-    btn.onclick = ()=>{
-      const ti = btn.getAttribute("data-save-tpl");
-      const ta = tplBox.querySelector(`textarea[data-tpl="${ti}"]`);
-      state.tplEdits[l.id][ti] = ta.value;
-      saveState();
-      btn.textContent = "Salvo ✓";
-      setTimeout(()=>btn.textContent="Salvar", 900);
-    };
-  });
-
-  // tasks
-  $("tasksBox").innerHTML = l.tasks.map(x=>`<div class="block">✅ ${x}</div>`).join("");
-
-  // delivery & notes
-  $("inpDelivery").value = state.delivery[l.id] || "";
-  $("inpNotes").value = state.notes[l.id] || "";
+ const l=course.lessons.find(x=>x.id===state.selected)||course.lessons[0],id=l.id;state.selected=id;for(const f of ['practice','quiz','tplEdits'])state[f][id]||={};
+ const answer=state.quiz[id][0];
+ $('lessonDetail').innerHTML=`<p class="eyebrow">AULA ${id.slice(1).padStart(2,'0')} / 20 · ${esc(l.module.toUpperCase())}</p><h2>${esc(l.title)}</h2><p class="outcome">${esc(l.outcome)}</p><div class="lesson-schedule">${l.schedule.map(s=>`<span><b>${s.minutes} min</b> ${esc(s.label)}</span>`).join('')}</div><div class="lesson-theory">${l.theory.map(p=>`<p>${esc(p)}</p>`).join('')}</div><div class="example-box"><p class="eyebrow">DO VAGO AO CLARO</p><p class="before"><b>Para revisar:</b> ${esc(l.example.before)}</p><p><b>Uma formulação melhor:</b> ${esc(l.example.after)}</p><p class="micro">${esc(l.example.label)}</p></div><h3 class="section-label">Agora, faça com seu conteúdo</h3>${l.practiceSteps.map((s,i)=>`<label class="practice-step"><input type="checkbox" data-practice="${i}" ${state.practice[id][i]?'checked':''}><span>${esc(s)}</span></label>`).join('')}<div class="quiz"><h3>Confira sua compreensão</h3><p>${esc(l.check.question)}</p>${l.check.options.map((o,i)=>`<label class="quiz-choice"><input name="lessonQuiz" type="radio" value="${i}" ${answer===i?'checked':''}><span>${esc(o)}</span></label>`).join('')}<button class="secondary" id="checkQuiz">Conferir resposta</button><div id="quizResult" class="quiz-result" role="status">${Number.isInteger(answer)?quizFeedback(l,answer):''}</div></div><h3 class="section-label">Seu material de trabalho</h3>${l.templates.map((t,i)=>`<details><summary>${esc(t.name)}</summary><div><label for="template${i}">Modelo editável</label><textarea id="template${i}" rows="5" maxlength="10000" data-template="${i}">${esc(state.tplEdits[id][i]??t.text)}</textarea></div></details>`).join('')}<label for="lessonDelivery">Entrega desta aula</label><textarea id="lessonDelivery" rows="5" maxlength="30000" placeholder="Registre o que você produziu. Pelo menos 30 caracteres para concluir.">${esc(state.delivery[id])}</textarea><label for="lessonNotes">Notas pessoais</label><textarea id="lessonNotes" rows="3" maxlength="30000" placeholder="Dúvidas, descobertas e próximos ajustes.">${esc(state.notes[id])}</textarea><p class="saving-note" id="lessonSaved">Edições são salvas automaticamente neste navegador.</p><details><summary>Critérios de autoavaliação</summary><div><ul>${l.rubric.map(r=>`<li>${esc(r)}</li>`).join('')}</ul><p class="micro">Use estes critérios no seu feedback. Não há avaliação automática da qualidade da entrega.</p></div></details><details><summary>Leituras complementares e anotações anteriores</summary><div>${l.links.map(r=>`<p><a href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${esc(r.label)}</a><br><span class="micro">${esc(r.note)}</span></p>`).join('')}<p class="micro">Progresso, modelos editados e notas da versão anterior são preservados. Leituras externas são opcionais.</p></div></details><div class="lesson-bottom"><button class="secondary" id="prevLesson" ${id==='L1'?'disabled':''}>← Anterior</button><button class="primary" id="completeLesson">${state.done[id]?'Concluída ✓ · Reabrir':'Concluir esta aula'}</button><button class="secondary" id="nextLesson" ${id==='L20'?'disabled':''}>Próxima →</button></div>`;
+ $('checkQuiz').onclick=()=>{const selected=document.querySelector('input[name="lessonQuiz"]:checked');if(!selected){notify('Escolha uma resposta primeiro.');return;}state.quiz[id][0]=Number(selected.value);persistCourse();$('quizResult').innerHTML=quizFeedback(l,Number(selected.value));};
+ $('lessonDetail').querySelectorAll('[data-practice]').forEach(el=>el.onchange=()=>{state.practice[id][el.dataset.practice]=el.checked;persistCourse();});
+ $('lessonDetail').querySelectorAll('[data-template]').forEach(el=>el.oninput=()=>{state.tplEdits[id][el.dataset.template]=el.value;lessonSave();});
+ $('lessonDelivery').oninput=()=>{state.delivery[id]=$('lessonDelivery').value;lessonSave();};$('lessonNotes').oninput=()=>{state.notes[id]=$('lessonNotes').value;lessonSave();};
+ $('prevLesson').onclick=()=>selectLesson('L'+(Number(id.slice(1))-1));$('nextLesson').onclick=()=>selectLesson('L'+(Number(id.slice(1))+1));
+ $('completeLesson').onclick=()=>{if(state.done[id]){state.done[id]=false;}else{const missing=[];if(!l.practiceSteps.every((_,i)=>state.practice[id][i]))missing.push('marque os exercícios realizados');if(state.quiz[id][0]!==l.check.correct)missing.push('revise a pergunta de compreensão');if((state.delivery[id]||'').trim().length<30)missing.push('registre sua entrega com pelo menos 30 caracteres');if(missing.length){notify('Para concluir: '+missing.join('; ')+'.');return;}state.done[id]=true;}persistCourse();progress();lessonList();renderLesson();};
 }
-
-/** =========================
- *  NAVEGAÇÃO
- *  ========================= */
-function goNext(){
-  const idx = COURSE.lessons.findIndex(x=>x.id===state.selected);
-  if(idx < COURSE.lessons.length - 1){
-    state.selected = COURSE.lessons[idx+1].id;
-    saveState();
-    renderAll();
-  }
+function quizFeedback(l,a){return `<p class="${a===l.check.correct?'feedback-good':'feedback-bad'}">${a===l.check.correct?'Correto.':'Reveja sua escolha.'} ${esc(l.check.feedback)}</p>`;}
+function lessonSave(){$('lessonSaved').textContent=persistCourse()?'Salvo neste navegador ✓':'Não salvo. Baixe um backup antes de fechar.';}
+function selectLesson(id){if(!course.lessons.some(l=>l.id===id))return;state.selected=id;persistCourse();lessonList();renderLesson();$('lessonDetail').scrollIntoView({behavior:'smooth',block:'start'});}
+const audienceHints={misto:'Defina os termos e explique por que esta informação interessa a quem não é da sua área.',academico:'Explique o desenho do estudo, a unidade, a incerteza e o alcance da conclusão.',alunos:'Comece com uma pergunta, explique o conceito e peça uma aplicação curta.',gestores:'Nomeie a decisão em discussão. Separe o achado científico da recomendação e das condições para agir.',comunidade:'Relacione a pergunta a uma experiência confirmada do público. Escute e evite supor que todas as pessoas vivem a mesma situação.'};
+function editFor(i){if(!studio.edits[i])studio.edits[i]={message:'',importance:'',evidence:'',limitation:'',transition:'',script:'',seconds:0,priority:false,reviewed:false};return studio.edits[i];}
+function totalPlanned(){if(!studio.deck)return 0;return studio.deck.slides.reduce((n,_,i)=>n+(studio.edits[i]?.seconds||Math.round(studio.brief.duration*60/studio.deck.slides.length)),0);}
+function releaseImages(){for(const u of imageURLs)URL.revokeObjectURL(u);imageURLs=[];}
+function renderStudio(){
+ const d=studio.deck;$('deckWorkspace').hidden=!d;$('emptyGuide').hidden=!!d;if(!d)return;
+ $('deckTitle').textContent=d.name;$('deckMeta').textContent=`Importado em ${fmtDate(d.importedAt)} · horário deste dispositivo · ${d.slides.length} slides${d.slides.every(s=>!s.images?.length)?' · imagens disponíveis apenas na sessão de importação':''}`;
+ $('audience').value=studio.brief.audience;$('duration').value=studio.brief.duration;$('mainMessage').value=studio.brief.message;
+ renderStats();renderSlideList();renderSlide();renderConnections();$('deckNotices').innerHTML=d.notices.map(n=>`<li>${esc(n)}</li>`).join('');
 }
-function goPrev(){
-  const idx = COURSE.lessons.findIndex(x=>x.id===state.selected);
-  if(idx > 0){
-    state.selected = COURSE.lessons[idx-1].id;
-    saveState();
-    renderAll();
-  }
+function renderStats(){if(!studio.deck)return;const s=studio.deck.slides,reviewed=s.filter((_,i)=>studio.edits[i]?.reviewed).length,priority=s.filter((_,i)=>studio.edits[i]?.priority).length,planned=totalPlanned();$('deckStats').innerHTML=`<div><strong>${s.length}</strong><span>slides importados</span></div><div><strong>${priority}</strong><span>destaques escolhidos</span></div><div><strong>${reviewed}/${s.length}</strong><span>revisados por você</span></div><div><strong>${time(planned)}</strong><span>tempo planejado${Math.abs(planned-studio.brief.duration*60)>s.length?' · difere da duração total':''}</span></div>`;}
+function renderSlideList(){if(!studio.deck)return;const q=$('slideSearch').value.toLowerCase();$('slideList').innerHTML=studio.deck.slides.map((s,i)=>({s,i})).filter(({s})=>(s.title+' '+s.lines.join(' ')).toLowerCase().includes(q)).map(({s,i})=>`<button class="slide-item ${i===studio.selected?'active':''}" data-slide="${i}" ${i===studio.selected?'aria-current="true"':''}><span class="slide-number">${String(i+1).padStart(2,'0')}</span><span><strong>${esc(s.title)}</strong><small>${studio.edits[i]?.priority?'★ Destaque · ':''}${studio.edits[i]?.reviewed?'Revisado por você':'Revisão pendente'}${s.hidden?' · Oculto':''}</small></span></button>`).join('')||'<p class="empty-state">Nenhum slide encontrado.</p>';}
+function renderSlide(){
+ if(!studio.deck?.slides.length)return;releaseImages();const i=studio.selected,s=studio.deck.slides[i],a=C.analyzeSlide(s),e=editFor(i),seconds=e.seconds||Math.round(studio.brief.duration*60/studio.deck.slides.length);
+ const imageHTML=(s.images||[]).map((im,j)=>{if(!im.data)return '';const u=URL.createObjectURL(new Blob([im.data],{type:im.type}));imageURLs.push(u);return `<figure><img src="${u}" alt="Elemento visual ${j+1} extraído do slide ${i+1}"><figcaption>Elemento do arquivo · sem interpretação automática</figcaption></figure>`;}).join('');
+ const highlights=C.chartHighlights(s);
+ const chartHTML=s.charts.map(c=>{const indices=[...new Set([...c.categories,...c.values].map(p=>p.idx))].sort((a,b)=>a-b);return `<h4>${esc(c.name||'Série sem nome')}</h4><div class="table-scroll"><table><thead><tr><th>Categoria / índice</th><th>Valor armazenado</th></tr></thead><tbody>${indices.slice(0,100).map(n=>`<tr><td>${esc(c.categories.find(p=>p.idx===n)?.value??('Índice '+n))}</td><td>${esc(c.values.find(p=>p.idx===n)?.value??'Ausente')}</td></tr>`).join('')}</tbody></table></div>${indices.length>100?'<p class="micro">Prévia limitada a 100 pontos desta série.</p>':''}`;}).join('');
+ $('slideDetail').innerHTML=`<div class="actions"><span class="tag">SLIDE ${i+1} / ${studio.deck.slides.length}</span><span class="tag">${a.wordCount} palavras extraídas</span></div><h2 style="margin-top:18px">${esc(s.title)}</h2><div class="source-block"><p class="eyebrow">TRECHO A CONSIDERAR · COPIADO DO ARQUIVO</p><p>${esc(a.candidate)}</p><p class="micro">Seleção por regras de texto. Você decide se este é o ponto principal.</p><button id="useCandidate" class="text-btn">Usar como ponto de partida ↓</button></div>${imageHTML?`<div class="images-strip">${imageHTML}</div>`:''}<details><summary>Consultar o conteúdo original deste slide</summary><div><div class="source-lines">${s.lines.map(l=>`<p>${esc(l)}</p>`).join('')||'<p>Nenhum texto extraível. Descreva manualmente o conteúdo visual.</p>'}</div><h4>Notas do apresentador</h4>${s.notes.length?s.notes.map(n=>`<p>${esc(n)}</p>`).join(''):'<p class="muted">Sem notas extraíveis neste slide.</p>'}${s.hyperlinks.length?`<h4>Links no arquivo · ainda não verificados</h4>${s.hyperlinks.map(u=>`<p><a href="${esc(safeURL(u))}" target="_blank" rel="noopener noreferrer">${esc(u)}</a></p>`).join('')}`:''}</div></details>${chartHTML?`<details><summary>Ver valores armazenados no gráfico</summary><div><p class="micro">Cache do PPTX, não consulta à planilha. Confira fonte, unidade, eixos e atualização antes de interpretar. Ausência não vira zero.</p>${chartHTML}</div></details>`:''}${highlights.length?`<section class="source-block"><p class="eyebrow">DESTAQUES NUMÉRICOS DO SEU GRÁFICO</p>${highlights.map((h,n)=>`<p>${esc(h.text)}</p><p class="micro">${esc(h.context)}</p><button class="text-btn" data-use-highlight="${n}">Levar esta comparação para a evidência ↓</button>`).join('')}</section>`:''}<div class="coach-grid"><section class="coach-card"><h3>O que dizer de importante</h3><ul><li>Declare uma mensagem que este slide sustenta.</li><li>Aponte a evidência e explique seu significado.</li><li>Diga por que isso interessa ao público.</li><li>Apresente o limite e a ponte para o próximo ponto.</li></ul></section><section class="coach-card"><h3>Para este público</h3><p>${esc(audienceHints[studio.brief.audience])}</p><p class="micro">Orientação de comunicação; não é uma conclusão científica sobre seu conteúdo.</p></section></div>${a.warnings.length?`<div class="warning-list" style="margin-top:18px"><b>Antes de levar ao palco</b><ul>${a.warnings.map(w=>`<li>${esc(w)}</li>`).join('')}</ul></div>`:''}<div class="edit-note"><p class="eyebrow">SEU ROTEIRO · EDITÁVEL</p><label for="editMessage">A mensagem que precisa ficar</label><textarea id="editMessage" data-edit="message" maxlength="12000" rows="2" placeholder="Que conclusão este slide realmente permite?">${esc(e.message)}</textarea><div class="two-cols"><div><label for="editImportance">Por que isso importa para o público?</label><textarea id="editImportance" data-edit="importance" maxlength="12000" rows="3" placeholder="Relacione a uma dúvida ou decisão real.">${esc(e.importance)}</textarea></div><div><label for="editEvidence">Evidência e fonte</label><textarea id="editEvidence" data-edit="evidence" maxlength="12000" rows="3" placeholder="Dado, unidade, período, fonte ou DOI. Não acrescente valores sem base.">${esc(e.evidence)}</textarea></div></div><label for="editLimitation">O que não podemos concluir?</label><textarea id="editLimitation" data-edit="limitation" maxlength="12000" rows="2" placeholder="Incerteza, escala, amostra, generalização ou causalidade.">${esc(e.limitation)}</textarea><label for="editTransition">Ponte para o próximo slide</label><textarea id="editTransition" data-edit="transition" maxlength="12000" rows="2" placeholder="Explique por que o próximo ponto vem agora.">${esc(e.transition)}</textarea><div class="section-head"><label for="editScript">Como você vai falar</label><button id="assembleSpeech" class="text-btn">Montar fala com meus campos ↙</button></div><textarea id="editScript" data-edit="script" maxlength="12000" rows="6" placeholder="Monte a fala a partir dos campos acima ou escreva diretamente. Revise antes de apresentar.">${esc(e.script)}</textarea><label for="editSeconds">Tempo deste slide (segundos)</label><input type="number" id="editSeconds" min="1" max="14400" value="${seconds}"><p class="micro">A sugestão inicial divide o tempo igualmente. Ajuste conforme a complexidade.</p><label class="check-line"><input type="checkbox" id="prioritySlide" ${e.priority?'checked':''}>Este é um dos pontos essenciais da palestra.</label><label class="check-line"><input type="checkbox" id="reviewedSlide" ${e.reviewed?'checked':''}>Revisei mensagem, evidências, fontes e limites deste slide.</label><p class="saving-note" id="slideSaved">Suas edições ficam salvas neste navegador.</p></div><details><summary>Perguntas para se preparar</summary><div><ul class="questions-list">${a.questions.map(q=>`<li>${esc(q)}</li>`).join('')}</ul></div></details><div class="slide-controls"><button class="secondary" id="prevSlide" ${i===0?'disabled':''}>← Anterior</button><button class="secondary" id="nextSlide" ${i===studio.deck.slides.length-1?'disabled':''}>Próximo →</button></div>`;
+ $('slideDetail').querySelectorAll('[data-edit]').forEach(el=>el.oninput=()=>{e[el.dataset.edit]=el.value;e.reviewed=false;$('reviewedSlide').checked=false;saveEdit();});
+ $('editSeconds').onchange=()=>{e.seconds=Math.max(1,Math.min(14400,Number($('editSeconds').value)||seconds));$('editSeconds').value=e.seconds;saveEdit();};
+ $('prioritySlide').onchange=()=>{e.priority=$('prioritySlide').checked;saveEdit();};
+ $('reviewedSlide').onchange=()=>{if($('reviewedSlide').checked&&(!e.message.trim()||!e.evidence.trim()||!e.limitation.trim())){$('reviewedSlide').checked=false;notify('Para marcar como revisado, registre mensagem, evidência/fonte e limites.');return;}e.reviewed=$('reviewedSlide').checked;saveEdit();};
+ $('useCandidate').onclick=()=>{if(e.message&&!confirm('Substituir a mensagem que você já escreveu por este trecho?'))return;e.message=a.candidate;e.reviewed=false;persistStudio();renderSlide();renderStats();renderSlideList();};
+ $('assembleSpeech').onclick=()=>{if(!e.message.trim()){notify('Escreva a mensagem principal primeiro.');return;}if(e.script&&!confirm('Substituir o texto da fala pelos campos do roteiro?'))return;e.script=assemble(e);e.reviewed=false;persistStudio();renderSlide();renderStats();renderSlideList();};
+ $('slideDetail').querySelectorAll('[data-use-highlight]').forEach(b=>b.onclick=()=>{const h=highlights[Number(b.dataset.useHighlight)];e.evidence+=(e.evidence?'\n\n':'')+h.text+' [Origem: gráfico do slide '+(i+1)+', cache do PPTX; conferir fonte, unidade e período.]';e.reviewed=false;persistStudio();renderSlide();renderStats();renderSlideList();});
+ $('prevSlide').onclick=()=>selectSlide(i-1);$('nextSlide').onclick=()=>selectSlide(i+1);
 }
-
-/** =========================
- *  EXPORT / IMPORT
- *  ========================= */
-function exportData(){
-  const payload = { version: 1, exportedAt: new Date().toISOString(), state };
-  const blob = new Blob([JSON.stringify(payload,null,2)], {type:"application/json;charset=utf-8"});
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "meu_curso_oratoria_progresso.json";
-  a.click();
-  URL.revokeObjectURL(a.href);
+function assemble(e){return [`O ponto principal é: ${e.message||'[defina a mensagem]'}`,e.evidence?`A evidência que sustenta essa leitura é: ${e.evidence}`:'[Inclua a evidência e sua fonte.]',e.importance?`Isso importa para vocês porque ${e.importance}`:'[Explique a importância para este público.]',e.limitation?`O limite desta conclusão é: ${e.limitation}`:'[Explicite o limite da conclusão.]',e.transition||'[Construa a ponte para o próximo ponto.]'].join('\n\n');}
+function saveEdit(){$('slideSaved').textContent=persistStudio()?'Salvo neste navegador ✓':'Não salvo. Baixe seu backup.';renderStats();renderSlideList();}
+function selectSlide(i){if(!studio.deck||i<0||i>=studio.deck.slides.length)return;studio.selected=i;persistStudio();renderSlideList();renderSlide();$('slideDetail').scrollIntoView({behavior:'smooth',block:'start'});}
+function renderConnections(){const pairs=C.connections(studio.deck.slides);$('connections').innerHTML=pairs.length?pairs.map((p,n)=>`<article class="connection-card"><span class="tag">SLIDES ${p.from+1} ↔ ${p.to+1}</span><h3 style="margin-top:16px">${esc(p.shared.join(' · '))}</h3><blockquote><b>Slide ${p.from+1}:</b> ${esc(p.excerptA)}</blockquote><blockquote><b>Slide ${p.to+1}:</b> ${esc(p.excerptB)}</blockquote><p class="muted">Pergunta de ligação: esses trechos se complementam, contrastam ou usam o mesmo termo com sentidos diferentes?</p><div class="actions"><button class="text-btn" data-pair-slide="${p.from}">Revisar slide ${p.from+1}</button><button class="text-btn" data-bridge="${n}">Criar ponte editável →</button></div></article>`).join(''):'<p class="empty-state">Não encontrei dois termos relevantes em comum entre os slides. Isso não significa que não existam relações. Escreva as transições no roteiro após revisar o conteúdo.</p>';
+ $('connections').querySelectorAll('[data-pair-slide]').forEach(b=>b.onclick=()=>selectSlide(Number(b.dataset.pairSlide)));
+ $('connections').querySelectorAll('[data-bridge]').forEach(b=>b.onclick=()=>{const p=pairs[Number(b.dataset.bridge)],e=editFor(p.from);if(e.transition&&!confirm('Substituir sua transição por uma nova ponte para revisar?'))return;e.transition=`Para continuar a discussão sobre ${p.shared.slice(0,2).join(' e ')}, vamos ao slide ${p.to+1}: “${studio.deck.slides[p.to].title}”. [Explique a relação sustentada pelos dois trechos; não presuma causalidade.]`;e.reviewed=false;persistStudio();selectSlide(p.from);notify('Ponte incluída como rascunho. Revise a relação e a ordem antes de usar.');});
 }
-
-function doImport(text){
-  const parsed = JSON.parse(text);
-  if(!parsed?.state) throw new Error("JSON inválido: não encontrei 'state'.");
-  state = parsed.state;
-  saveState();
-  location.reload();
+async function importFile(file){if(!file)return;const status=$('importStatus');status.className='';if(!/\.(pptx|ppsx)$/i.test(file.name)){status.className='error';status.textContent='Para o formato antigo .ppt: abra no PowerPoint ou LibreOffice e salve como .pptx. A leitura binária de .ppt não está disponível.';return;}if(file.size>30*1024*1024){status.className='error';status.textContent='Arquivo acima de 30 MB. Comprima as imagens antes de importar.';return;}if(studio.deck&&!confirm('Substituir a apresentação atual? Baixe seu roteiro ou backup antes, caso precise guardá-lo.'))return;$('uploadButton').disabled=true;status.textContent='Lendo a apresentação neste dispositivo…';try{const d=await C.readPptx(await file.arrayBuffer(),file.name,(n,total)=>{status.textContent=`Lendo slide ${n} de ${total}…`;});setDeck(d);status.textContent=`${d.slides.length} slides importados. Confira as mensagens e fontes no estúdio.`;}catch(e){status.className='error';status.textContent=e.message||'Não foi possível ler o arquivo. Salve uma nova cópia em PPTX e tente novamente.';}finally{$('uploadButton').disabled=false;$('deckFile').value='';}}
+function setDeck(d){releaseImages();studio.deck=d;studio.edits={};studio.selected=0;studio.brief.message='';$('slideSearch').value='';persistStudio();renderStudio();$('deckWorkspace').scrollIntoView({behavior:'smooth',block:'start'});}
+function outline(){if(!studio.deck)return '';const d=studio.deck;return [`ROTEIRO — ${d.name}`,`Preparado em ${fmtDate(new Date().toISOString())}`,`Público: ${$('audience').selectedOptions?.[0]?.textContent||studio.brief.audience}`,`Mensagem central: ${studio.brief.message||'[a definir]'}`,`Duração pretendida: ${studio.brief.duration} min | Planejada: ${time(totalPlanned())}`,'Rascunho de preparação. Conteúdo do arquivo e campos do autor; fontes não verificadas automaticamente.','',...d.slides.flatMap((s,i)=>{const e=editFor(i);return [`SLIDE ${i+1} — ${s.title}${s.hidden?' [OCULTO NO POWERPOINT]':''}`,`Tempo: ${time(e.seconds||Math.round(studio.brief.duration*60/d.slides.length))} | ${e.reviewed?'Revisado pelo autor':'Revisão pendente'}${e.priority?' | DESTAQUE':''}`,e.script||assemble(e),'','Notas originais: '+(s.notes.join('\n')||'Não extraídas.'),''];})].join('\n');}
+function rehearsalElapsed(){return rehearsalSeconds+(rehearsalRunning?(performance.now()-rehearsalStarted)/1000:0);}
+function updateRehearsal(){const secs=rehearsalElapsed(),n=C.words($('rehearsalScript').value).length,rate=$('readAll').checked&&secs>=5&&n?Math.round(n/(secs/60)):null;$('rehearsalTime').textContent=time(secs);$('rehearsalMetrics').innerHTML=`<div><strong>${n}</strong><span>palavras no texto</span></div><div><strong>${rate??'—'}</strong><span>palavras/min ${rate===null?'· não estimadas':'· estimativa do ensaio'}</span></div>`;}
+function toggleRehearsal(){if(rehearsalRunning){rehearsalSeconds=rehearsalElapsed();rehearsalRunning=false;$('rehearsalToggle').textContent='Retomar ensaio';}else{rehearsalStarted=performance.now();rehearsalRunning=true;$('rehearsalToggle').textContent='Pausar ensaio';}updateRehearsal();}
+function renderHistory(){$('rehearsalHistory').innerHTML=studio.history.length?studio.history.map((h,i)=>`<div class="history-item"><div><strong>${esc(fmtDate(h.date))} · ${time(h.seconds)}</strong><p>${h.matched&&h.seconds>=5&&h.words?`${Math.round(h.words/(h.seconds/60))} palavras/min · texto correspondente declarado`:'Ensaio sem estimativa de palavras/minuto'}</p>${h.notes?`<p>${esc(h.notes)}</p>`:''}<p>Autoavaliação: ${h.rubric.filter(x=>Number(x)>0).length}/5 critérios preenchidos</p></div><button class="text-btn danger" data-remove-history="${i}" aria-label="Excluir ensaio de ${esc(fmtDate(h.date))}">Excluir</button></div>`).join(''):'<p class="empty-state">Seu primeiro registro começa no próximo ensaio. Áudios só são preservados quando você os baixa.</p>';$('rehearsalHistory').querySelectorAll('[data-remove-history]').forEach(b=>b.onclick=()=>{if(!confirm('Excluir este registro de ensaio?'))return;studio.history.splice(Number(b.dataset.removeHistory),1);persistStudio();renderHistory();});}
+async function toggleRecording(){
+ if(recordPending)return;
+ if(recorder&&recorder.state==='recording'){recorder.stop();return;}
+ if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){notify('Este navegador não oferece gravação. Use o gravador do celular e o cronômetro do ensaio.');return;}
+ if(recordBlob&&!confirm('Iniciar outra gravação? Baixe o áudio atual antes, caso queira preservá-lo.'))return;
+ recordPending=true;$('recordToggle').disabled=true;$('recordStatus').textContent='Aguardando acesso ao microfone…';
+ try{recordStream=await navigator.mediaDevices.getUserMedia({audio:true});recordChunks=[];recorder=new MediaRecorder(recordStream);recordStart=performance.now();recorder.ondataavailable=e=>{if(e.data.size)recordChunks.push(e.data);};
+ recorder.onstop=()=>{recordStream?.getTracks().forEach(t=>t.stop());recordStream=null;if(recordingURL)URL.revokeObjectURL(recordingURL);recordBlob=new Blob(recordChunks,{type:recorder.mimeType||'audio/webm'});recordingURL=URL.createObjectURL(recordBlob);$('recording').src=recordingURL;$('recording').hidden=false;$('downloadRecording').hidden=false;$('recordToggle').textContent='Gravar outro áudio';$('recordStatus').textContent='Gravação concluída. Escute e baixe antes de sair: o áudio não fica salvo ao fechar a aba.';};
+ recorder.onerror=()=>{if(recorder.state==='recording')recorder.stop();recordStream?.getTracks().forEach(t=>t.stop());notify('A gravação foi interrompida. Confira o áudio disponível.');};
+ recorder.start(1000);$('recordToggle').textContent='■ Parar gravação';$('recordStatus').textContent='● Gravando neste dispositivo. Pare para escutar e baixar. Limite: 30 minutos.';
+ }catch(e){recordStream?.getTracks().forEach(t=>t.stop());recordStream=null;$('recordStatus').textContent=e.name==='NotAllowedError'?'Microfone não autorizado. Você pode ensaiar normalmente sem gravar.':'Não consegui acessar o microfone. Confira o dispositivo e as permissões.';}
+ finally{recordPending=false;$('recordToggle').disabled=false;}
 }
-
-/** =========================
- *  EVENTOS
- *  ========================= */
-function bindEvents(){
-  $("btnSaveProfile").onclick = ()=>{
-    state.profile.name = $("inpName").value.trim();
-    state.profile.goal = $("inpGoal").value.trim();
-    saveState();
-    renderProfile();
-  };
-
-  $("inpPhoto").onchange = async (e)=>{
-    const f = e.target.files?.[0];
-    if(!f) return;
-    const reader = new FileReader();
-    reader.onload = ()=>{
-      state.profile.photoData = reader.result;
-      saveState();
-      renderProfile();
-    };
-    reader.readAsDataURL(f);
-  };
-
-  $("btnClearPhoto").onclick = ()=>{
-    state.profile.photoData = "";
-    saveState();
-    renderProfile();
-  };
-
-  $("btnTimerStart").onclick = startTimer;
-  $("btnTimerStop").onclick = stopTimer;
-
-  $("btnPrev").onclick = goPrev;
-  $("btnNext").onclick = goNext;
-
-  $("btnDone").onclick = ()=>{
-    const l = getLesson();
-    state.done[l.id] = true;
-    saveState();
-    renderAll();
-  };
-  $("btnUndone").onclick = ()=>{
-    const l = getLesson();
-    delete state.done[l.id];
-    saveState();
-    renderAll();
-  };
-
-  $("btnLike").onclick = ()=>{
-    const l = getLesson();
-    state.liked[l.id] = (state.liked[l.id]===1) ? 0 : 1;
-    saveState();
-    renderLesson();
-  };
-  $("btnDislike").onclick = ()=>{
-    const l = getLesson();
-    state.liked[l.id] = (state.liked[l.id]===-1) ? 0 : -1;
-    saveState();
-    renderLesson();
-  };
-
-  $("btnSaveDelivery").onclick = ()=>{
-    const l = getLesson();
-    state.delivery[l.id] = $("inpDelivery").value.trim();
-    saveState();
-    $("msgDelivery").textContent = "Entrega salva ✓";
-    setTimeout(()=>$("msgDelivery").textContent="", 1200);
-  };
-
-  $("btnSaveNotes").onclick = ()=>{
-    const l = getLesson();
-    state.notes[l.id] = $("inpNotes").value;
-    saveState();
-    $("msgNotes").textContent = "Notas salvas ✓";
-    setTimeout(()=>$("msgNotes").textContent="", 1200);
-  };
-
-  $("btnExport").onclick = exportData;
-
-  const dlg = $("dlgImport");
-  $("btnImportOpen").onclick = ()=>{ $("importText").value=""; dlg.showModal(); };
-  $("btnDoImport").onclick = (e)=>{
-    e.preventDefault();
-    try{ doImport($("importText").value.trim()); }
-    catch(err){ alert("Falha ao importar: " + err.message); }
-  };
-
-  $("btnReset").onclick = ()=>{
-    if(!confirm("Resetar TUDO neste navegador?")) return;
-    localStorage.removeItem(KEY);
-    location.reload();
-  };
-}
-
-/** =========================
- *  RENDER GERAL
- *  ========================= */
-function renderAll(){
-  hideError();
-  renderProfile();
-  $("timerText").textContent = formatTime(state.timeSec);
-  renderProgress();
-  renderLessonList();
-  renderLesson();
-}
-
-/** =========================
- *  BOOT
- *  ========================= */
-document.addEventListener("DOMContentLoaded", ()=>{
-  try{
-    bindEvents();
-    renderAll();
-    if(state.timerRunning) startTimer();
-  }catch(err){
-    showError(err.message || String(err));
-  }
-});
+function initializeRehearsal(){$('rehearsalScript').value=studio.rehearsal.script;$('rehearsalNotes').value=studio.rehearsal.notes;const criteria=['Mensagem compreensível','Evidência e limites claros','Sequência e transições','Ritmo e pausas','Fechamento com direção'];$('selfRubric').innerHTML=criteria.map((r,i)=>`<div class="self-row"><label for="rubric${i}">${r}</label><select id="rubric${i}" data-rubric="${i}"><option value="0">Ainda não avaliei</option><option value="1">Precisa de revisão</option><option value="2">Está encaminhado</option><option value="3">Está claro para mim</option></select></div>`).join('');criteria.forEach((_,i)=>{$('rubric'+i).value=String(studio.rehearsal.rubric[i]||0);$('rubric'+i).onchange=()=>{studio.rehearsal.rubric[i]=$('rubric'+i).value;persistStudio();};});renderHistory();updateRehearsal();}
+function backupPayload(){tickStudy();return {schema:'oratoria-backup',version:2,exportedAt:new Date().toISOString(),state,studio:persistentStudio()};}
+async function inspectBackup(file){try{if(!file||file.size>8*1024*1024)throw Error('Use um backup JSON de até 8 MB.');const p=JSON.parse(await file.text());if(!p||!p.state||typeof p.state!=='object'||!p.state.done)throw Error('Não reconheci este arquivo como backup do curso.');if(p.schema&&p.schema!=='oratoria-backup')throw Error('O arquivo pertence a outra aplicação.');if(p.version&&![1,2].includes(Number(p.version)))throw Error('Versão de backup não suportada.');pendingBackup={state:C.normalizeState(p.state),studio:p.studio?normalizeStudio(p.studio):null};$('backupPreview').hidden=false;$('backupPreview').innerHTML=`<p><b>Backup pronto para revisão</b></p><p>${Object.values(pendingBackup.state.done).filter(Boolean).length} aulas concluídas${pendingBackup.studio?.deck?` · ${pendingBackup.studio.deck.slides.length} slides`:''}. ${pendingBackup.studio?'Substitui curso e estúdio.':'Substitui o curso; preserva o estúdio atual.'}</p><p class="micro">Ao confirmar, uma cópia dos registros atuais será baixada primeiro.</p><button id="confirmRestore" class="primary">Restaurar estes registros</button>`;$('confirmRestore').onclick=()=>{download('oratoria-backup-antes-da-restauracao.json',JSON.stringify(backupPayload(),null,2),'application/json');pauseStudy();state=pendingBackup.state;if(pendingBackup.studio)studio=pendingBackup.studio;persistCourse();persistStudio();progress();lessonList();renderLesson();renderStudio();initializeRehearsal();$('backupPreview').hidden=true;pendingBackup=null;notify('Backup restaurado.');};}catch(e){notify(e.message);}$('backupFile').value='';}
+// Navegação e eventos fixos.
+ document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>go(b.dataset.view));window.addEventListener('hashchange',()=>go(location.hash.slice(1),false));
+ $('profileOpen').onclick=()=>{$('profileName').value=state.profile.name;$('profileGoal').value=state.profile.goal;$('profileDialog').showModal();};$('aboutOpen').onclick=()=>$('aboutDialog').showModal();$('pasteOpen').onclick=()=>$('pasteDialog').showModal();
+ $('saveProfile').onclick=()=>{state.profile.name=$('profileName').value.trim();state.profile.goal=$('profileGoal').value.trim();if(persistCourse())notify('Perfil salvo.');progress();};
+ $('exportBackup').onclick=()=>download('oratoria-backup-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify(backupPayload(),null,2),'application/json');$('importBackupButton').onclick=()=>$('backupFile').click();$('backupFile').onchange=e=>inspectBackup(e.target.files[0]);
+ $('uploadButton').onclick=()=>$('deckFile').click();$('deckFile').onchange=e=>importFile(e.target.files[0]);$('slideSearch').oninput=renderSlideList;
+ $('importPaste').onclick=()=>{const text=$('pasteContent').value.trim();if(!text){notify('Cole o conteúdo de pelo menos um slide.');return;}const blocks=text.split(/^\s*---\s*$/m).map(s=>s.trim()).filter(Boolean);if(blocks.length>150){notify('Use até 150 slides por importação.');return;}if(studio.deck&&!confirm('Substituir a apresentação atual por este conteúdo?'))return;const slides=blocks.map((b,i)=>{const lines=b.split(/\r?\n/).map(C.clean).filter(Boolean);return {number:i+1,title:lines[0],lines,notes:[],charts:[],hyperlinks:[],images:[],pictureCount:0,hidden:false};});setDeck({name:$('pasteTitle').value.trim()||'Apresentação colada',importedAt:new Date().toISOString(),method:'texto-colado',slides,notices:['Conteúdo colado pelo usuário. Não há verificação de fonte, imagem ou layout.']});$('pasteDialog').close();};
+ $('slideList').onclick=e=>{const b=e.target.closest('[data-slide]');if(b)selectSlide(Number(b.dataset.slide));};
+ $('audience').onchange=()=>{studio.brief.audience=$('audience').value;persistStudio();renderSlide();};$('duration').onchange=()=>{studio.brief.duration=Math.max(1,Math.min(240,Number($('duration').value)||15));$('duration').value=studio.brief.duration;persistStudio();renderStats();renderSlide();};$('mainMessage').oninput=()=>{studio.brief.message=$('mainMessage').value;persistStudio();};
+ $('removeDeck').onclick=()=>{if(!confirm('Remover esta apresentação e seu roteiro deste navegador? Seu progresso no curso será preservado.'))return;releaseImages();studio.deck=null;studio.edits={};studio.brief.message='';persistStudio();renderStudio();notify('Apresentação removida.');};
+ $('exportOutline').onclick=()=>{if(studio.deck)download('roteiro-palestra.txt',outline());};$('printOutline').onclick=()=>{if(!studio.deck)return;$('printArea').innerHTML=`<h1>Roteiro de apresentação</h1><p>${esc(outline())}</p>`;window.print();};
+ $('lessonSearch').oninput=lessonList;$('lessonList').onclick=e=>{const b=e.target.closest('[data-lesson]');if(b)selectLesson(b.dataset.lesson);};$('continueCourse').onclick=()=>selectLesson(state.selected);
+ $('studyToggle').onclick=()=>{if(studyRunning)pauseStudy();else{studyRunning=true;studyLast=performance.now();$('studyToggle').textContent='Pausar estudo';}};
+ $('loadScript').onclick=()=>{if(!studio.deck){notify('Importe uma apresentação no estúdio primeiro.');return;}if($('rehearsalScript').value&&!confirm('Substituir o texto de ensaio pelo roteiro do estúdio?'))return;const script=studio.deck.slides.map((s,i)=>studio.edits[i]?.script||assemble(editFor(i))).join('\n\n');$('rehearsalScript').value=script.slice(0,60000);studio.rehearsal.script=$('rehearsalScript').value;$('readAll').checked=false;persistStudio();updateRehearsal();};
+ $('rehearsalScript').oninput=()=>{studio.rehearsal.script=$('rehearsalScript').value;$('readAll').checked=false;persistStudio();updateRehearsal();};$('rehearsalNotes').oninput=()=>{studio.rehearsal.notes=$('rehearsalNotes').value;persistStudio();};$('readAll').onchange=updateRehearsal;$('rehearsalToggle').onclick=toggleRehearsal;
+ $('rehearsalReset').onclick=()=>{if(rehearsalElapsed()>0&&!confirm('Zerar o cronômetro deste ensaio?'))return;rehearsalRunning=false;rehearsalSeconds=0;$('readAll').checked=false;$('rehearsalToggle').textContent='Começar ensaio';updateRehearsal();};
+ $('recordToggle').onclick=toggleRecording;$('downloadRecording').onclick=()=>{if(recordBlob)download('ensaio-oratoria.'+(recordBlob.type.includes('mp4')?'m4a':recordBlob.type.includes('ogg')?'ogg':'webm'),recordBlob);};
+ $('saveRehearsal').onclick=()=>{if(rehearsalRunning)toggleRehearsal();if(rehearsalSeconds<1){notify('Cronometre um ensaio antes de registrar.');return;}studio.history.unshift({date:new Date().toISOString(),seconds:Math.round(rehearsalSeconds),words:C.words($('rehearsalScript').value).length,matched:$('readAll').checked,notes:$('rehearsalNotes').value,rubric:studio.rehearsal.rubric.slice()});studio.history=studio.history.slice(0,100);const saved=persistStudio();renderHistory();notify(saved?'Ensaio registrado. O áudio deve ser baixado separadamente.':'Registro disponível nesta aba. Baixe um backup para preservar.');rehearsalSeconds=0;$('readAll').checked=false;$('rehearsalToggle').textContent='Começar ensaio';updateRehearsal();};
+ const prompts=['Que ideia você quer que o público consiga explicar amanhã?','Qual é a evidência mais forte da sua apresentação?','Qual conclusão seus dados ainda não permitem?','Por que este tema importa para este público específico?','Como explicaria seu gráfico principal sem mostrar a tela?','Que pergunta difícil pode aparecer depois da palestra?','Como diria sua mensagem central em trinta segundos?','Qual é a diferença entre o seu achado e a sua recomendação?'];
+ $('nextQuestion').onclick=()=>{const list=studio.deck?[...prompts,...C.analyzeSlide(studio.deck.slides[studio.selected]).questions]:prompts;questionIndex=(questionIndex+1)%list.length;$('promptQuestion').textContent=list[questionIndex];};
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseStudy();});window.addEventListener('pagehide',()=>{pauseStudy();persistStudio();if(recorder?.state==='recording')recorder.stop();recordStream?.getTracks().forEach(t=>t.stop());});
+ window.addEventListener('beforeunload',e=>{if(storageIssue||recordBlob||recorder?.state==='recording'){e.preventDefault();e.returnValue='';}});
+ setInterval(()=>{tickStudy();if(studyRunning&&Math.floor(state.timeSec)%15===0)persistCourse();if(rehearsalRunning)updateRehearsal();if(recorder?.state==='recording'&&performance.now()-recordStart>=30*60*1000)recorder.stop();},1000);
+ progress();lessonList();renderLesson();renderStudio();initializeRehearsal();go(location.hash.slice(1)||'studio',false);
+})();

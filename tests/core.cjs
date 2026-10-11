@@ -1,0 +1,33 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const {DOMParser}=require('@xmldom/xmldom');
+global.DOMParser=DOMParser;global.JSZip=require('../assets/vendor/jszip.min.js');
+const C=require('../assets/presentation.js');
+(async()=>{
+ const buf=fs.readFileSync(process.argv[2]);
+ const d=await C.readPptx(buf,'fixture.pptx');
+ assert.equal(d.slides.length,3);
+ assert.equal(d.slides[0].title,'Água e fogo: gráfico sintético','Presentation order must come from relationships');
+ assert.equal(d.slides[1].title,'Fogo e água: exemplo sintético');
+ assert.ok(d.slides[1].notes.join('').includes('não extrapolar'));
+ assert.ok(d.slides[1].lines.some(l=>l.includes('<img src=x onerror=alert(1)>')));
+ assert.equal(d.slides[0].charts[0].values.find(p=>p.idx===0).value,'0');
+ assert.equal(d.slides[0].charts[0].values.find(p=>p.idx===1),undefined,'Missing data must not become zero');
+ assert.equal(d.slides[0].charts[0].values.find(p=>p.idx===2).value,'12.5');
+ assert.equal(d.slides[2].hidden,true);
+ const highlights=C.chartHighlights(d.slides[0]);assert.equal(highlights[0].minimum,0);assert.equal(highlights[0].maximum,12.5);assert.equal(highlights[0].absent,1);assert.ok(highlights[0].text.includes('12,5'));
+ assert.equal(C.chartHighlights({charts:[{name:'invalid',categories:[],values:[{idx:0,value:''},{idx:1,value:'abc'}]}]}).length,0);
+ assert.ok(C.connections(d.slides).length>=1);
+ assert.throws(()=>C.zipPreflight(new Uint8Array([1,2,3]).buffer),/PPTX/);
+ assert.throws(()=>C.xml('<!DOCTYPE x><x/>'),/não permitidas/);
+ assert.equal(C.pathAt('ppt/slides/slide1.xml','../notesSlides/notesSlide1.xml'),'ppt/notesSlides/notesSlide1.xml');
+ assert.equal(C.pathAt('ppt/slides/slide1.xml','https://evil.test'),null);
+ const zip=await JSZip.loadAsync(buf);zip.file('ppt/presentation.xml','<!DOCTYPE evil [<!ENTITY x SYSTEM "file:///etc/passwd">]><p/>');
+ const bad=await zip.generateAsync({type:'uint8array'});await assert.rejects(()=>C.readPptx(bad,'bad.pptx'),/não permitidas/);
+ const saved=C.normalizeState(JSON.parse('{"done":{"L1":true,"L99":true},"delivery":{"L1":"texto antigo"},"selected":"L99","profile":{"name":"Ana"},"tplEdits":{"L1":{"0":"rascunho"}},"__proto__":{"polluted":true}}'));
+ assert.equal(saved.done.L1,true);assert.equal(saved.done.L99,undefined);assert.equal(saved.selected,'L1');assert.equal(saved.delivery.L1,'texto antigo');assert.equal(saved.tplEdits.L1[0],'rascunho');assert.equal({}.polluted,undefined);
+ const course=JSON.parse(fs.readFileSync('assets/course.json','utf8'));assert.equal(course.lessons.length,20);
+ for(const l of course.lessons){assert.equal(l.schedule.reduce((n,s)=>n+s.minutes,0),60);assert.equal(l.practiceSteps.length,4);assert.ok(l.theory.join(' ').length>800);assert.equal(l.check.options.length,3);assert.ok(l.check.correct>=0&&l.check.correct<3);}
+ fs.writeFileSync(process.argv[3],JSON.stringify({...d,slides:d.slides.map(s=>({...s,images:[]}))}));
+ console.log('PASS: PPTX order, original text, notes, chart zero/missing, hidden slides, connections, unsafe XML, legacy progress, 20 complete lessons.');
+})().catch(e=>{console.error(e);process.exit(1)});
