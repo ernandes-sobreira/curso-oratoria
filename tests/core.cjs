@@ -18,7 +18,7 @@ const C=require('../assets/presentation.js');
  const highlights=C.chartHighlights(d.slides[0]);assert.equal(highlights[0].minimum,0);assert.equal(highlights[0].maximum,12.5);assert.equal(highlights[0].absent,1);assert.ok(highlights[0].text.includes('12,5'));
  assert.equal(C.chartHighlights({charts:[{name:'invalid',categories:[],values:[{idx:0,value:''},{idx:1,value:'abc'}]}]}).length,0);
  assert.ok(C.connections(d.slides).length>=1);
- assert.throws(()=>C.zipPreflight(new Uint8Array([1,2,3]).buffer),/PPTX/);
+ assert.throws(()=>C.zipPreflight(new Uint8Array([1,2,3]).buffer),/pacote de documento/);
  assert.throws(()=>C.xml('<!DOCTYPE x><x/>'),/não permitidas/);
  assert.equal(C.pathAt('ppt/slides/slide1.xml','../notesSlides/notesSlide1.xml'),'ppt/notesSlides/notesSlide1.xml');
  assert.equal(C.pathAt('ppt/slides/slide1.xml','https://evil.test'),null);
